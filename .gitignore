@@ -1,0 +1,22 @@
+cd ~/Documents/agrioptima-ai
+
+cat > .gitignore << 'EOF'
+# Python
+backend/.agrioptima/
+backend/__pycache__/
+backend/.pytest_cache/
+*.pyc
+
+# Secrets
+.env
+backend/.env
+frontend/.env
+
+# JavaScript
+frontend/node_modules/
+frontend/dist/
+
+# OS/editor
+.DS_Store
+.vscode/settings.json
+EOF
