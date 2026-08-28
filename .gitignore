@@ -1,8 +1,6 @@
-cd ~/Documents/agrioptima-ai
-
 cat > .gitignore << 'EOF'
 # Python
-backend/.agrioptima/
+backend/.agrioptima-ai/
 backend/__pycache__/
 backend/.pytest_cache/
 *.pyc

@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: agrioptima-postgres
+    environment:
+      POSTGRES_USER: agrioptima
+      POSTGRES_PASSWORD: agrioptima_local_only
+      POSTGRES_DB: agrioptima
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
