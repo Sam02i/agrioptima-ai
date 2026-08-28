@@ -1,0 +1,96 @@
+[
+    {
+        "crop": "Tomato",
+        "seasons": [
+            "Kharif",
+            "Rabi"
+        ],
+        "min_ph": 6.0,
+        "max_ph": 7.0,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 55000,
+        "minimum_n": 55,
+        "minimum_p": 35,
+        "minimum_k": 40,
+        "reference_yield_kg_per_acre": 9000,
+        "agronomy_reference": "pH range per TNAU Agritech Portal (agritech.tnau.ac.in); water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Chilli",
+        "seasons": [
+            "Kharif",
+            "Rabi"
+        ],
+        "min_ph": 6.0,
+        "max_ph": 7.5,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 68000,
+        "minimum_n": 60,
+        "minimum_p": 38,
+        "minimum_k": 45,
+        "reference_yield_kg_per_acre": 2400,
+        "agronomy_reference": "pH range per Agritell.com and ICL India chilli cultivation guides; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Maize",
+        "seasons": [
+            "Kharif",
+            "Rabi"
+        ],
+        "min_ph": 5.5,
+        "max_ph": 7.5,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 35000,
+        "minimum_n": 45,
+        "minimum_p": 20,
+        "minimum_k": 20,
+        "reference_yield_kg_per_acre": 5000,
+        "agronomy_reference": "pH range per TNAU Agritech Portal (agritech.tnau.ac.in); water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Paddy",
+        "seasons": [
+            "Kharif"
+        ],
+        "min_ph": 5.5,
+        "max_ph": 7.0,
+        "water_requirement": "high",
+        "minimum_investment_rupees_per_acre": 45000,
+        "minimum_n": 55,
+        "minimum_p": 25,
+        "minimum_k": 25,
+        "reference_yield_kg_per_acre": 4200,
+        "agronomy_reference": "pH range and high-water classification per TNAU Agritech Portal rice nutrient management page (agritech.tnau.ac.in/expert_system/paddy); budget and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Onion",
+        "seasons": [
+            "Kharif",
+            "Rabi"
+        ],
+        "min_ph": 6.0,
+        "max_ph": 7.2,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 50000,
+        "minimum_n": 50,
+        "minimum_p": 30,
+        "minimum_k": 40,
+        "reference_yield_kg_per_acre": 8000,
+        "agronomy_reference": "pH range per ICAR Directorate of Onion and Garlic Research (dogr.icar.gov.in), official climate & soil page; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Bajra",
+        "seasons": [
+            "Kharif"
+        ],
+        "min_ph": 5.5,
+        "max_ph": 8.0,
+        "water_requirement": "low",
+        "minimum_investment_rupees_per_acre": 25000,
+        "minimum_n": 20,
+        "minimum_p": 10,
+        "minimum_k": 15,
+        "reference_yield_kg_per_acre": 1400,
+        "agronomy_reference": "Wide pH tolerance and low-water classification consistent with general pearl millet agronomy guidance; budget and N/P/K minimums are team estimates, not independently sourced."
+    }
+]
