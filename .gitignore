@@ -6,6 +6,7 @@ backend/.pytest_cache/
 *.pyc
 
 # Secrets
+# These files will never be committed 
 .env
 backend/.env
 frontend/.env
@@ -17,4 +18,5 @@ frontend/dist/
 # OS/editor
 .DS_Store
 .vscode/settings.json
-EOF
+EOF 
+# End of File
