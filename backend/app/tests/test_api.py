@@ -63,3 +63,31 @@ def test_crop_recommend_rejects_invalid_season():
 
     response = client.post("/crop/recommend", json=payload)
     assert response.status_code == 422
+
+
+def test_crop_recommend_returns_nonempty_recommendations():
+    payload = {
+        "name": "Test Farmer",
+        "village": "Test Village",
+        "district": "Nashik",
+        "state": "Maharashtra",
+        "latitude": 19.997,
+        "longitude": 73.789,
+        "area_acres": 3,
+        "season": "Kharif",
+        "irrigation": "limited",
+        "soil_ph": 6.8,
+        "nitrogen": 72,
+        "phosphorus": 48,
+        "potassium": 55,
+        "soil_source": "soil_health_card",
+        "previous_crop": "Onion",
+        "investment_budget_rupees": 240000,
+        "sowing_period": "June-July",
+    }
+    response = client.post("/crop/recommend", json=payload)
+    data = response.json()
+    assert len(data["recommendations"]) > 0
+    for rec in data["recommendations"]:
+        assert 0 <= rec["opportunity_score"] <= 100
+        assert 0 <= rec["confidence"] <= 100

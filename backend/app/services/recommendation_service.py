@@ -55,7 +55,6 @@ async def build_recommendation(profile: dict) -> dict:
             weather_status = "unavailable"
 
     # Step 3: score each eligible crop
-    # Step 3: score each eligible crop
     recommendations = []
     for crop in eligible_crops:
         price_opportunity = 50  # neutral fallback
@@ -86,6 +85,42 @@ async def build_recommendation(profile: dict) -> dict:
             "profitability": 50,      # neutral until real cost/price data available
             "saturation_risk": 30,    # neutral baseline
         }
+
+        score = crop_opportunity_score(parts)
+        conf = confidence(parts, live_signal_count, profile["soil_source"])
+
+        reason_codes = []
+        explanations = []
+        sources = []
+
+        if parts["soil_fit"] >= 70:
+            reason_codes.append("SOIL_COMPATIBLE")
+            explanations.append(f"Soil nutrient levels meet or exceed {crop['crop']}'s minimum requirements.")
+        if weather_status == "live":
+            reason_codes.append("LIVE_WEATHER_USED")
+            explanations.append("Live weather forecast was used to assess climate fit.")
+        if mandi_status == "live":
+            reason_codes.append("LIVE_MANDI_PRICE_USED")
+            explanations.append("Recent mandi price data was used to assess price opportunity.")
+        else:
+            reason_codes.append("MANDI_PRICE_UNAVAILABLE")
+            explanations.append("Live mandi price data was unavailable; a neutral price score was used instead.")
+
+        sources.append({"provider": profile["soil_source"], "type": "soil"})
+        sources.append({"provider": "open_meteo", "status": weather_status})
+        sources.append({"provider": "data_gov_india_agmarknet", "status": mandi_status})
+
+        recommendations.append({
+            "crop": crop["crop"],
+            "opportunity_score": score,
+            "confidence": conf,
+            "score_breakdown": parts,
+            "reference_yield_kg_per_acre": crop["reference_yield_kg_per_acre"],
+            "reason_codes": reason_codes,
+            "explanations": explanations,
+            "sources": sources,
+        })
+
     # Step 4: sort best-first, keep top 5
     recommendations.sort(key=lambda r: r["opportunity_score"], reverse=True)
     recommendations = recommendations[:5]

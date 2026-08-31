@@ -92,5 +92,82 @@
         "minimum_k": 15,
         "reference_yield_kg_per_acre": 1400,
         "agronomy_reference": "Wide pH tolerance and low-water classification consistent with general pearl millet agronomy guidance; budget and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Wheat",
+        "seasons": [
+            "Rabi"
+        ],
+        "min_ph": 6.0,
+        "max_ph": 7.5,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 32000,
+        "minimum_n": 50,
+        "minimum_p": 25,
+        "minimum_k": 20,
+        "reference_yield_kg_per_acre": 4800,
+        "agronomy_reference": "pH range consistent across multiple agronomic sources for wheat cultivation; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Soybean",
+        "seasons": [
+            "Kharif"
+        ],
+        "min_ph": 6.0,
+        "max_ph": 7.0,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 30000,
+        "minimum_n": 20,
+        "minimum_p": 25,
+        "minimum_k": 25,
+        "reference_yield_kg_per_acre": 2200,
+        "agronomy_reference": "pH range per common agronomic guidance for soybean cultivation; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced. Note: as a legume, soybean's nitrogen minimum is lower than cereal crops due to nitrogen fixation."
+    },
+    {
+        "crop": "Groundnut",
+        "seasons": [
+            "Kharif",
+            "Rabi"
+        ],
+        "min_ph": 5.5,
+        "max_ph": 7.0,
+        "water_requirement": "low",
+        "minimum_investment_rupees_per_acre": 38000,
+        "minimum_n": 15,
+        "minimum_p": 20,
+        "minimum_k": 25,
+        "reference_yield_kg_per_acre": 2800,
+        "agronomy_reference": "pH range per Wikifarmer groundnut cultivation guide (referencing ICRISAT-Patancheru field practice); water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Cotton",
+        "seasons": [
+            "Kharif"
+        ],
+        "min_ph": 5.8,
+        "max_ph": 8.0,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 42000,
+        "minimum_n": 50,
+        "minimum_p": 25,
+        "minimum_k": 25,
+        "reference_yield_kg_per_acre": 1500,
+        "agronomy_reference": "pH range consistent across Yara, Bayer Crop Science, and ICL agronomic guidance for cotton; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+    },
+    {
+        "crop": "Sugarcane",
+        "seasons": [
+            "Kharif",
+            "Rabi"
+        ],
+        "min_ph": 5.0,
+        "max_ph": 8.5,
+        "water_requirement": "high",
+        "minimum_investment_rupees_per_acre": 60000,
+        "minimum_n": 70,
+        "minimum_p": 25,
+        "minimum_k": 60,
+        "reference_yield_kg_per_acre": 35000,
+        "agronomy_reference": "pH range per FAO Land & Water crop information database for sugarcane (optimum ~6.5, tolerant range 5.0-8.5); water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
     }
 ]

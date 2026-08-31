@@ -20,7 +20,7 @@ def evaluate_eligibility(profile: dict , crop: dict) -> Rejection|None:
 
     if profile['season'] not in crop['seasons']:
         codes.append("SEASON_NOT_SUPPORTED")
-        message.append(f"{crop['crop']} is not configured for the selected {profile['season']} season")
+        messages.append(f"{crop['crop']} is not configured for the selected {profile['season']} season")
 
 # If the list has codes → crop is rejected, returns a Rejection object explaining it
 # If the list is empty → crop is eligible, returns None (nothing to reject)
