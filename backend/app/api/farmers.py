@@ -1,49 +1,106 @@
-from datetime import date
-# will be used for soil_test_date
-from typing import Literal
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from app.db.session import SessionLocal
+from app.db.models import Farmer, Farm
+import uuid
 
-from pydantic import BaseModel, Field, model_validator
-# Base_model the class every schema inherits form 
-# model_validator lets you write custom validation logic under multiple fields
-# Field lets you add validation to a field
-
-class FarmerRecommendationRequest(BaseModel):
-    name: str = Field(min_length=2, max_length=160)
-    village: str = Field(min_length=2, max_length=160)
-    district: str = Field(min_length=2, max_length=160)
-    state: str | None = None
-
-    # taking default values
-    #* Longitude's valid range is -180 to 180
-    #* Latitude's valid range -90 to 90
-    latitude: float | None = Field(default=None, ge=-90, le=90)
-    longitude: float | None = Field(default=None, ge=-180, le=180)
-
-    #* Capped at 10,000 acres as a sanity ceiling.
-    #* gt = 0 "Farm cant have negative area"
-    area_acres: float = Field(gt=0, le=10000)
-
-    #&No default value given, so this field is required. Must be exactly one of these three strings.
+router = APIRouter(prefix="/api/v1/farmers", tags=["farmers"])
 
 
-    season: Literal["Kharif", "Rabi", "Zaid"]
-    irrigation: Literal["none", "limited", "adequate"]
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-    soil_ph: float = Field(ge=3.0, le=10.0)
-    nitrogen: float = Field(ge=0)
-    phosphorus: float = Field(ge=0)
-    potassium: float = Field(ge=0)
 
-    soil_source: Literal["soil_health_card", "lab_report", "manual_entry"]
-    soil_test_date: date | None = None
-    previous_crop: str = Field(min_length=2, max_length=64)
-    investment_budget_rupees: int = Field(gt=0) # most not be zero
-    sowing_period: str = Field(min_length=2, max_length=64)
+@router.get("")
+def list_farmers(db: Session = Depends(get_db)):
+    """Return all farmers with their farm count."""
+    farmers = db.query(Farmer).all()
+    return [
+        {
+            "farmer_id": f.public_id,
+            "name": f.name,
+            "village": f.village,
+            "district": f.district,
+            "state": f.state,
+            "farm_count": len(f.farms),
+            "created_at": f.created_at.isoformat() if f.created_at else None,
+        }
+        for f in farmers
+    ]
 
-#free-text field describing the intended sowing window
-    @model_validator(mode="after")
-    def require_complete_coordinates(self):
-        if (self.latitude is None) != (self.longitude is None):
-            raise ValueError("Provide both latitude and longitude, or leave both empty.")
-        return self
 
+@router.get("/{farmer_id}")
+def get_farmer(farmer_id: str, db: Session = Depends(get_db)):
+    """Return a single farmer with their farms."""
+    farmer = db.query(Farmer).filter(Farmer.public_id == farmer_id).first()
+    if not farmer:
+        return {"error": "Farmer not found"}
+
+    farms = [
+        {
+            "farm_id": farm.public_id,
+            "area_acres": float(farm.area_acres),
+            "season": farm.season,
+            "irrigation": farm.irrigation,
+            "soil_ph": float(farm.soil_ph),
+            "latitude": float(farm.latitude) if farm.latitude else None,
+            "longitude": float(farm.longitude) if farm.longitude else None,
+        }
+        for farm in farmer.farms
+    ]
+
+    return {
+        "farmer_id": farmer.public_id,
+        "name": farmer.name,
+        "village": farmer.village,
+        "district": farmer.district,
+        "state": farmer.state,
+        "farms": farms,
+        "created_at": farmer.created_at.isoformat() if farmer.created_at else None,
+    }
+
+
+@router.post("")
+def create_farmer(payload: dict, db: Session = Depends(get_db)):
+    """Create a new farmer record and return stable IDs."""
+    public_id = f"FARMER_{uuid.uuid4().hex[:8].upper()}"
+    farmer = Farmer(
+        public_id=public_id,
+        name=payload.get("name", ""),
+        village=payload.get("village", ""),
+        district=payload.get("district", ""),
+        state=payload.get("state"),
+    )
+    db.add(farmer)
+    db.flush()
+
+    farm_public_id = f"FARM_{uuid.uuid4().hex[:8].upper()}"
+    farm = Farm(
+        public_id=farm_public_id,
+        farmer_id=farmer.id,
+        area_acres=payload.get("area_acres", 0),
+        latitude=payload.get("latitude"),
+        longitude=payload.get("longitude"),
+        season=payload.get("season", ""),
+        irrigation=payload.get("irrigation", ""),
+        soil_ph=payload.get("soil_ph", 0),
+        nitrogen=payload.get("nitrogen", 0),
+        phosphorus=payload.get("phosphorus", 0),
+        potassium=payload.get("potassium", 0),
+        soil_source=payload.get("soil_source", "manual_entry"),
+        soil_test_date=payload.get("soil_test_date"),
+        previous_crop=payload.get("previous_crop", ""),
+        investment_budget_paise=payload.get("investment_budget_rupees", 0) * 100,
+        sowing_period=payload.get("sowing_period", ""),
+    )
+    db.add(farm)
+    db.commit()
+
+    return {
+        "farmer_id": public_id,
+        "farm_id": farm_public_id,
+    }

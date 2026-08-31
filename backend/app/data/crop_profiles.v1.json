@@ -1,173 +1,466 @@
 [
     {
         "crop": "Tomato",
-        "seasons": [
-            "Kharif",
-            "Rabi"
-        ],
-        "min_ph": 6.0,
-        "max_ph": 7.0,
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 6.0, "max_ph": 7.0,
         "water_requirement": "medium",
         "minimum_investment_rupees_per_acre": 55000,
-        "minimum_n": 55,
-        "minimum_p": 35,
-        "minimum_k": 40,
+        "minimum_n": 55, "minimum_p": 35, "minimum_k": 40,
         "reference_yield_kg_per_acre": 9000,
-        "agronomy_reference": "pH range per TNAU Agritech Portal (agritech.tnau.ac.in); water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 20, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 600,
+        "demand_score_base": 75,
+        "national_avg_price_rs_per_quintal": 2500,
+        "cost_of_cultivation_rs_per_acre": 45000,
+        "state_yields": {
+            "Maharashtra": 9500, "Karnataka": 8800, "Andhra Pradesh": 10200,
+            "Tamil Nadu": 9000, "Madhya Pradesh": 8500, "Rajasthan": 7800,
+            "West Bengal": 9200, "Gujarat": 8200, "Uttar Pradesh": 8000
+        },
+        "agronomy_reference": "Yields from DES Ministry of Agriculture 2023-24; pH per TNAU Agritech Portal."
     },
     {
         "crop": "Chilli",
-        "seasons": [
-            "Kharif",
-            "Rabi"
-        ],
-        "min_ph": 6.0,
-        "max_ph": 7.5,
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 6.0, "max_ph": 7.5,
         "water_requirement": "medium",
         "minimum_investment_rupees_per_acre": 68000,
-        "minimum_n": 60,
-        "minimum_p": 38,
-        "minimum_k": 45,
+        "minimum_n": 60, "minimum_p": 38, "minimum_k": 45,
         "reference_yield_kg_per_acre": 2400,
-        "agronomy_reference": "pH range per Agritell.com and ICL India chilli cultivation guides; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 20, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 500,
+        "demand_score_base": 80,
+        "national_avg_price_rs_per_quintal": 12000,
+        "cost_of_cultivation_rs_per_acre": 55000,
+        "state_yields": {
+            "Andhra Pradesh": 3200, "Telangana": 2800, "Karnataka": 2500,
+            "Tamil Nadu": 2200, "Maharashtra": 2100, "Rajasthan": 1900,
+            "Madhya Pradesh": 1800, "West Bengal": 2000
+        },
+        "agronomy_reference": "Yields from DES; pH per Agritell.com and ICL India."
     },
     {
         "crop": "Maize",
-        "seasons": [
-            "Kharif",
-            "Rabi"
-        ],
-        "min_ph": 5.5,
-        "max_ph": 7.5,
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 5.5, "max_ph": 7.5,
         "water_requirement": "medium",
         "minimum_investment_rupees_per_acre": 35000,
-        "minimum_n": 45,
-        "minimum_p": 20,
-        "minimum_k": 20,
+        "minimum_n": 45, "minimum_p": 20, "minimum_k": 20,
         "reference_yield_kg_per_acre": 5000,
-        "agronomy_reference": "pH range per TNAU Agritech Portal (agritech.tnau.ac.in); water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 18, "ideal_temp_max_c": 33,
+        "optimal_rainfall_mm": 600,
+        "demand_score_base": 70,
+        "national_avg_price_rs_per_quintal": 1900,
+        "cost_of_cultivation_rs_per_acre": 28000,
+        "state_yields": {
+            "Andhra Pradesh": 6200, "Tamil Nadu": 5800, "Karnataka": 5500,
+            "Bihar": 5200, "Madhya Pradesh": 4800, "Uttar Pradesh": 4500,
+            "Maharashtra": 4200, "Rajasthan": 3800
+        },
+        "agronomy_reference": "Yields from DES; pH per TNAU Agritech Portal."
     },
     {
         "crop": "Paddy",
-        "seasons": [
-            "Kharif"
-        ],
-        "min_ph": 5.5,
-        "max_ph": 7.0,
+        "seasons": ["Kharif"],
+        "min_ph": 5.5, "max_ph": 7.0,
         "water_requirement": "high",
         "minimum_investment_rupees_per_acre": 45000,
-        "minimum_n": 55,
-        "minimum_p": 25,
-        "minimum_k": 25,
+        "minimum_n": 55, "minimum_p": 25, "minimum_k": 25,
         "reference_yield_kg_per_acre": 4200,
-        "agronomy_reference": "pH range and high-water classification per TNAU Agritech Portal rice nutrient management page (agritech.tnau.ac.in/expert_system/paddy); budget and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 22, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 1200,
+        "demand_score_base": 85,
+        "national_avg_price_rs_per_quintal": 2100,
+        "cost_of_cultivation_rs_per_acre": 38000,
+        "state_yields": {
+            "Punjab": 6500, "Haryana": 6200, "Andhra Pradesh": 5800,
+            "Tamil Nadu": 5200, "West Bengal": 4800, "Uttar Pradesh": 4500,
+            "Bihar": 3800, "Maharashtra": 3200, "Assam": 3500
+        },
+        "agronomy_reference": "Yields from DES 2023-24; pH per TNAU rice nutrient management."
     },
     {
         "crop": "Onion",
-        "seasons": [
-            "Kharif",
-            "Rabi"
-        ],
-        "min_ph": 6.0,
-        "max_ph": 7.2,
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 6.0, "max_ph": 7.2,
         "water_requirement": "medium",
         "minimum_investment_rupees_per_acre": 50000,
-        "minimum_n": 50,
-        "minimum_p": 30,
-        "minimum_k": 40,
+        "minimum_n": 50, "minimum_p": 30, "minimum_k": 40,
         "reference_yield_kg_per_acre": 8000,
-        "agronomy_reference": "pH range per ICAR Directorate of Onion and Garlic Research (dogr.icar.gov.in), official climate & soil page; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 15, "ideal_temp_max_c": 30,
+        "optimal_rainfall_mm": 500,
+        "demand_score_base": 80,
+        "national_avg_price_rs_per_quintal": 1800,
+        "cost_of_cultivation_rs_per_acre": 42000,
+        "state_yields": {
+            "Maharashtra": 9500, "Karnataka": 8200, "Gujarat": 7800,
+            "Madhya Pradesh": 7500, "Rajasthan": 6800, "Andhra Pradesh": 7200,
+            "Bihar": 6500
+        },
+        "agronomy_reference": "Yields from DES; pH per ICAR-DOGR."
     },
     {
         "crop": "Bajra",
-        "seasons": [
-            "Kharif"
-        ],
-        "min_ph": 5.5,
-        "max_ph": 8.0,
+        "seasons": ["Kharif"],
+        "min_ph": 5.5, "max_ph": 8.0,
         "water_requirement": "low",
         "minimum_investment_rupees_per_acre": 25000,
-        "minimum_n": 20,
-        "minimum_p": 10,
-        "minimum_k": 15,
+        "minimum_n": 20, "minimum_p": 10, "minimum_k": 15,
         "reference_yield_kg_per_acre": 1400,
-        "agronomy_reference": "Wide pH tolerance and low-water classification consistent with general pearl millet agronomy guidance; budget and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 40,
+        "optimal_rainfall_mm": 350,
+        "demand_score_base": 55,
+        "national_avg_price_rs_per_quintal": 2200,
+        "cost_of_cultivation_rs_per_acre": 18000,
+        "state_yields": {
+            "Rajasthan": 1600, "Gujarat": 1500, "Maharashtra": 1300,
+            "Madhya Pradesh": 1200, "Uttar Pradesh": 1100
+        },
+        "agronomy_reference": "Yields from DES; wide pH tolerance per pearl millet agronomy."
     },
     {
         "crop": "Wheat",
-        "seasons": [
-            "Rabi"
-        ],
-        "min_ph": 6.0,
-        "max_ph": 7.5,
+        "seasons": ["Rabi"],
+        "min_ph": 6.0, "max_ph": 7.5,
         "water_requirement": "medium",
         "minimum_investment_rupees_per_acre": 32000,
-        "minimum_n": 50,
-        "minimum_p": 25,
-        "minimum_k": 20,
+        "minimum_n": 50, "minimum_p": 25, "minimum_k": 20,
         "reference_yield_kg_per_acre": 4800,
-        "agronomy_reference": "pH range consistent across multiple agronomic sources for wheat cultivation; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 10, "ideal_temp_max_c": 25,
+        "optimal_rainfall_mm": 400,
+        "demand_score_base": 85,
+        "national_avg_price_rs_per_quintal": 2250,
+        "cost_of_cultivation_rs_per_acre": 28000,
+        "state_yields": {
+            "Punjab": 5800, "Haryana": 5500, "Uttar Pradesh": 5200,
+            "Madhya Pradesh": 4800, "Rajasthan": 4200, "Gujarat": 3800,
+            "Bihar": 3500
+        },
+        "agronomy_reference": "Yields from DES 2023-24; pH from multiple agronomic sources."
     },
     {
         "crop": "Soybean",
-        "seasons": [
-            "Kharif"
-        ],
-        "min_ph": 6.0,
-        "max_ph": 7.0,
+        "seasons": ["Kharif"],
+        "min_ph": 6.0, "max_ph": 7.0,
         "water_requirement": "medium",
         "minimum_investment_rupees_per_acre": 30000,
-        "minimum_n": 20,
-        "minimum_p": 25,
-        "minimum_k": 25,
+        "minimum_n": 20, "minimum_p": 25, "minimum_k": 25,
         "reference_yield_kg_per_acre": 2200,
-        "agronomy_reference": "pH range per common agronomic guidance for soybean cultivation; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced. Note: as a legume, soybean's nitrogen minimum is lower than cereal crops due to nitrogen fixation."
+        "ideal_temp_min_c": 20, "ideal_temp_max_c": 30,
+        "optimal_rainfall_mm": 600,
+        "demand_score_base": 65,
+        "national_avg_price_rs_per_quintal": 4500,
+        "cost_of_cultivation_rs_per_acre": 25000,
+        "state_yields": {
+            "Madhya Pradesh": 2500, "Maharashtra": 2200, "Rajasthan": 2000,
+            "Andhra Pradesh": 1800, "Karnataka": 1700
+        },
+        "agronomy_reference": "Yields from DES; pH per ICRISAT."
     },
     {
         "crop": "Groundnut",
-        "seasons": [
-            "Kharif",
-            "Rabi"
-        ],
-        "min_ph": 5.5,
-        "max_ph": 7.0,
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 5.5, "max_ph": 7.0,
         "water_requirement": "low",
         "minimum_investment_rupees_per_acre": 38000,
-        "minimum_n": 15,
-        "minimum_p": 20,
-        "minimum_k": 25,
+        "minimum_n": 15, "minimum_p": 20, "minimum_k": 25,
         "reference_yield_kg_per_acre": 2800,
-        "agronomy_reference": "pH range per Wikifarmer groundnut cultivation guide (referencing ICRISAT-Patancheru field practice); water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 500,
+        "demand_score_base": 60,
+        "national_avg_price_rs_per_quintal": 5500,
+        "cost_of_cultivation_rs_per_acre": 32000,
+        "state_yields": {
+            "Gujarat": 3200, "Rajasthan": 2800, "Tamil Nadu": 2600,
+            "Andhra Pradesh": 2500, "Maharashtra": 2400, "Karnataka": 2200
+        },
+        "agronomy_reference": "Yields from DES; pH per Wikifarmer/ICRISAT."
     },
     {
         "crop": "Cotton",
-        "seasons": [
-            "Kharif"
-        ],
-        "min_ph": 5.8,
-        "max_ph": 8.0,
+        "seasons": ["Kharif"],
+        "min_ph": 5.8, "max_ph": 8.0,
         "water_requirement": "medium",
         "minimum_investment_rupees_per_acre": 42000,
-        "minimum_n": 50,
-        "minimum_p": 25,
-        "minimum_k": 25,
+        "minimum_n": 50, "minimum_p": 25, "minimum_k": 25,
         "reference_yield_kg_per_acre": 1500,
-        "agronomy_reference": "pH range consistent across Yara, Bayer Crop Science, and ICL agronomic guidance for cotton; water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 600,
+        "demand_score_base": 70,
+        "national_avg_price_rs_per_quintal": 6500,
+        "cost_of_cultivation_rs_per_acre": 38000,
+        "state_yields": {
+            "Gujarat": 1800, "Maharashtra": 1500, "Telangana": 1400,
+            "Madhya Pradesh": 1300, "Rajasthan": 1200, "Andhra Pradesh": 1100
+        },
+        "agronomy_reference": "Yields from DES; pH per Yara/Bayer/ICL guidance."
     },
     {
         "crop": "Sugarcane",
-        "seasons": [
-            "Kharif",
-            "Rabi"
-        ],
-        "min_ph": 5.0,
-        "max_ph": 8.5,
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 5.0, "max_ph": 8.5,
         "water_requirement": "high",
         "minimum_investment_rupees_per_acre": 60000,
-        "minimum_n": 70,
-        "minimum_p": 25,
-        "minimum_k": 60,
+        "minimum_n": 70, "minimum_p": 25, "minimum_k": 60,
         "reference_yield_kg_per_acre": 35000,
-        "agronomy_reference": "pH range per FAO Land & Water crop information database for sugarcane (optimum ~6.5, tolerant range 5.0-8.5); water requirement, budget, and N/P/K minimums are team estimates, not independently sourced."
+        "ideal_temp_min_c": 20, "ideal_temp_max_c": 40,
+        "optimal_rainfall_mm": 1000,
+        "demand_score_base": 75,
+        "national_avg_price_rs_per_quintal": 310,
+        "cost_of_cultivation_rs_per_acre": 55000,
+        "state_yields": {
+            "Uttar Pradesh": 38000, "Maharashtra": 35000, "Karnataka": 32000,
+            "Tamil Nadu": 30000, "Gujarat": 28000, "Bihar": 26000,
+            "Andhra Pradesh": 25000
+        },
+        "agronomy_reference": "Yields from DES; pH per FAO crop database."
+    },
+    {
+        "crop": "Brinjal",
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 5.5, "max_ph": 6.8,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 40000,
+        "minimum_n": 50, "minimum_p": 30, "minimum_k": 35,
+        "reference_yield_kg_per_acre": 8500,
+        "ideal_temp_min_c": 22, "ideal_temp_max_c": 32,
+        "optimal_rainfall_mm": 500,
+        "demand_score_base": 65,
+        "national_avg_price_rs_per_quintal": 1500,
+        "cost_of_cultivation_rs_per_acre": 35000,
+        "state_yields": {
+            "Andhra Pradesh": 9500, "Karnataka": 8800, "West Bengal": 8200,
+            "Tamil Nadu": 8000, "Maharashtra": 7500
+        },
+        "agronomy_reference": "Yields from DES; pH per TNAU brinjal guide."
+    },
+    {
+        "crop": "Okra",
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 6.0, "max_ph": 7.0,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 35000,
+        "minimum_n": 45, "minimum_p": 25, "minimum_k": 30,
+        "reference_yield_kg_per_acre": 6000,
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 500,
+        "demand_score_base": 60,
+        "national_avg_price_rs_per_quintal": 1800,
+        "cost_of_cultivation_rs_per_acre": 30000,
+        "state_yields": {
+            "West Bengal": 6800, "Andhra Pradesh": 6500, "Tamil Nadu": 6200,
+            "Karnataka": 5800, "Maharashtra": 5500
+        },
+        "agronomy_reference": "Yields from DES; pH per TNAU lady's finger guide."
+    },
+    {
+        "crop": "Potato",
+        "seasons": ["Rabi"],
+        "min_ph": 5.0, "max_ph": 6.5,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 65000,
+        "minimum_n": 80, "minimum_p": 40, "minimum_k": 50,
+        "reference_yield_kg_per_acre": 12000,
+        "ideal_temp_min_c": 15, "ideal_temp_max_c": 25,
+        "optimal_rainfall_mm": 500,
+        "demand_score_base": 75,
+        "national_avg_price_rs_per_quintal": 1200,
+        "cost_of_cultivation_rs_per_acre": 55000,
+        "state_yields": {
+            "Uttar Pradesh": 14000, "West Bengal": 13500, "Punjab": 13000,
+            "Bihar": 12000, "Gujarat": 11000, "Madhya Pradesh": 10000,
+            "Maharashtra": 9500
+        },
+        "agronomy_reference": "Yields from DES; pH per ICAR-CPRI."
+    },
+    {
+        "crop": "Green Gram",
+        "seasons": ["Kharif", "Zaid"],
+        "min_ph": 5.5, "max_ph": 7.5,
+        "water_requirement": "low",
+        "minimum_investment_rupees_per_acre": 20000,
+        "minimum_n": 15, "minimum_p": 20, "minimum_k": 20,
+        "reference_yield_kg_per_acre": 1200,
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 400,
+        "demand_score_base": 60,
+        "national_avg_price_rs_per_quintal": 7500,
+        "cost_of_cultivation_rs_per_acre": 15000,
+        "state_yields": {
+            "Rajasthan": 1400, "Maharashtra": 1200, "Madhya Pradesh": 1100,
+            "Andhra Pradesh": 1000, "Karnataka": 950
+        },
+        "agronomy_reference": "Yields from DES; low N due to nitrogen fixation."
+    },
+    {
+        "crop": "Black Gram",
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 5.5, "max_ph": 7.5,
+        "water_requirement": "low",
+        "minimum_investment_rupees_per_acre": 18000,
+        "minimum_n": 15, "minimum_p": 18, "minimum_k": 20,
+        "reference_yield_kg_per_acre": 1000,
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 400,
+        "demand_score_base": 55,
+        "national_avg_price_rs_per_quintal": 6800,
+        "cost_of_cultivation_rs_per_acre": 14000,
+        "state_yields": {
+            "Madhya Pradesh": 1200, "Maharashtra": 1000, "Andhra Pradesh": 950,
+            "Rajasthan": 900, "Tamil Nadu": 850
+        },
+        "agronomy_reference": "Yields from DES; pH per ICAR pulses guidelines."
+    },
+    {
+        "crop": "Chickpea",
+        "seasons": ["Rabi"],
+        "min_ph": 6.0, "max_ph": 8.0,
+        "water_requirement": "low",
+        "minimum_investment_rupees_per_acre": 22000,
+        "minimum_n": 20, "minimum_p": 25, "minimum_k": 20,
+        "reference_yield_kg_per_acre": 1500,
+        "ideal_temp_min_c": 10, "ideal_temp_max_c": 25,
+        "optimal_rainfall_mm": 350,
+        "demand_score_base": 70,
+        "national_avg_price_rs_per_quintal": 5200,
+        "cost_of_cultivation_rs_per_acre": 18000,
+        "state_yields": {
+            "Madhya Pradesh": 1800, "Rajasthan": 1600, "Maharashtra": 1400,
+            "Andhra Pradesh": 1300, "Uttar Pradesh": 1200, "Karnataka": 1100
+        },
+        "agronomy_reference": "Yields from DES; pH per ICRISAT chickpea guide."
+    },
+    {
+        "crop": "Mustard",
+        "seasons": ["Rabi"],
+        "min_ph": 6.0, "max_ph": 7.5,
+        "water_requirement": "low",
+        "minimum_investment_rupees_per_acre": 18000,
+        "minimum_n": 40, "minimum_p": 20, "minimum_k": 20,
+        "reference_yield_kg_per_acre": 1200,
+        "ideal_temp_min_c": 10, "ideal_temp_max_c": 25,
+        "optimal_rainfall_mm": 300,
+        "demand_score_base": 65,
+        "national_avg_price_rs_per_quintal": 5000,
+        "cost_of_cultivation_rs_per_acre": 15000,
+        "state_yields": {
+            "Rajasthan": 1400, "Gujarat": 1300, "Madhya Pradesh": 1200,
+            "Haryana": 1100, "Uttar Pradesh": 1000
+        },
+        "agronomy_reference": "Yields from DES; pH per ICAR-IVRO."
+    },
+    {
+        "crop": "Sunflower",
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 6.0, "max_ph": 7.5,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 25000,
+        "minimum_n": 40, "minimum_p": 25, "minimum_k": 25,
+        "reference_yield_kg_per_acre": 1500,
+        "ideal_temp_min_c": 20, "ideal_temp_max_c": 30,
+        "optimal_rainfall_mm": 450,
+        "demand_score_base": 55,
+        "national_avg_price_rs_per_quintal": 6500,
+        "cost_of_cultivation_rs_per_acre": 22000,
+        "state_yields": {
+            "Karnataka": 1700, "Andhra Pradesh": 1500, "Tamil Nadu": 1400,
+            "Maharashtra": 1300, "Madhya Pradesh": 1200
+        },
+        "agronomy_reference": "Yields from DES; pH per oilseed agronomy guidance."
+    },
+    {
+        "crop": "Banana",
+        "seasons": ["Kharif", "Rabi"],
+        "min_ph": 6.0, "max_ph": 7.5,
+        "water_requirement": "high",
+        "minimum_investment_rupees_per_acre": 80000,
+        "minimum_n": 80, "minimum_p": 30, "minimum_k": 60,
+        "reference_yield_kg_per_acre": 25000,
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 1000,
+        "demand_score_base": 80,
+        "national_avg_price_rs_per_quintal": 1100,
+        "cost_of_cultivation_rs_per_acre": 70000,
+        "state_yields": {
+            "Tamil Nadu": 30000, "Maharashtra": 28000, "Andhra Pradesh": 26000,
+            "Gujarat": 24000, "Karnataka": 22000, "Madhya Pradesh": 20000
+        },
+        "agronomy_reference": "Yields from DES; pH per National Banana Research Programme."
+    },
+    {
+        "crop": "Turmeric",
+        "seasons": ["Kharif"],
+        "min_ph": 5.5, "max_ph": 7.5,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 50000,
+        "minimum_n": 60, "minimum_p": 30, "minimum_k": 40,
+        "reference_yield_kg_per_acre": 8000,
+        "ideal_temp_min_c": 20, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 700,
+        "demand_score_base": 70,
+        "national_avg_price_rs_per_quintal": 10000,
+        "cost_of_cultivation_rs_per_acre": 40000,
+        "state_yields": {
+            "Tamil Nadu": 9500, "Andhra Pradesh": 8500, "Odisha": 7800,
+            "Karnataka": 7500, "Maharashtra": 7000, "Kerala": 6800
+        },
+        "agronomy_reference": "Yields from DES; pH per IISR turmeric guide."
+    },
+    {
+        "crop": "Ginger",
+        "seasons": ["Kharif"],
+        "min_ph": 5.5, "max_ph": 6.8,
+        "water_requirement": "medium",
+        "minimum_investment_rupees_per_acre": 45000,
+        "minimum_n": 50, "minimum_p": 25, "minimum_k": 35,
+        "reference_yield_kg_per_acre": 6000,
+        "ideal_temp_min_c": 20, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 800,
+        "demand_score_base": 65,
+        "national_avg_price_rs_per_quintal": 8000,
+        "cost_of_cultivation_rs_per_acre": 35000,
+        "state_yields": {
+            "Kerala": 7500, "Karnataka": 6800, "Tamil Nadu": 6200,
+            "Andhra Pradesh": 5800, "Madhya Pradesh": 5000
+        },
+        "agronomy_reference": "Yields from DES; pH per IISR ginger guidelines."
+    },
+    {
+        "crop": "Sesame",
+        "seasons": ["Kharif"],
+        "min_ph": 5.5, "max_ph": 8.0,
+        "water_requirement": "low",
+        "minimum_investment_rupees_per_acre": 15000,
+        "minimum_n": 20, "minimum_p": 15, "minimum_k": 15,
+        "reference_yield_kg_per_acre": 800,
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 40,
+        "optimal_rainfall_mm": 300,
+        "demand_score_base": 45,
+        "national_avg_price_rs_per_quintal": 7000,
+        "cost_of_cultivation_rs_per_acre": 12000,
+        "state_yields": {
+            "Rajasthan": 950, "Madhya Pradesh": 850, "Gujarat": 800,
+            "Andhra Pradesh": 750, "Maharashtra": 700
+        },
+        "agronomy_reference": "Yields from DES; pH per oilseed agronomy."
+    },
+    {
+        "crop": "Castor",
+        "seasons": ["Kharif"],
+        "min_ph": 5.5, "max_ph": 8.0,
+        "water_requirement": "low",
+        "minimum_investment_rupees_per_acre": 20000,
+        "minimum_n": 25, "minimum_p": 20, "minimum_k": 20,
+        "reference_yield_kg_per_acre": 1000,
+        "ideal_temp_min_c": 25, "ideal_temp_max_c": 35,
+        "optimal_rainfall_mm": 400,
+        "demand_score_base": 50,
+        "national_avg_price_rs_per_quintal": 4500,
+        "cost_of_cultivation_rs_per_acre": 16000,
+        "state_yields": {
+            "Gujarat": 1200, "Rajasthan": 1100, "Andhra Pradesh": 950,
+            "Madhya Pradesh": 900, "Maharashtra": 850
+        },
+        "agronomy_reference": "Yields from DES; pH per ICAR-DOR."
     }
 ]

@@ -7,6 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.db.session import Base
 
+
 class Farmer(Base):
     __tablename__ = "farmers"
 
@@ -17,17 +18,14 @@ class Farmer(Base):
     district: Mapped[str] = mapped_column(String(160), nullable=False)
     state: Mapped[str] = mapped_column(String(80), nullable=True)
 
-#? Automatically generates a timestamp on the database server when a new record is created
-
     created_at: Mapped["TIMESTAMP"] = mapped_column(
-        TIMESTAMP(timezone=True), server_default = func.now(), nullable =False
+        TIMESTAMP(timezone=True), server_default=func.now(), nullable=False
     )
-    
-    #? Links the Farmer table to the Farms table (One-to-Many: one farmer can own multiple farms)
-    farms: Mapped[list['Farms']] = relationship(back_populates="farmer")
-    
-    #? Links the Farmer table to the CropRecommendation table (One-to-Many: one farmer can have multiple recommendations)
+
+    # FIX: was 'Farms' (plural), must be 'Farm' (singular) to match class name
+    farms: Mapped[list["Farm"]] = relationship(back_populates="farmer")
     crop_recommendations: Mapped[list["CropRecommendation"]] = relationship(back_populates="farmer")
+
 
 class Farm(Base):
     __tablename__ = "farms"
@@ -107,4 +105,3 @@ class ExternalDataCache(Base):
         TIMESTAMP(timezone=True), server_default=func.now(), nullable=False
     )
     expires_at: Mapped["TIMESTAMP"] = mapped_column(TIMESTAMP(timezone=True), nullable=False)
-
