@@ -104,7 +104,7 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
                 isScrolled ? 'text-xl sm:text-2xl' : 'text-2xl lg:text-3xl'
               }`}
             >
-              <span>Agrovia.</span>
+              <span>AgriOptimaᴬᴵ.</span>
             </a>
           </div>
 

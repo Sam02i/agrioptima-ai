@@ -257,7 +257,7 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
 
                   <div className="hidden sm:block">
                     <span className="inline-flex items-center px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-semibold">
-                      Live Telemetry
+                      Farm Conditions
                     </span>
                   </div>
                 </div>

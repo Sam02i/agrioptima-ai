@@ -37,7 +37,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
             {mode === 'login' ? 'Grower & Buyer Portal' : 'Create Farm Account'}
           </h3>
           <p className="text-gray-500 text-xs mt-1">
-            Access live field telemetry, forward contracts, and automated yield records.
+            Access farm records, produce listings, quality checks, buyer tools, and shipment information.
           </p>
         </div>
 

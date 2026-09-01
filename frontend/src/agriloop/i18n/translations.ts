@@ -60,14 +60,14 @@ export const translations = {
     nav_how_it_works: 'How it Works',
     nav_impact: 'Our Impact',
     nav_stories: 'Stories',
-    nav_live_telemetry: 'Live Telemetry',
+    nav_live_telemetry: 'Farm Conditions',
     nav_login: 'Log In',
     nav_get_started: 'Get Started',
     nav_language: 'Language',
     nav_select_language: 'Select Language',
     session_active: 'Active Session',
     session_connected: 'Field Telemetry Connected',
-    session_open: 'Open Live Telemetry',
+    session_open: 'Open Farm Conditions',
     session_logout: 'Log Out',
 
     // Hero
@@ -88,7 +88,7 @@ export const translations = {
     intro_btn_explore: 'Explore Platform',
 
     // Features Grid (Solutions)
-    features_badge: 'About Agrovia',
+    features_badge: 'About AgriOptimaᴬᴵ',
     features_title_line1: 'Smart Solutions for',
     features_title_line2: 'Modern Farming',
     features_desc:
@@ -115,7 +115,7 @@ export const translations = {
     features_card5_stats: '99.4% Grading Accuracy',
 
     // Unique Core Solutions
-    unique_badge: 'About Agrovia',
+    unique_badge: 'About AgriOptimaᴬᴵ',
     unique_title_line1: 'Smart Farming Solutions',
     unique_title_line2: 'That Deliver Real Results',
     unique_desc:
@@ -168,7 +168,7 @@ export const translations = {
     stories_badge: 'Verified Partner Reviews',
     stories_title: 'Trusted by Growers, Co-Ops & Buyers Worldwide',
     stories_desc:
-      'Discover how smallholders, enterprise cooperatives, and institutional food distributors achieve higher profitability and zero-dispute trade with Agrovia.',
+      'Discover how smallholders, enterprise cooperatives, and institutional food distributors achieve higher profitability and zero-dispute trade with AgriOptimaᴬᴵ.',
     stories_trust1: '100% Verified Farm & Buyer Profiles',
     stories_trust2: 'Zero Dispute Dual-Gate Quality Settlement',
     stories_trust3: '4.9 / 5.0 Average Agronomy Rating',
@@ -184,8 +184,8 @@ export const translations = {
     footer_cta_subtitle: 'stronger, and simpler',
     footer_cta_desc: 'Straightforward answers to help you make confident decisions for your farm. Join the network today.',
     footer_btn_contact: 'Contact Us',
-    footer_brand_desc: 'Agrovia empowers farmers with smart tools for better yields and sustainable growth.',
-    footer_tagline: 'Agrovia empowers farmers with smart tools for better yields and sustainable growth.',
+    footer_brand_desc: 'AgriOptimaᴬᴵ empowers farmers with smart tools for better yields and sustainable growth.',
+    footer_tagline: 'AgriOptimaᴬᴵ empowers farmers with smart tools for better yields and sustainable growth.',
     footer_social: 'Social Media',
     footer_col_links: 'Quick Links',
     footer_col_company: 'Company',

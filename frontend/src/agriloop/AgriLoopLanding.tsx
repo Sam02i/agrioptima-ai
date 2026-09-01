@@ -16,7 +16,6 @@ import { Footer } from './components/Footer';
 
 // Modals
 import { FarmPlanModal } from './components/FarmPlanModal';
-import { DemoModal } from './components/DemoModal';
 import { ContactModal } from './components/ContactModal';
 import { AuthModal } from './components/AuthModal';
 import { LegalModal } from './components/LegalModal';
@@ -33,7 +32,6 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
   // Modal states
   const [farmPlanOpen, setFarmPlanOpen] = useState(false);
   const [farmPlanInitialStep, setFarmPlanInitialStep] = useState(1);
-  const [demoModalOpen, setDemoModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'terms' | 'privacy' | null>(null);
@@ -46,8 +44,7 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
   };
 
   const handleSelectFeature = (feature: FeatureCard) => {
-    // When a feature card is clicked, open the interactive demo / live simulation or plan builder
-    setDemoModalOpen(true);
+    setPortalChoiceOpen(true);
   };
 
   const handleAuthSuccess = (roleName: string) => {
@@ -105,7 +102,7 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
         <StoriesSection onOpenStoryDetail={(name) => setContactModalOpen(true)} />
 
         {/* 6. Impact Metrics Section ("Our Growing Impact" 10k+, 500+, $50M, 95%) */}
-        <ImpactMetrics onExploreImpact={() => setDemoModalOpen(true)} />
+        <ImpactMetrics onExploreImpact={() => setPortalChoiceOpen(true)} />
       </main>
 
       {/* Footer */}
@@ -114,7 +111,7 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
         onOpenTerms={() => setLegalModalType('terms')}
         onOpenContact={() => setContactModalOpen(true)}
         onOpenServices={(service) => {
-          setDemoModalOpen(true);
+          setPortalChoiceOpen(true);
         }}
       />
 
@@ -130,11 +127,6 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
         onClose={() => setPortalChoiceOpen(false)}
         onFarmer={onFarmer}
         onBuyer={onBuyer}
-      />
-
-      <DemoModal
-        isOpen={demoModalOpen}
-        onClose={() => setDemoModalOpen(false)}
       />
 
       <ContactModal

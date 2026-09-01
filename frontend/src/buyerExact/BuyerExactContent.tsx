@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ArrowDownRight,
   ArrowLeft,
@@ -15,7 +16,6 @@ import {
   Clock3,
   CreditCard,
   FileCheck2,
-  Handshake,
   LayoutDashboard,
   Leaf,
   MapPin,
@@ -51,6 +51,7 @@ import LogisticsOptimizerPanel from '../components/LogisticsOptimizerPanel';
 
 type Seller = {
   id: string;
+  farmerId?: string;
   crop: string;
   name: string;
   location: string;
@@ -62,7 +63,22 @@ type Seller = {
   distance: number;
   delivery: string;
   image: string;
+  grade?: string;
+  packaging?: string;
+  harvest?: string;
 };
+const cropPhotoModules=import.meta.glob('../assets/marketplace/crops/*.{jpg,png}',{eager:true,query:'?url',import:'default'}) as Record<string,string>;
+const cropSlugs:Record<string,string>={
+  'apple':'apple','arhar (tur)':'arhar-tur','bajra':'bajra','banana':'banana','barley':'barley','brinjal':'brinjal','cabbage':'cabbage','cauliflower':'cauliflower','chana':'chana','chili':'chili','coriander':'coriander','cotton':'cotton','cumin (jeera)':'cumin','garlic':'garlic','ginger':'ginger','grapes':'grapes','groundnut':'groundnut','guava':'guava','jowar':'jowar','jute':'jute','maize':'maize','mango':'mango','masoor':'masoor','moong':'moong','mustard':'mustard','okra (bhindi)':'okra','onion':'onion','orange (kinnow)':'orange','papaya':'papaya','peas':'peas','pomegranate':'pomegranate','potato':'potato','rice':'rice','sesame (til)':'sesame','soybean':'soybean','sugarcane':'sugarcane','sunflower':'sunflower','tomato':'tomato','turmeric':'turmeric','urad':'urad','wheat':'wheat'
+};
+function marketplacePhoto(crop:string){const slug=cropSlugs[crop.trim().toLowerCase()];return cropPhotoModules[`../assets/marketplace/crops/${slug}.png`]||cropPhotoModules[`../assets/marketplace/crops/${slug}.jpg`]||cropVisual(crop,'Verified produce')}
+function cropVisual(crop: string, farmer: string, index = 0) {
+  const key=crop.toLowerCase();
+  const emoji=key.includes('apple')?'🍎':key.includes('tomato')?'🍅':key.includes('onion')?'🧅':key.includes('orange')||key.includes('kinnow')?'🍊':key.includes('potato')?'🥔':key.includes('maize')?'🌽':key.includes('chilli')?'🌶️':key.includes('groundnut')?'🥜':key.includes('turmeric')?'🫚':key.includes('cotton')?'☁️':key.includes('jute')?'🌿':'🌾';
+  const palettes=[['#dceacb','#79985d'],['#f1ddc4','#a77550'],['#d8e7df','#59806d'],['#eee1b8','#a68a3e'],['#e3dced','#796b91']]; const [light,dark]=palettes[index%palettes.length];
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="${light}"/><stop offset="1" stop-color="${dark}"/></linearGradient></defs><rect width="900" height="520" fill="url(#g)"/><circle cx="450" cy="220" r="155" fill="#fff" opacity=".4"/><text x="450" y="285" text-anchor="middle" font-size="190">${emoji}</text><rect x="215" y="426" width="470" height="55" rx="28" fill="#153e2c" opacity=".92"/><text x="450" y="461" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="white">${crop} · ${farmer}</text></svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
 const sellers: Seller[] = [
   {
     id: 'demo-1',
@@ -115,7 +131,6 @@ const nav = [
   ['Marketplace', Store],
   ['Smart procurement', Sparkles],
   ['Orders', ShoppingBasket],
-  ['Shipments', Truck],
   ['Produce passports', FileCheck2],
   ['Credit', WalletCards],
   ['Suppliers', Users],
@@ -135,11 +150,12 @@ function Brand() {
       <span>
         <Leaf />
       </span>
-      AgriOptima
+      AgriOptimaᴬᴵ
     </div>
   );
 }
-function Header({ menu, onHome, onFarmer }: { menu: () => void; onHome: () => void; onFarmer: () => void }) {
+function Header({ menu, onHome, onFarmer, buyer, buyers, changeBuyer }: { menu: () => void; onHome: () => void; onFarmer: () => void; buyer:string; buyers:string[]; changeBuyer:(id:string)=>void }) {
+  const buyerNumber=buyer.replace('BUYER_','');
   return (
     <header className="topbar">
       <button className="mobile-menu" onClick={menu}>
@@ -151,6 +167,7 @@ function Header({ menu, onHome, onFarmer }: { menu: () => void; onHome: () => vo
         <kbd>⌘ K</kbd>
       </div>
       <div className="top-actions">
+        <select className="buyer-data-switch" value={buyer} onChange={e=>changeBuyer(e.target.value)} aria-label="Choose buyer profile">{buyers.map(id=><option key={id} value={id}>{id}</option>)}</select>
         <div className="exact-portal-switch">
           <button onClick={onHome}>Home</button>
           <button onClick={onFarmer}>Farmer portal</button>
@@ -159,10 +176,10 @@ function Header({ menu, onHome, onFarmer }: { menu: () => void; onHome: () => vo
           <Bell />
           <i />
         </button>
-        <span className="avatar">AM</span>
+        <span className="avatar">B{buyerNumber.slice(-1)}</span>
         <div className="person">
-          <b>Arjun Mehta</b>
-          <small>Procurement lead</small>
+          <b>{buyer}</b>
+          <small>Verified buyer profile</small>
         </div>
         <ChevronDown />
       </div>
@@ -174,11 +191,15 @@ function Sidebar({
   setActive,
   open,
   close,
+  buyer,
+  availableCredit,
 }: {
   active: string;
   setActive: (v: string) => void;
   open: boolean;
   close: () => void;
+  buyer:string;
+  availableCredit:number;
 }) {
   return (
     <aside className={`sidebar ${open ? 'open' : ''}`}>
@@ -189,9 +210,9 @@ function Sidebar({
         </button>
       </div>
       <div className="workspace">
-        <span>AM</span>
+        <span>B{buyer.slice(-1)}</span>
         <div>
-          <b>Mehta Foods</b>
+          <b>{buyer}</b>
           <small>Buyer workspace</small>
         </div>
         <ChevronDown />
@@ -217,8 +238,8 @@ function Sidebar({
           <CircleDollarSign />
           Procurement credit
         </div>
-        <strong>₹3,80,000</strong>
-        <small>Available of ₹5,00,000</small>
+        <strong>₹{Math.round(availableCredit).toLocaleString('en-IN')}</strong>
+        <small>Current profile availability</small>
         <Progress value={24}>
           <ProgressTrack>
             <ProgressIndicator />
@@ -256,17 +277,19 @@ function Overview({
   market,
   plan,
   openShipment,
+  buyer,
 }: {
   market: () => void;
   plan: () => void;
   openShipment: (id: string) => void;
+  buyer:string;
 }) {
   return (
     <div className="page dashboard-page">
       <section className="opening-hero">
         <div className="opening-copy">
           <span className="hero-label">
-            <Sparkles /> Buyer command center · Live
+            <Sparkles /> {buyer} command center · Live
           </span>
           <h1>
             Smarter procurement.
@@ -274,9 +297,8 @@ function Overview({
             <em>Stronger margins.</em>
           </h1>
           <p>
-            One intelligent workspace to discover verified supply, negotiate
-            fairly, optimize landed cost, and track every shipment from farm to
-            warehouse.
+            One intelligent workspace to discover verified supply, optimize
+            landed cost, and track every shipment from farm to warehouse.
           </p>
           <div className="opening-actions">
             <Button onClick={plan}>
@@ -400,10 +422,10 @@ function Overview({
               copy="ORD-2048 · Nashik → Mumbai"
             />
             <Alert
-              icon={Handshake}
+              icon={PackageCheck}
               tone="amber"
-              title="Counter offer received"
-              copy="Sahyadri Farms · ₹26.40/kg"
+              title="New verified supply available"
+              copy="Sahyadri Farms · 4.8T Grade A"
             />
             <Alert
               icon={WalletCards}
@@ -628,14 +650,22 @@ function Marketplace({
   toggle: (id: string) => void;
 }) {
   const [liveSellers,setLiveSellers]=useState<Seller[]>(sellers);
-  useEffect(()=>{Promise.all([fetch('http://127.0.0.1:8000/marketplace/listings').then((r)=>r.json()),fetch('http://127.0.0.1:8000/marketplace/farmers').then((r)=>r.json())]).then(([listingData,farmerData])=>{const farmersById=new Map((farmerData.farmers||[]).map((farmer:any)=>[farmer.farmer_id,farmer]));const rows=(listingData.listings||[]).map((listing:any,index:number)=>{const farmer:any=farmersById.get(listing.farmer_id)||{};const crop=listing.crop_name||'Produce';const palette=['#dfe8cf','#f2d7bd','#d6e7df','#eee0bd','#d8d8ef'];const emoji:Record<string,string>={tomato:'🍅',onion:'🧅',orange:'🍊',soybean:'🌱',cotton:'☁️'};const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520"><rect width="100%" height="100%" fill="${palette[index%palette.length]}"/><circle cx="450" cy="230" r="145" fill="#ffffff77"/><text x="450" y="285" text-anchor="middle" font-size="170">${emoji[crop.toLowerCase()]||'🌾'}</text><text x="450" y="455" text-anchor="middle" font-family="Arial" font-size="30" fill="#173f2b">${crop} · ${farmer.name||listing.farmer_name}</text></svg>`;return{id:String(listing.listing_id),crop,name:farmer.name||listing.farmer_name||'Verified farmer',location:`${listing.district}, ${listing.state}`,variety:`${listing.crop_variety||'Standard'} · ${listing.declared_grade||'Verified'}`,quantity:Number(listing.available_quantity_kg||listing.quantity_kg||0),price:Number(listing.price_per_kg||0),freshness:88+(index%10),reliability:90+(index%8),distance:45+index*13,delivery:index%2?'Tomorrow, 8 AM':'Today, 7 PM',image:`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`}});if(rows.length)setLiveSellers(rows)}).catch(()=>undefined)},[]);
+  const [showComparison,setShowComparison]=useState(false);
+  const [farmerDetail,setFarmerDetail]=useState<any>(null);
+  const [requirementOpen,setRequirementOpen]=useState(false);
+  const [requirementSent,setRequirementSent]=useState(false);
+  const [query,setQuery]=useState(''); const [nearOnly,setNearOnly]=useState(false); const [todayOnly,setTodayOnly]=useState(false); const [gradeOnly,setGradeOnly]=useState(false);
+  const openFarmer=async(id?:string)=>{if(!id)return;const response=await fetch(`http://127.0.0.1:8000/marketplace/farmers/${id}`);if(response.ok)setFarmerDetail(await response.json())};
+  useEffect(()=>{Promise.all([fetch('http://127.0.0.1:8000/marketplace/listings').then((r)=>r.json()),fetch('http://127.0.0.1:8000/marketplace/farmers').then((r)=>r.json())]).then(([listingData,farmerData])=>{const farmersById=new Map((farmerData.farmers||[]).map((farmer:any)=>[farmer.farmer_id,farmer]));const rows=(listingData.listings||[]).map((listing:any,index:number)=>{const farmer:any=farmersById.get(listing.farmer_id)||{};const crop=listing.crop_name||'Produce';const name=farmer.name||listing.farmer_name||'Verified farmer';const grade=String(listing.declared_grade||'GRADE_A').replace('GRADE_','Grade ');const supplied=String(listing.image_data||'');const usable=supplied.startsWith('data:image/')||supplied.startsWith('blob:');return{id:String(listing.listing_id),farmerId:String(listing.farmer_id),crop,name,location:`${listing.district}, ${listing.state}`,variety:`${listing.crop_variety||'Standard'} · ${grade}`,quantity:Number(listing.available_quantity_kg||listing.quantity_kg||0),grade,packaging:String(listing.packaging_type||'Crates').replaceAll('_',' '),harvest:String(listing.harvest_date||listing.expected_harvest_date||'Latest harvest'),price:Number(Number(listing.price_per_kg||0).toFixed(2)),freshness:88+(index%10),reliability:90+(index%8),distance:45+index*13,delivery:index%2?'Tomorrow, 8 AM':'Today, 7 PM',image:usable?supplied:marketplacePhoto(crop)}});if(rows.length)setLiveSellers(rows)}).catch(()=>undefined)},[]);
+  const visibleSellers=liveSellers.filter(s=>(!query||`${s.crop} ${s.name} ${s.location}`.toLowerCase().includes(query.toLowerCase()))&&(!nearOnly||s.distance<=150)&&(!todayOnly||s.delivery.startsWith('Today'))&&(!gradeOnly||s.variety.toLowerCase().includes('grade_a')||s.variety.toLowerCase().includes('grade a')));
+  const portalTarget=document.querySelector<HTMLElement>('.buyer-exact-host')?.shadowRoot||document.body;
   return (
     <div className="page">
       <Heading
         title="Available produce"
         copy="Compare true landed cost—not just the quoted price."
       >
-        <Button>
+        <Button onClick={()=>{setRequirementOpen(true);setRequirementSent(false)}}>
           <ShoppingBasket />
           Post requirement
         </Button>
@@ -643,26 +673,24 @@ function Marketplace({
       <section className="filters">
         <div className="search">
           <Search />
-          <input defaultValue="Tomato" />
+          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search crop, farmer, location…" />
         </div>
-        <button>
-          Grade A <ChevronDown />
+        <button type="button" aria-pressed={gradeOnly} className={gradeOnly?'active':''} onClick={()=>setGradeOnly(v=>!v)}>
+          {gradeOnly?'Grade A only':'All grades'} <ChevronDown />
         </button>
-        <button>
-          Within 150 km <ChevronDown />
+        <button type="button" aria-pressed={nearOnly} className={nearOnly?'active':''} onClick={()=>setNearOnly(v=>!v)}>
+          {nearOnly?'Within 150 km':'Any distance'} <ChevronDown />
         </button>
-        <button>
-          Harvested today <ChevronDown />
+        <button type="button" aria-pressed={todayOnly} className={todayOnly?'active':''} onClick={()=>setTodayOnly(v=>!v)}>
+          {todayOnly?'Available today':'Any delivery'} <ChevronDown />
         </button>
-        <span>{liveSellers.length} verified farmer listings</span>
+        <span>{visibleSellers.length} verified farmer listings</span>
       </section>
       <section className="seller-grid">
-        {liveSellers.map((s, i) => (
+        {visibleSellers.map((s, i) => (
           <article className="seller-card" key={s.id}>
-            <div
-              className="seller-img"
-              style={{ backgroundImage: `url(${s.image})` }}
-            >
+            <div className="seller-img">
+              <img src={s.image} alt={`${s.crop} offered by ${s.name}`} onError={(event)=>{event.currentTarget.src=cropVisual(s.crop,s.name,i)}} />
               <span>
                 <Zap />
                 {s.freshness}% fresh
@@ -677,8 +705,9 @@ function Marketplace({
             <div className="seller-body">
               <div className="seller-title">
                 <div>
-                  <span>{s.crop} · {s.variety}</span>
-                  <h2>{s.name}</h2>
+                  <span>{s.variety}</span>
+                  <h2>{s.crop}</h2>
+                  <small className="farmer-name">Sold by {s.name}</small>
                   <p>
                     <MapPin />
                     {s.location} · {s.distance} km
@@ -695,7 +724,8 @@ function Marketplace({
                   AI verified
                 </Badge>
                 <Badge variant="outline">Passport ready</Badge>
-                <Badge variant="outline">Grade A</Badge>
+                <Badge variant="outline">{s.grade||'Grade A'}</Badge>
+                <Badge variant="outline">{s.packaging||'Crates'}</Badge>
               </div>
               <div className="facts">
                 <span>
@@ -704,7 +734,7 @@ function Marketplace({
                 </span>
                 <span>
                   <small>Harvest</small>
-                  <b>Today, 5:30 AM</b>
+                  <b>{s.harvest||'Latest harvest'}</b>
                 </span>
                 <span>
                   <small>Delivery</small>
@@ -731,7 +761,7 @@ function Marketplace({
                 </div>
               )}
               <div className="seller-actions">
-                <Button variant="outline">View farmer</Button>
+                <Button variant="outline" onClick={()=>openFarmer(s.farmerId)}>View farmer</Button>
                 <Button onClick={() => toggle(s.id)}>{selected.includes(s.id)?'Added to plan':'Add to plan'}</Button>
               </div>
             </div>
@@ -744,11 +774,14 @@ function Marketplace({
             <b>{selected.length} sellers selected</b>
             <small>Select at least 2 to compare landed cost</small>
           </span>
-          <Button disabled={selected.length < 2}>
+          <Button disabled={selected.length < 2} onClick={()=>setShowComparison(true)}>
             Compare sellers <ArrowRight />
           </Button>
         </div>
       )}
+      {showComparison&&createPortal(<div className="comparison-overlay" onClick={()=>setShowComparison(false)}><section className="comparison-panel" onClick={e=>e.stopPropagation()}><button className="comparison-close" onClick={()=>setShowComparison(false)}><X/></button><span className="eyebrow">Side-by-side supplier comparison</span><h2>Compare selected farmers</h2><p>Price, freshness, reliability, distance, and estimated landed cost from the selected listings.</p><div className="comparison-grid">{liveSellers.filter(s=>selected.includes(s.id)).map(s=><article key={s.id}><img src={s.image} alt={s.crop}/><h3>{s.name}</h3><small>{s.crop} · {s.location}</small><dl><div><dt>Farmer price</dt><dd>₹{s.price}/kg</dd></div><div><dt>Est. landed cost</dt><dd>₹{(s.price+Math.max(1.2,s.distance*.025)).toFixed(2)}/kg</dd></div><div><dt>Freshness</dt><dd>{s.freshness}%</dd></div><div><dt>Reliability</dt><dd>{s.reliability}%</dd></div><div><dt>Distance</dt><dd>{s.distance} km</dd></div><div><dt>Available</dt><dd>{s.quantity.toLocaleString('en-IN')} kg</dd></div></dl></article>)}</div><Button onClick={()=>setShowComparison(false)}>Done</Button></section></div>,portalTarget)}
+      {farmerDetail&&createPortal(<div className="comparison-overlay" onClick={()=>setFarmerDetail(null)}><section className="farmer-detail-modal" onClick={e=>e.stopPropagation()}><button className="comparison-close" onClick={()=>setFarmerDetail(null)}><X/></button><span className="eyebrow">Verified farmer profile</span><h2>{farmerDetail.farmer.name}</h2><p><MapPin/> {farmerDetail.farmer.village}, {farmerDetail.farmer.district}, {farmerDetail.farmer.state}</p><div className="farmer-detail-grid">{farmerDetail.farms.map((farm:any)=><article key={farm.farm_id}><small>{farm.farm_name}</small><b>{farm.area_acres} acres</b><span>{farm.irrigation_type} irrigation · Soil pH {farm.ph??'—'}</span><span>N {farm.nitrogen??'—'} · P {farm.phosphorus??'—'} · K {farm.potassium??'—'}</span></article>)}</div><h3>Available produce</h3>{farmerDetail.listings.length?farmerDetail.listings.map((listing:any)=><div className="farmer-listing-row" key={listing.listing_id}><b>{listing.crop_name} · {listing.crop_variety}</b><span>{Number(listing.available_quantity_kg).toLocaleString('en-IN')} kg</span><strong>₹{listing.price_per_kg}/kg</strong></div>):<p>No active listings.</p>}<Button onClick={()=>{setFarmerDetail(null);setRequirementOpen(true)}}>Post requirement for this farmer</Button></section></div>,portalTarget)}
+      {requirementOpen&&createPortal(<div className="comparison-overlay" onClick={()=>setRequirementOpen(false)}><section className="requirement-modal" onClick={e=>e.stopPropagation()}><button className="comparison-close" onClick={()=>setRequirementOpen(false)}><X/></button><span className="eyebrow">Buyer requirement</span><h2>Post a produce requirement</h2>{requirementSent?<div className="requirement-success"><CheckCircle2/><b>Requirement posted</b><p>Matching farmers will appear in your procurement plan.</p><Button onClick={()=>setRequirementOpen(false)}>Done</Button></div>:<form onSubmit={e=>{e.preventDefault();setRequirementSent(true)}}><label>Crop<input required placeholder="Tomato, onion, wheat…"/></label><label>Quantity (kg)<input required type="number" min="1" placeholder="1000"/></label><label>Maximum price per kg<input required type="number" min="1" placeholder="30"/></label><label>Delivery location<input required placeholder="Mumbai warehouse"/></label><Button type="submit">Find matching farmers <ArrowRight/></Button></form>}</section></div>,portalTarget)}
     </div>
   );
 }
@@ -1347,8 +1380,8 @@ function Placeholder({ title }: { title: string }) {
         </span>
         <h2>{title} is ready for your demo journey</h2>
         <p>
-          Open Marketplace to select sellers, negotiate a rate, and build a
-          consolidated 10-tonne tomato plan.
+          Open Marketplace to select verified farmers and build a consolidated
+          produce sourcing plan.
         </p>
         <Button variant="outline">Explore sample records</Button>
       </section>
@@ -1458,9 +1491,15 @@ function Negotiation({ seller, close }: { seller: Seller; close: () => void }) {
 
 export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>void; onFarmer:()=>void }) {
   const [active, setActive] = useState('Overview');
+  const [buyers,setBuyers]=useState<string[]>([]);
+  const [buyer,setBuyer]=useState(()=>localStorage.getItem('agrioptima_buyer_id')||'BUYER_0000');
+  const [buyerProfile,setBuyerProfile]=useState<any>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [passport, setPassport] = useState<string | null>(null);
   const [menu, setMenu] = useState(false);
+  useEffect(()=>{fetch('http://127.0.0.1:8000/credit/buyers').then(r=>r.json()).then(d=>setBuyers(d.buyers||[])).catch(()=>setBuyers([]))},[]);
+  useEffect(()=>{fetch(`http://127.0.0.1:8000/credit/buyer/${buyer}/profile`).then(r=>r.json()).then(setBuyerProfile).catch(()=>setBuyerProfile(null))},[buyer]);
+  const changeBuyer=(id:string)=>{setBuyer(id);setSelected([]);setPassport(null);localStorage.setItem('agrioptima_buyer_id',id);window.dispatchEvent(new CustomEvent('agrioptima-buyer-change',{detail:id}))};
   let content: React.ReactNode;
   if (active === 'Overview')
     content = (
@@ -1468,6 +1507,7 @@ export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>voi
         market={() => setActive('Marketplace')}
         plan={() => setActive('Smart procurement')}
         openShipment={setPassport}
+        buyer={buyer}
       />
     );
   else if (active === 'Marketplace')
@@ -1482,7 +1522,7 @@ export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>voi
       />
     );
   else if (active === 'Smart procurement') content = <SmartPlan />;
-  else if (active === 'Orders' || active === 'Shipments') content = <OrdersPage openPassport={setPassport}/>;
+  else if (active === 'Orders') content = <OrdersPage openPassport={setPassport}/>;
   else if (active === 'Produce passports') content = <PassportsPage openPassport={setPassport}/>;
   else if (active === 'Credit') content = <CreditEnginePage/>;
   else if (active === 'Suppliers') content = <SupplierLogisticsPage/>;
@@ -1494,10 +1534,12 @@ export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>voi
         setActive={setActive}
         open={menu}
         close={() => setMenu(false)}
+        buyer={buyer}
+        availableCredit={Number(buyerProfile?.score?.available_limit||0)}
       />
       <div className="main">
-        <Header menu={() => setMenu(true)} onHome={onHome} onFarmer={onFarmer} />
-        {content}
+        <Header menu={() => setMenu(true)} onHome={onHome} onFarmer={onFarmer} buyer={buyer} buyers={buyers} changeBuyer={changeBuyer} />
+        <div key={buyer}>{content}</div>
       </div>
       {menu && <button className="overlay" onClick={() => setMenu(false)} />}{' '}
       {passport && (

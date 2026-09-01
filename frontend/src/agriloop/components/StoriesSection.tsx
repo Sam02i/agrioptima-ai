@@ -47,7 +47,7 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
       companyOrFarm: 'Henderson Valley Orchards',
       location: 'Yakima Valley, Washington',
       quote:
-        'Agrovia cut our irrigation energy bill by 38% in the first season while improving fruit brix sugar levels consistently across all blocks with zero manual guesswork.',
+        'AgriOptimaᴬᴵ cut our irrigation energy bill by 38% in the first season while improving fruit brix sugar levels consistently across all blocks with zero manual guesswork.',
       metric: '+38% Energy Savings',
       badge: 'Precision Agronomy',
       badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',
@@ -125,7 +125,7 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
       companyOrFarm: 'Apex Agri-Credit Fund',
       location: 'Denver, Colorado',
       quote:
-        'Agrovia’s procurement credit score is revolutionary. Real transactional history enables us to underwrite $150K working capital lines with a 98.2% on-time repayment rate.',
+        'AgriOptimaᴬᴵ’s procurement credit score is revolutionary. Real transactional history enables us to underwrite $150K working capital lines with a 98.2% on-time repayment rate.',
       metric: '98.2% Repayment Rate',
       badge: 'Fintech Credit',
       badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',

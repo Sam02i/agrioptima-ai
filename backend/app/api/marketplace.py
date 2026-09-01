@@ -3,6 +3,10 @@ from pathlib import Path
 import sqlite3
 
 from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel
+from datetime import datetime
+import uuid
+from app.adapters.data_gov_mandi import fetch_mandi_records
 
 router = APIRouter(prefix="/marketplace", tags=["Farmer Marketplace"])
 DB_PATH = Path(__file__).resolve().parents[2] / "data" / "farmer_marketplace.db"
@@ -11,9 +15,25 @@ DB_PATH = Path(__file__).resolve().parents[2] / "data" / "farmer_marketplace.db"
 def _connection():
     if not DB_PATH.exists():
         raise HTTPException(503, "Farmer marketplace data is unavailable")
-    connection = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
+    columns = {row[1] for row in connection.execute("PRAGMA table_info(crop_listings)")}
+    if "image_data" not in columns:
+        connection.execute("ALTER TABLE crop_listings ADD COLUMN image_data TEXT")
+        connection.commit()
     return connection
+
+
+class NewListing(BaseModel):
+    farmer_id: str
+    crop_name: str
+    crop_variety: str = "Local"
+    quantity_kg: float
+    price_per_kg: float
+    minimum_order_quantity_kg: float = 100
+    declared_grade: str = "GRADE_A"
+    packaging_type: str = "CRATE"
+    image_data: str | None = None
 
 
 @router.get("/summary")
@@ -97,7 +117,8 @@ def listings(crop: str | None = Query(default=None), status: str = "AVAILABLE"):
                cl.crop_name, cl.crop_variety, cl.quantity_kg, cl.available_quantity_kg,
                cl.price_per_kg, cl.minimum_order_quantity_kg, cl.harvest_date,
                cl.expected_harvest_date, cl.declared_grade, cl.packaging_type,
-               cl.listing_status, cl.latitude, cl.longitude, cl.district, cl.state
+               cl.listing_status, cl.latitude, cl.longitude, cl.district, cl.state,
+               cl.image_data
         FROM crop_listings cl JOIN farmers f ON f.id=cl.farmer_id
         WHERE cl.listing_status=?
     """
@@ -109,3 +130,62 @@ def listings(crop: str | None = Query(default=None), status: str = "AVAILABLE"):
     with _connection() as db:
         rows = [dict(row) for row in db.execute(sql, params)]
     return {"listings": rows, "count": len(rows)}
+
+
+@router.post("/listings", status_code=201)
+def create_listing(payload: NewListing):
+    if not DB_PATH.exists():
+        raise HTTPException(503, "Farmer marketplace data is unavailable")
+    db = sqlite3.connect(DB_PATH)
+    try:
+        columns = {row[1] for row in db.execute("PRAGMA table_info(crop_listings)")}
+        if "image_data" not in columns:
+            db.execute("ALTER TABLE crop_listings ADD COLUMN image_data TEXT")
+        farmer = db.execute("SELECT district, state FROM farmers WHERE id=?", (payload.farmer_id,)).fetchone()
+        farm = db.execute("SELECT id, latitude, longitude FROM farms WHERE farmer_id=? ORDER BY area_acres DESC LIMIT 1", (payload.farmer_id,)).fetchone()
+        if not farmer or not farm:
+            raise HTTPException(404, "Farmer or farm record not found")
+        listing_id = str(uuid.uuid4())
+        now = datetime.utcnow().isoformat()
+        db.execute("""INSERT INTO crop_listings
+            (id, farmer_id, farm_id, crop_name, crop_variety, quantity_kg, available_quantity_kg,
+             price_per_kg, minimum_order_quantity_kg, declared_grade, packaging_type, listing_status,
+             latitude, longitude, district, state, created_at, updated_at, image_data)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            (listing_id, payload.farmer_id, farm[0], payload.crop_name, payload.crop_variety,
+             payload.quantity_kg, payload.quantity_kg, payload.price_per_kg,
+             payload.minimum_order_quantity_kg, payload.declared_grade, payload.packaging_type,
+             "AVAILABLE", farm[1], farm[2], farmer[0], farmer[1], now, now, payload.image_data))
+        db.commit()
+        return {"listing_id": listing_id, "status": "AVAILABLE"}
+    finally:
+        db.close()
+
+
+@router.delete("/listings/{listing_id}")
+def remove_listing(listing_id: str, farmer_id: str = Query(...)):
+    """Remove a produce listing owned by the selected farmer."""
+    with _connection() as db:
+        listing = db.execute(
+            "SELECT id FROM crop_listings WHERE id=? AND farmer_id=?",
+            (listing_id, farmer_id),
+        ).fetchone()
+        if not listing:
+            raise HTTPException(404, "Listing was not found for this farmer")
+        db.execute("DELETE FROM crop_listings WHERE id=?", (listing_id,))
+        db.commit()
+    return {"listing_id": listing_id, "removed": True}
+@router.get("/mandi-prices")
+async def mandi_prices(crop: str = Query(..., min_length=2)):
+    result = await fetch_mandi_records(crop)
+    records = (result or {}).get("records", [])
+    prices = []
+    for row in records[:20]:
+        try:
+            modal = float(row.get("modal_price") or 0)
+        except (TypeError, ValueError):
+            continue
+        if modal > 0:
+            prices.append({"market": row.get("market") or row.get("market_name") or "Mandi", "district": row.get("district") or "", "modal_price": modal, "price_per_kg": round(modal / 100, 2), "arrival_date": row.get("arrival_date") or row.get("price_date")})
+    per_kg = [row["price_per_kg"] for row in prices]
+    return {"crop": crop, "prices": prices, "average_price_per_kg": round(sum(per_kg) / len(per_kg), 2) if per_kg else None, "minimum_price_per_kg": min(per_kg) if per_kg else None, "maximum_price_per_kg": max(per_kg) if per_kg else None, "source": "AGMARKNET via data.gov.in", "fetched_at": (result or {}).get("fetched_at")}

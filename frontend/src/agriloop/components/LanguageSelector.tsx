@@ -143,7 +143,7 @@ export function LanguageSelector({
               <Sparkles className="w-3 h-3 text-[#166534]" />
               Instant Translation
             </span>
-            <span className="font-mono text-gray-400">Agrovia i18n</span>
+            <span className="font-mono text-gray-400">AgriOptimaᴬᴵ i18n</span>
           </div>
         </div>
       )}

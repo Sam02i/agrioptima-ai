@@ -44,7 +44,6 @@ interface CreditPosition {
 }
 
 export default function CreditPanel() {
-  const [buyers, setBuyers] = useState<string[]>([]);
   const [selectedBuyer, setSelectedBuyer] = useState("");
   const [score, setScore] = useState<CreditScore | null>(null);
   const [features, setFeatures] = useState<CreditFeatures | null>(null);
@@ -54,12 +53,7 @@ export default function CreditPanel() {
   const [drawAmount, setDrawAmount] = useState("");
   const [repayAmount, setRepayAmount] = useState("");
 
-  useEffect(() => {
-    fetch(`${API}/credit/buyers`)
-      .then((r) => r.json())
-      .then((d) => setBuyers(d.buyers?.slice(0, 50) || []))
-      .catch(() => setBuyers(["BUYER_0000", "BUYER_0001", "BUYER_0010", "BUYER_0050", "BUYER_0100", "BUYER_0200", "BUYER_0300", "BUYER_0399"]));
-  }, []);
+  useEffect(()=>{const initial=localStorage.getItem('agrioptima_buyer_id')||'BUYER_0000';loadScore(initial);const handler=(event:Event)=>loadScore((event as CustomEvent<string>).detail);window.addEventListener('agrioptima-buyer-change',handler);return()=>window.removeEventListener('agrioptima-buyer-change',handler)},[]);
 
   const loadScore = async (bid: string) => {
     setLoading(true);
@@ -146,26 +140,6 @@ export default function CreditPanel() {
 
   return (
     <div className="space-y-6">
-      {/* Buyer selector */}
-      <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-sm font-semibold text-[#1a2e1a] mb-3">Select Buyer</h3>
-        <div className="flex flex-wrap gap-2">
-          {buyers.map((b) => (
-            <button
-              key={b}
-              onClick={() => loadScore(b)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                selectedBuyer === b
-                  ? "bg-[#2d5a3d] text-white"
-                  : "bg-gray-50 text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              {b}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {loading && (
         <div className="p-3 bg-[#e8f0eb] border border-[#c5d9be] rounded-xl text-[#2d5a3d] text-xs text-center">
           Loading credit assessment...
@@ -295,26 +269,26 @@ export default function CreditPanel() {
                   </div>
                 </div>
                 {/* Draw/Repay */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex gap-1">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 min-w-0">
                     <input
                       type="number"
                       placeholder="Draw amount"
                       value={drawAmount}
                       onChange={(e) => setDrawAmount(e.target.value)}
-                      className="flex-1 px-2 py-1.5 border border-gray-200 rounded-lg text-xs"
+                      className="min-w-0 w-full px-3 py-2 border border-gray-200 rounded-lg text-xs"
                     />
                     <button onClick={simulateDraw} className="px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs font-medium hover:bg-orange-600">
                       Draw
                     </button>
                   </div>
-                  <div className="flex gap-1">
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 min-w-0">
                     <input
                       type="number"
                       placeholder="Repay amount"
                       value={repayAmount}
                       onChange={(e) => setRepayAmount(e.target.value)}
-                      className="flex-1 px-2 py-1.5 border border-gray-200 rounded-lg text-xs"
+                      className="min-w-0 w-full px-3 py-2 border border-gray-200 rounded-lg text-xs"
                     />
                     <button onClick={simulateRepay} className="px-3 py-1.5 bg-green-500 text-white rounded-lg text-xs font-medium hover:bg-green-600">
                       Repay

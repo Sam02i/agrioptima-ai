@@ -1,4 +1,6 @@
 import { CapabilityItem, FeatureCard, StepItem, ImpactStat } from '../types';
+import landingFieldPlough from '../assets/images/landing-field-plough.jpeg';
+import landingRiceFarmer from '../assets/images/landing-rice-farmer.jpeg';
 
 export const HERO_BACKGROUND_IMAGE =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuCwjuk3Eug9vyc23MtLFSpN_jFO0hpMWyah-nuysD5u4ipslKvgbEvBIQt2OAZ8XFkMKqwgi29ayPfYoscUtGcTdqr0JZbP8TnH_m19OeaaXDIJ_JbKdxB_aPj9dgG_N2j_zWhGd6JzKtw2tcjJl7U2Txy-agPjvsndeZz2e5Q_58UbsvaWpPIGyjOmS-a0XsHCsAaWLjsJ74X-w8ignv2VMltaM7bIx2uf0eWbaBMfAIcO5MtoX90w';
@@ -68,11 +70,10 @@ export const FEATURES: FeatureCard[] = [
     title: 'Precision Crop Management',
     description:
       'Track soil, crops, and weather in real time for better decisions and higher yields.',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBhTDW7JLHxts8JsY9CVsOxqk1IrbtbW8ktC6sDkNTa7Yd1aFnb1OebcFhXXQp3jQuRjrUe6MHcxt1__Oq5LOt6Oy8c1uiEUvrLjls_Yo3T0c2qdbkLZUo6FGdmb15ScegATaakoj6n6yE0RzBhJ6_r0TP9xkdPix16-P2YCsFsBQjthbkftg-SO4c2WggSGwbL1Iw7s4Pz8YvczYZw9Bc-Ub3Jfne2IBcDjZx4wIyzqYwfAQYCACdd',
-    alt: 'Precision Crop Management farmer with tablet in field',
-    category: 'Telemetry & Analytics',
-    stats: '+32% Yield Efficiency'
+    image: landingFieldPlough,
+    alt: 'Indian farmer preparing a rice field with bullocks',
+    category: 'Farm & Soil Planning',
+    stats: 'Area-aware recommendations'
   },
   {
     id: 'spectral-quality',
@@ -90,11 +91,10 @@ export const FEATURES: FeatureCard[] = [
     title: 'Sustainable Agriculture',
     description:
       'Protect soil, conserve resources, and grow long term.',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBf7YS_3J6uFSwmMTchgY8V-KqNlCLFDxFcVD6__ZaNqYrPBkbPX8iqTS2FQrcxgORGqB_zjT3yeGekaS3hFNWkzr1ar3YZSkSso3Dt1l1ZU7loXsGjMiVWRBJCjN7GBe0VkfvN9hdaUqEL-DWINVMUSmm62WsXFmay6yM6dbYpiSUl7LpU5_nPE7Ax5J8UegnZvAc81lWQT1cvloQJO7Iqoqiim_jVyTghK-5DI78Qki0MO9n7uNZM',
-    alt: 'Sustainable Agriculture farmer with basket of fresh produce',
-    category: 'Soil Ecology',
-    stats: '100% Organic Compliance'
+    image: landingRiceFarmer,
+    alt: 'Indian farmer planting rice seedlings by hand',
+    category: 'Farmer Decision Support',
+    stats: 'Built around local farm data'
   }
 ];
 

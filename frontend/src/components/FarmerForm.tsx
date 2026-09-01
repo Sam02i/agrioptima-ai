@@ -109,7 +109,15 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
     e.preventDefault();
     const errs = validate();
     setErrors(errs);
-    if (errs.length === 0) onSubmit(form);
+    if (errs.length === 0) onSubmit({
+      ...form,
+      area_acres: Number(form.area_acres),
+      soil_ph: Number(form.soil_ph),
+      nitrogen: Number(form.nitrogen),
+      phosphorus: Number(form.phosphorus),
+      potassium: Number(form.potassium),
+      investment_budget_rupees: Math.max(1, Math.round(Number(form.investment_budget_rupees))),
+    });
   };
 
   const input = "w-full px-3 py-2 bg-[#f8faf6] border border-gray-200 rounded-xl text-[#1a2e1a] text-sm focus:outline-none focus:ring-2 focus:ring-[#4a8c6a]/30 focus:border-[#4a8c6a] transition-colors placeholder:text-gray-300";

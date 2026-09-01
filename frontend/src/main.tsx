@@ -1,6 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './fixes.css'
+import './nearby.css'
+import './buyerMarketplaceFixes.css'
+import './buyerInteractive.css'
 import App from './App.tsx'
 import { LanguageProvider } from './agriloop/i18n/LanguageContext'
 

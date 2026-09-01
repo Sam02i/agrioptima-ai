@@ -71,7 +71,8 @@ export async function getRecommendations(
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ detail: "Unknown error" }));
-    throw new Error(error.detail || `Request failed with status ${response.status}`);
+    const detail=Array.isArray(error.detail)?error.detail.map((item:any)=>`${item.loc?.slice(-1)[0]||"Field"}: ${item.msg}`).join(" · "):error.detail;
+    throw new Error(detail || `Request failed with status ${response.status}`);
   }
 
   return response.json();

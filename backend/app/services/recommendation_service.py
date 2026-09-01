@@ -34,6 +34,7 @@ async def build_recommendation(profile: dict) -> dict:
 
     eligible_crops = []
     rejected_crops = []
+    conditional_codes = {}
 
     # Step 1: run hard eligibility for every crop
     for crop in crops:
@@ -46,6 +47,39 @@ async def build_recommendation(profile: dict) -> dict:
             })
         else:
             eligible_crops.append(crop)
+
+    # Imported profiles cover many combinations that were not represented in
+    # the small prototype crop catalogue. Never return an empty recommendation
+    # screen: preserve the selected season, then rank the five crops requiring
+    # the fewest adjustments. Their constraints remain explicit warnings.
+    if len(eligible_crops) < 5:
+        candidates = []
+        existing_names = {crop["crop"] for crop in eligible_crops}
+        weights = {
+            "SOIL_PH_OUT_OF_RANGE": 4,
+            "INSUFFICIENT_IRRIGATION": 3,
+            "BUDGET_INSUFFICIENT": 2,
+            "BASIC_ROTATION_RULE": 1,
+        }
+        for crop in crops:
+            rejection = evaluate_eligibility(profile, crop)
+            if rejection and "SEASON_NOT_SUPPORTED" not in rejection.codes:
+                penalty = sum(weights.get(code, 5) for code in rejection.codes)
+                candidates.append((penalty, len(rejection.codes), crop["crop"], crop, rejection.codes))
+        if not candidates:
+            for crop in crops:
+                if crop["crop"] in existing_names:
+                    continue
+                rejection = evaluate_eligibility(profile, crop)
+                codes = rejection.codes if rejection else []
+                penalty = sum(weights.get(code, 8) for code in codes)
+                candidates.append((penalty, len(codes), crop["crop"], crop, codes))
+        candidates.sort(key=lambda item: (item[0], item[1], item[2]))
+        selected = candidates[:max(0, 5 - len(eligible_crops))]
+        eligible_crops.extend(item[3] for item in selected)
+        conditional_codes = {item[2]: item[4] for item in selected}
+        selected_names = set(conditional_codes)
+        rejected_crops = [row for row in rejected_crops if row["crop"] not in selected_names]
 
     # Step 2: fetch all live data in parallel
     has_coords = (
@@ -174,6 +208,14 @@ async def build_recommendation(profile: dict) -> dict:
         # Build reason codes and explanations
         reason_codes = []
         explanations = []
+
+        if crop_name in conditional_codes:
+            reason_codes.append("CONDITIONAL_RECOMMENDATION")
+            readable = ", ".join(code.replace("_", " ").lower() for code in conditional_codes[crop_name])
+            explanations.append(
+                f"This is the closest seasonal match for the connected farm profile. "
+                f"Review these manageable constraints before sowing: {readable}."
+            )
 
         # --- RAINFALL-AWARE REASONING ---
         rainfall_status = climate_context["rainfall_status"]
