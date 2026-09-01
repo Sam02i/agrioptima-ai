@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FarmerRecommendationRequest } from "../api/recommendations";
 import { getSoilForDistrict } from "../api/regions";
 
 type Props = {
   onSubmit: (payload: FarmerRecommendationRequest) => void;
   loading: boolean;
+  initialValues?: Partial<FarmerRecommendationRequest>;
 };
 
 const SEASONS = ["Kharif", "Rabi", "Zaid"] as const;
@@ -18,7 +19,7 @@ const CROPS = [
 
 const API = "http://127.0.0.1:8000";
 
-export default function FarmerForm({ onSubmit, loading }: Props) {
+export default function FarmerForm({ onSubmit, loading, initialValues }: Props) {
   const [form, setForm] = useState<FarmerRecommendationRequest>({
     name: "",
     village: "",
@@ -38,6 +39,7 @@ export default function FarmerForm({ onSubmit, loading }: Props) {
     investment_budget_rupees: 240000,
     sowing_period: "June-July",
   });
+  useEffect(()=>{if(initialValues)setForm((current)=>({...current,...initialValues}))},[initialValues]);
 
   const [errors, setErrors] = useState<string[]>([]);
   const [soilEstimate, setSoilEstimate] = useState(false);

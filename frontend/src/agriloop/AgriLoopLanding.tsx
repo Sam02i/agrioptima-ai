@@ -65,14 +65,8 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
       {loggedInUser && (
         <div className="bg-[#1b4332] text-white text-xs py-2 px-4 text-center flex items-center justify-center gap-3 sticky top-0 z-50">
           <span>
-            Active Session: <strong>{loggedInUser}</strong> (Field Telemetry Connected)
+            Active Session: <strong>{loggedInUser}</strong>
           </span>
-          <button
-            onClick={() => setDemoModalOpen(true)}
-            className="underline text-[#c4f042] hover:text-white cursor-pointer font-semibold"
-          >
-            Open Live Telemetry
-          </button>
           <button
             onClick={() => setLoggedInUser(null)}
             className="text-white/70 hover:text-white ml-2 cursor-pointer"
@@ -86,7 +80,6 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
       <Header
         onOpenGetStarted={() => handleOpenGetStarted(1)}
         onOpenLogin={() => setAuthModalOpen(true)}
-        onOpenLiveDashboard={() => setDemoModalOpen(true)}
       />
 
       {/* Main Content Sections */}
@@ -94,11 +87,10 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
         {/* 1. Hero Section with Background, Heading, and CTA */}
         <Hero
           onOpenGetStarted={() => handleOpenGetStarted(1)}
-          onOpenWatchDemo={() => setDemoModalOpen(true)}
         />
 
         {/* 2. Introduction Section ("Farming Made Smarter" / "Bringing Technology to Agriculture") */}
-        <Introduction onLearnMore={() => setDemoModalOpen(true)} />
+        <Introduction onLearnMore={() => handleOpenGetStarted(1)} />
 
         {/* 3. Features Grid Section ("Smart Solutions for Modern Farming") */}
         <FeaturesGrid onSelectFeature={handleSelectFeature} />

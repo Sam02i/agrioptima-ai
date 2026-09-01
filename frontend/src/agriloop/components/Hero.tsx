@@ -1,14 +1,13 @@
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { HERO_BACKGROUND_IMAGE } from '../data/content';
 import { BlurReveal } from './BlurReveal';
 import { useLanguage } from '../i18n/LanguageContext';
 
 interface HeroProps {
   onOpenGetStarted: () => void;
-  onOpenWatchDemo: () => void;
 }
 
-export function Hero({ onOpenGetStarted, onOpenWatchDemo }: HeroProps) {
+export function Hero({ onOpenGetStarted }: HeroProps) {
   const { t } = useLanguage();
 
   return (
@@ -77,14 +76,6 @@ export function Hero({ onOpenGetStarted, onOpenWatchDemo }: HeroProps) {
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
               </button>
 
-              <button
-                id="btn-hero-watch-demo"
-                onClick={onOpenWatchDemo}
-                className="inline-flex items-center justify-center px-8 py-3.5 border border-white/50 text-base font-medium rounded-full text-white hover:bg-white/15 hover:border-white/80 backdrop-blur-sm transition-all duration-200 cursor-pointer group"
-              >
-                <Play className="mr-2 w-4 h-4 fill-white/80 transition-transform group-hover:scale-110" />
-                <span>{t('hero_cta_watch_demo')}</span>
-              </button>
             </div>
           </BlurReveal>
         </div>
@@ -92,4 +83,3 @@ export function Hero({ onOpenGetStarted, onOpenWatchDemo }: HeroProps) {
     </section>
   );
 }
-

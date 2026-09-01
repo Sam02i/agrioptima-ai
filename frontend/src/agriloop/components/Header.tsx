@@ -1,15 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { LanguageSelector } from './LanguageSelector';
 
 interface HeaderProps {
   onOpenGetStarted: () => void;
   onOpenLogin: () => void;
-  onOpenLiveDashboard: () => void;
 }
 
-export function Header({ onOpenGetStarted, onOpenLogin, onOpenLiveDashboard }: HeaderProps) {
+export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
   const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -151,16 +150,6 @@ export function Header({ onOpenGetStarted, onOpenLogin, onOpenLiveDashboard }: H
               {t('nav_stories')}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1b4332] transition-all duration-200 group-hover:w-full"></span>
             </a>
-            <button
-              id="nav-btn-live-preview"
-              onClick={onOpenLiveDashboard}
-              className={`inline-flex items-center font-semibold rounded-full bg-[#f0fdf4]/90 text-[#166534] border border-[#bbf7d0] hover:bg-[#dcfce7] transition-all duration-200 cursor-pointer shadow-2xs ${
-                isScrolled ? 'text-[11px] px-2.5 py-0.5' : 'text-xs px-3 py-1'
-              }`}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] mr-1.5 animate-pulse"></span>
-              {t('nav_live_telemetry')}
-            </button>
           </nav>
 
           {/* Topbar Right Controls: Single Easy-Click Language Selector + CTAs */}
@@ -241,19 +230,6 @@ export function Header({ onOpenGetStarted, onOpenLogin, onOpenLiveDashboard }: H
           >
             {t('nav_stories')}
           </a>
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenLiveDashboard();
-            }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#166534] bg-[#f0fdf4] flex items-center justify-between border border-[#bbf7d0]"
-          >
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#22c55e]"></span>
-              {t('nav_live_telemetry')}
-            </span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
           <div className="pt-3 border-t border-gray-100 flex flex-col gap-2">
             <button
               onClick={() => {
@@ -279,5 +255,3 @@ export function Header({ onOpenGetStarted, onOpenLogin, onOpenLiveDashboard }: H
     </header>
   );
 }
-
-

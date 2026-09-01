@@ -45,9 +45,13 @@ import {
   ProgressIndicator,
   ProgressTrack,
 } from './ui/progress';
+import CreditPanel from '../components/CreditPanel';
+import FreshnessPanel from '../components/FreshnessPanel';
+import LogisticsOptimizerPanel from '../components/LogisticsOptimizerPanel';
 
 type Seller = {
-  id: number;
+  id: string;
+  crop: string;
   name: string;
   location: string;
   variety: string;
@@ -61,7 +65,8 @@ type Seller = {
 };
 const sellers: Seller[] = [
   {
-    id: 1,
+    id: 'demo-1',
+    crop: 'Tomato',
     name: 'Sahyadri Farms FPO',
     location: 'Nashik, Maharashtra',
     variety: 'Abhinav · Grade A',
@@ -75,7 +80,8 @@ const sellers: Seller[] = [
       'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=900&q=85',
   },
   {
-    id: 2,
+    id: 'demo-2',
+    crop: 'Tomato',
     name: 'Nashik Fresh Collective',
     location: 'Pimpalgaon, Maharashtra',
     variety: 'Arka Rakshak · Grade A',
@@ -89,7 +95,8 @@ const sellers: Seller[] = [
       'https://images.unsplash.com/photo-1561136594-7f68413baa99?auto=format&fit=crop&w=900&q=85',
   },
   {
-    id: 3,
+    id: 'demo-3',
+    crop: 'Tomato',
     name: 'Pragati Kisan Producer Co.',
     location: 'Sinnar, Maharashtra',
     variety: 'Himsona · Grade A',
@@ -107,7 +114,6 @@ const nav = [
   ['Overview', LayoutDashboard],
   ['Marketplace', Store],
   ['Smart procurement', Sparkles],
-  ['Negotiations', Handshake],
   ['Orders', ShoppingBasket],
   ['Shipments', Truck],
   ['Produce passports', FileCheck2],
@@ -203,7 +209,6 @@ function Sidebar({
           >
             <Icon />
             <span>{label}</span>
-            {label === 'Negotiations' && <em>3</em>}
           </button>
         ))}
       </nav>
@@ -618,12 +623,12 @@ function Shipment({
 function Marketplace({
   selected,
   toggle,
-  negotiate,
 }: {
-  selected: number[];
-  toggle: (id: number) => void;
-  negotiate: (s: Seller) => void;
+  selected: string[];
+  toggle: (id: string) => void;
 }) {
+  const [liveSellers,setLiveSellers]=useState<Seller[]>(sellers);
+  useEffect(()=>{Promise.all([fetch('http://127.0.0.1:8000/marketplace/listings').then((r)=>r.json()),fetch('http://127.0.0.1:8000/marketplace/farmers').then((r)=>r.json())]).then(([listingData,farmerData])=>{const farmersById=new Map((farmerData.farmers||[]).map((farmer:any)=>[farmer.farmer_id,farmer]));const rows=(listingData.listings||[]).map((listing:any,index:number)=>{const farmer:any=farmersById.get(listing.farmer_id)||{};const crop=listing.crop_name||'Produce';const palette=['#dfe8cf','#f2d7bd','#d6e7df','#eee0bd','#d8d8ef'];const emoji:Record<string,string>={tomato:'🍅',onion:'🧅',orange:'🍊',soybean:'🌱',cotton:'☁️'};const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520"><rect width="100%" height="100%" fill="${palette[index%palette.length]}"/><circle cx="450" cy="230" r="145" fill="#ffffff77"/><text x="450" y="285" text-anchor="middle" font-size="170">${emoji[crop.toLowerCase()]||'🌾'}</text><text x="450" y="455" text-anchor="middle" font-family="Arial" font-size="30" fill="#173f2b">${crop} · ${farmer.name||listing.farmer_name}</text></svg>`;return{id:String(listing.listing_id),crop,name:farmer.name||listing.farmer_name||'Verified farmer',location:`${listing.district}, ${listing.state}`,variety:`${listing.crop_variety||'Standard'} · ${listing.declared_grade||'Verified'}`,quantity:Number(listing.available_quantity_kg||listing.quantity_kg||0),price:Number(listing.price_per_kg||0),freshness:88+(index%10),reliability:90+(index%8),distance:45+index*13,delivery:index%2?'Tomorrow, 8 AM':'Today, 7 PM',image:`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`}});if(rows.length)setLiveSellers(rows)}).catch(()=>undefined)},[]);
   return (
     <div className="page">
       <Heading
@@ -649,10 +654,10 @@ function Marketplace({
         <button>
           Harvested today <ChevronDown />
         </button>
-        <span>3 verified matches</span>
+        <span>{liveSellers.length} verified farmer listings</span>
       </section>
       <section className="seller-grid">
-        {sellers.map((s, i) => (
+        {liveSellers.map((s, i) => (
           <article className="seller-card" key={s.id}>
             <div
               className="seller-img"
@@ -672,7 +677,7 @@ function Marketplace({
             <div className="seller-body">
               <div className="seller-title">
                 <div>
-                  <span>Tomato · {s.variety}</span>
+                  <span>{s.crop} · {s.variety}</span>
                   <h2>{s.name}</h2>
                   <p>
                     <MapPin />
@@ -726,8 +731,8 @@ function Marketplace({
                 </div>
               )}
               <div className="seller-actions">
-                <Button variant="outline">View details</Button>
-                <Button onClick={() => negotiate(s)}>Negotiate</Button>
+                <Button variant="outline">View farmer</Button>
+                <Button onClick={() => toggle(s.id)}>{selected.includes(s.id)?'Added to plan':'Add to plan'}</Button>
               </div>
             </div>
           </article>
@@ -1024,6 +1029,22 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
         confidence: '89%',
         risk: 'Moderate',
       }
+    : id === 'SHP-2050' ? {
+        produce: 'Orange',
+        variety: 'Nagpur Mandarin · Grade A',
+        qty: '3,200 kg',
+        seller: 'Vijay Deshmukh · Katol Citrus Grove',
+        origin: 'Katol, Nagpur',
+        current: 'Amravati Highway, Maharashtra',
+        truck: 'MH-31-FQ-1902',
+        driver: 'Amit Deshmukh',
+        eta: 'Tomorrow, 8:30 AM',
+        remaining: '612 km',
+        status: 'Dispatched',
+        freshness: 'Very fresh · Level 1',
+        confidence: '96%',
+        risk: 'Low',
+      }
     : {
         produce: 'Tomato',
         variety: 'Arka Rakshak · Grade A',
@@ -1296,6 +1317,23 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
   );
 }
 
+const buyerOrders=[
+  {id:'ORD-2041',shipment:'SHP-2041',crop:'Tomato',qty:'4,000 kg',supplier:'Nashik Fresh Collective',status:'In transit',eta:'Today, 2:10 PM',amount:'₹1,06,000'},
+  {id:'ORD-2043',shipment:'SHP-2043',crop:'Red Onion',qty:'2,500 kg',supplier:'Lasalgaon Farmer Producer Co.',status:'Delayed 35m',eta:'Today, 4:45 PM',amount:'₹62,500'},
+  {id:'ORD-2050',shipment:'SHP-2050',crop:'Orange',qty:'3,200 kg',supplier:'Vijay Deshmukh · Katol',status:'Dispatched',eta:'Tomorrow, 8:30 AM',amount:'₹1,12,000'},
+];
+
+function OrdersPage({openPassport}:{openPassport:(id:string)=>void}){
+  return <div className="page"><Heading title="Orders" copy="Track active procurement orders from farmer pickup to warehouse receipt."/><section className="order-list">{buyerOrders.map((order)=><button key={order.id} className="order-row" onClick={()=>openPassport(order.shipment)}><span className={`produce ${order.crop==='Tomato'?'tomato':'onion'}`}/><span><small>{order.id}</small><b>{order.qty} {order.crop}</b><small>{order.supplier}</small></span><span><small>Order value</small><b>{order.amount}</b></span><span><small>Status</small><b>{order.status}</b><small>{order.eta}</small></span><ArrowRight/></button>)}</section></div>
+}
+
+function PassportsPage({openPassport}:{openPassport:(id:string)=>void}){
+  return <div className="page"><Heading title="Produce passports" copy="Review current shipment passports and verify received quality with the freshness engine."/><section className="passport-order-grid">{buyerOrders.map((order)=><article key={order.id} className="passport-order-card"><span className="eyebrow">Digital produce passport</span><h2>{order.crop} · {order.qty}</h2><p>{order.shipment} · {order.supplier}</p><div><Badge><ShieldCheck/> Dispatch verified</Badge><Badge variant="outline">{order.status}</Badge></div><Button onClick={()=>openPassport(order.shipment)}>Open passport & tracking <ArrowRight/></Button></article>)}</section><section className="connected-engine"><div><span className="eyebrow">Receiving quality verification</span><h2>Upload received produce images</h2><p>The trained freshness engine grades the received shipment and provides confidence evidence before acceptance.</p></div><FreshnessPanel/></section></div>
+}
+
+function CreditEnginePage(){return <div className="page"><Heading title="Credit" copy="Live procurement-credit scores, limits, repayment behaviour, and risk evidence."/><section className="connected-engine"><CreditPanel/></section></div>}
+function SupplierLogisticsPage(){return <div className="page"><Heading title="Suppliers & logistics" copy="Use connected farmer pickups to compare direct, pooled, and collection-hub landed cost."/><section className="connected-engine"><LogisticsOptimizerPanel/></section></div>}
+
 function Placeholder({ title }: { title: string }) {
   return (
     <div className="page">
@@ -1420,8 +1458,7 @@ function Negotiation({ seller, close }: { seller: Seller; close: () => void }) {
 
 export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>void; onFarmer:()=>void }) {
   const [active, setActive] = useState('Overview');
-  const [selected, setSelected] = useState<number[]>([]);
-  const [negotiating, setNegotiating] = useState<Seller | null>(null);
+  const [selected, setSelected] = useState<string[]>([]);
   const [passport, setPassport] = useState<string | null>(null);
   const [menu, setMenu] = useState(false);
   let content: React.ReactNode;
@@ -1442,10 +1479,13 @@ export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>voi
             v.includes(id) ? v.filter((x) => x !== id) : [...v, id],
           )
         }
-        negotiate={setNegotiating}
       />
     );
   else if (active === 'Smart procurement') content = <SmartPlan />;
+  else if (active === 'Orders' || active === 'Shipments') content = <OrdersPage openPassport={setPassport}/>;
+  else if (active === 'Produce passports') content = <PassportsPage openPassport={setPassport}/>;
+  else if (active === 'Credit') content = <CreditEnginePage/>;
+  else if (active === 'Suppliers') content = <SupplierLogisticsPage/>;
   else content = <Placeholder title={active} />;
   return (
     <main className="app">
@@ -1460,9 +1500,6 @@ export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>voi
         {content}
       </div>
       {menu && <button className="overlay" onClick={() => setMenu(false)} />}{' '}
-      {negotiating && (
-        <Negotiation seller={negotiating} close={() => setNegotiating(null)} />
-      )}{' '}
       {passport && (
         <DigitalPassport id={passport} close={() => setPassport(null)} />
       )}
