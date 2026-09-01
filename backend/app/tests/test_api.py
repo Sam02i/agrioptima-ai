@@ -68,7 +68,9 @@ def _fake_mandi(commodity: str, district: str | None = None):
 def test_health_check(_mandi, _nasa, _weather):
     response = client.get("/health")
     assert response.status_code == 200
-    assert response.json() == {"status": "ok"}
+    data = response.json()
+    assert data["status"] == "ok"
+    assert "services" in data
 
 
 @patch("app.services.recommendation_service.fetch_open_meteo", new_callable=AsyncMock, return_value=FAKE_WEATHER)
@@ -224,3 +226,74 @@ def test_crop_recommend_includes_farmer_id(_mandi, _nasa, _weather):
     assert "farmer_id" in data
     assert data["farmer_id"] is not None
     assert data["farmer_id"].startswith("FARMER_")
+
+
+def test_credit_buyers_returns_selectable_buyers():
+    response = client.get("/credit/buyers")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["count"] > 0
+    assert data["buyers"]
+    assert all(buyer.startswith("BUYER_") for buyer in data["buyers"])
+
+    score_response = client.get(f"/credit/buyer/{data['buyers'][0]}/score")
+    assert score_response.status_code == 200
+    assert score_response.json()["buyer_id"] == data["buyers"][0]
+
+
+def test_supplier_ranking_scores_and_rejects_candidates():
+    response = client.post("/ranking/score", json={
+        "rfq": {
+            "crop_name": "Tomato", "required_quantity": 1000,
+            "minimum_quality_grade": "B", "maximum_acceptable_price": 32,
+        },
+        "candidates": [
+            {"lot_id": "LOT_1", "farmer_name": "Asha Farms", "crop_name": "Tomato",
+             "price_per_unit": 28, "available_quantity": 1200, "quality_grade": "A",
+             "farmer_reliability": 90},
+            {"lot_id": "LOT_2", "farmer_name": "Costly Farms", "crop_name": "Tomato",
+             "price_per_unit": 40, "available_quantity": 1200, "quality_grade": "A"},
+        ],
+    })
+    assert response.status_code == 200
+    results = response.json()["results"]
+    assert results[0]["eligible"] is True
+    assert results[0]["ranking_score"] > 0
+    assert results[1]["eligible"] is False
+    assert "maximum" in results[1]["rejection_reason"]
+
+
+@patch("agrioptima.logistics.routing.get_distance_km_osrm", return_value=None)
+def test_logistics_buyer_quote_compares_models(_osrm):
+    response = client.post("/logistics/buyer-quote", json={
+        "crop": "tomato", "farmer_price_per_kg": 25,
+        "farmers": [
+            {"name": "Farmer A", "quantity_kg": 3000, "latlon": [30.90, 75.85], "price_per_kg": 22, "reliability_score": 91},
+            {"name": "Farmer B", "quantity_kg": 3000, "latlon": [30.95, 75.90], "price_per_kg": 24, "reliability_score": 88},
+        ],
+        "buyer": {"name": "Azadpur Mandi", "latlon": [28.70, 77.16]},
+        "collection_hub": {"name": "Ludhiana Hub", "latlon": [30.80, 75.80]},
+        "max_landed_cost_per_kg": 35,
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data["logistics_result"]["models"]) == 3
+    assert data["logistics_result"]["recommended_model"]["name"].startswith("MODEL_")
+    assert data["buyer_quote"]["final_buyer_cost"] > 0
+    assert data["buyer_quote"]["final_cost_per_kg"] > 25
+
+
+def test_marketplace_exposes_imported_farmer_data():
+    summary = client.get("/marketplace/summary")
+    assert summary.status_code == 200
+    assert summary.json()["farmer_count"] == 3
+    assert summary.json()["available_listing_count"] == 5
+
+    farmers = client.get("/marketplace/farmers")
+    assert farmers.status_code == 200
+    assert farmers.json()["count"] == 3
+    assert all("phone" not in farmer for farmer in farmers.json()["farmers"])
+
+    listings = client.get("/marketplace/listings")
+    assert listings.status_code == 200
+    assert listings.json()["count"] == 5

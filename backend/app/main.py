@@ -7,25 +7,43 @@ from app.services.persistence import persist_recommendation
 from app.db.session import SessionLocal
 from app.api.farmers import router as farmers_router
 from app.api.pincode import router as pincode_router
+from app.api.credit import router as credit_router
+from app.api.freshness import router as freshness_router
+from app.api.ranking import router as ranking_router
+from app.api.logistics import router as logistics_router
+from app.api.marketplace import router as marketplace_router
 
-app = FastAPI(title="AgriOptima AI — Team 1 Farmer Intelligence", version="1.0.0")
+app = FastAPI(
+    title="AgriOptima AI Platform",
+    version="2.0.0",
+    description="Integrated agricultural intelligence: crop recommendation, credit scoring, freshness assessment, and supplier ranking."
+)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=["*"],
     allow_credentials=False,
-    allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
+    allow_methods=["GET", "POST", "PUT", "PATCH"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
-# Include API routers
-app.include_router(farmers_router)
-app.include_router(pincode_router)
+# ── Routers ──
+app.include_router(farmers_router)       # /farmers/*, /farms/*
+app.include_router(pincode_router)       # /api/v1/pincode/*
+app.include_router(credit_router)        # /credit/*
+app.include_router(freshness_router)     # /freshness/*
+app.include_router(ranking_router)       # /ranking/*
+app.include_router(logistics_router)     # /logistics/*
+app.include_router(marketplace_router)   # /marketplace/*
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "ok", "version": "2.0.0", "services": [
+        "crop_recommendation", "pincode_lookup", "credit_scoring",
+        "freshness_assessment", "supplier_ranking", "logistics_optimization",
+        "buyer_cost_quote", "farmer_marketplace"
+    ]}
 
 
 # Canonical route (PRD section 33.4)
