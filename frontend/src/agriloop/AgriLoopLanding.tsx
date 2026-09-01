@@ -20,12 +20,13 @@ import { DemoModal } from './components/DemoModal';
 import { ContactModal } from './components/ContactModal';
 import { AuthModal } from './components/AuthModal';
 import { LegalModal } from './components/LegalModal';
+import { PortalChoiceModal } from './components/PortalChoiceModal';
 
 import { FeatureCard } from './types';
 
 interface AgriLoopLandingProps {
   onBuyer: () => void;
-  onFarmer: () => void;
+  onFarmer: (farmerId?: string) => void;
 }
 
 export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingProps) {
@@ -36,11 +37,12 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'terms' | 'privacy' | null>(null);
+  const [portalChoiceOpen, setPortalChoiceOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
 
   const handleOpenGetStarted = (step: number = 1) => {
     setFarmPlanInitialStep(step);
-    setFarmPlanOpen(true);
+    setPortalChoiceOpen(true);
   };
 
   const handleSelectFeature = (feature: FeatureCard) => {
@@ -129,6 +131,13 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
         isOpen={farmPlanOpen}
         initialStep={farmPlanInitialStep}
         onClose={() => setFarmPlanOpen(false)}
+      />
+
+      <PortalChoiceModal
+        isOpen={portalChoiceOpen}
+        onClose={() => setPortalChoiceOpen(false)}
+        onFarmer={onFarmer}
+        onBuyer={onBuyer}
       />
 
       <DemoModal
