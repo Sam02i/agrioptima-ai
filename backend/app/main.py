@@ -51,6 +51,16 @@ app.include_router(soil_router)          # /soil/*
 app.include_router(trade_router)         # /trade/*
 
 
+@app.get("/")
+def root():
+    return {
+        "name": "AgriOptima AI API",
+        "status": "online",
+        "health": "/health",
+        "documentation": "/docs",
+    }
+
+
 @app.get("/health")
 def health():
     return {"status": "ok", "version": "2.0.0", "services": [

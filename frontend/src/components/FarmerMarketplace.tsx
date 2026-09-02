@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 type Farmer = { farmer_id: string; name: string; state: string; district: string; village: string; preferred_language: string; profile_status: string; farm_count: number; listing_count: number; total_area_acres: number; crops: string[] };
 type Listing = { listing_id: string; farmer_id: string; farmer_name: string; crop_name: string; crop_variety: string; available_quantity_kg: number; price_per_kg: number; minimum_order_quantity_kg: number; harvest_date?: string; expected_harvest_date?: string; declared_grade: string; packaging_type?: string; district: string; state: string; image_data?: string };
 type Detail = { farmer: Farmer; farms: Array<Record<string, string | number | null>>; needs: Record<string, string | number | boolean | null> | null; listings: Listing[] };

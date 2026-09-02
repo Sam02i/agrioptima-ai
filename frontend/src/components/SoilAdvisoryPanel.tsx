@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 type FertilizerOption={fertilizer:string;quantity:number;unit:string;benefit:string};
 type Advisory={soil_health_score:number;summary:string;source:string;district?:string;estimated?:boolean;ph:{value:number;status:string};nutrients:Array<{name:string;value:number;target:number;status:string;gap:number}>;missing_nutrients:string[];fertilizer_plan:Array<{fertilizer:string;quantity:number;unit:string;purpose:string;timing:string}>;fertilizer_options?:Array<{nutrient:string;options:FertilizerOption[]}>;advisory_note:string};
 

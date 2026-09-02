@@ -1,8 +1,9 @@
-cat > .gitignore << 'EOF'
 # Python
 backend/.agrioptima-ai/
 backend/__pycache__/
 backend/.pytest_cache/
+backend/data/soil_cards/
+backend/data/*.db
 *.pyc
 
 # Secrets
@@ -18,5 +19,3 @@ frontend/dist/
 # OS/editor
 .DS_Store
 .vscode/settings.json
-EOF 
-# End of File

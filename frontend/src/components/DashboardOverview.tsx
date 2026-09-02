@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 type Summary = { farmer_count: number; farm_count: number; available_listing_count: number; available_quantity_kg: number; crop_count: number; crops: Array<{ crop_name: string; available_kg: number; average_price_per_kg: number }> };
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 type Farmer = { name: string; quantity_kg: number; price_per_kg: number; reliability_score: number; lat: number; lon: number };
 type ModelDetail = { model: string; total_cost: number; cost_per_kg: number; eta_hours: number; trips_required: number; handling_points: number; weight_utilisation_pct: number; vehicle?: string; main_vehicle?: string; route_distance_km?: number; total_route_distance_km?: number };

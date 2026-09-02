@@ -18,6 +18,8 @@ export type FarmerRecommendationRequest = {
   sowing_period: string;
 };
 
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
 export type RecommendationItem = {
   crop: string;
   opportunity_score: number;
@@ -63,7 +65,7 @@ export type RecommendationResponse = {
 export async function getRecommendations(
   payload: FarmerRecommendationRequest
 ): Promise<RecommendationResponse> {
-  const response = await fetch("http://127.0.0.1:8000/crop/recommend", {
+  const response = await fetch(`${API}/crop/recommend`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
