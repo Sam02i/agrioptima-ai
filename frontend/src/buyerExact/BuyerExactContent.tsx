@@ -95,36 +95,6 @@ const sellers: Seller[] = [
     image:
       'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=900&q=85',
   },
-  {
-    id: 'demo-2',
-    crop: 'Tomato',
-    name: 'Nashik Fresh Collective',
-    location: 'Pimpalgaon, Maharashtra',
-    variety: 'Arka Rakshak · Grade A',
-    quantity: 4000,
-    price: 26.5,
-    freshness: 91,
-    reliability: 93,
-    distance: 96,
-    delivery: 'Tomorrow, 8 AM',
-    image:
-      'https://images.unsplash.com/photo-1561136594-7f68413baa99?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    id: 'demo-3',
-    crop: 'Tomato',
-    name: 'Pragati Kisan Producer Co.',
-    location: 'Sinnar, Maharashtra',
-    variety: 'Himsona · Grade A',
-    quantity: 3000,
-    price: 27.8,
-    freshness: 97,
-    reliability: 98,
-    distance: 61,
-    delivery: 'Today, 5:30 PM',
-    image:
-      'https://images.unsplash.com/photo-1546470427-e26264be0b0d?auto=format&fit=crop&w=900&q=85',
-  },
 ];
 const nav = [
   ['Overview', LayoutDashboard],
@@ -136,12 +106,12 @@ const nav = [
   ['Suppliers', Users],
 ] as const;
 const stats = [
-  ['Available sellers', '248', '+18 this week', Store, 'green'],
-  ['Active orders', '12', '4 need attention', ShoppingBasket, 'blue'],
-  ['In transit', '07', '2 arriving today', Truck, 'amber'],
-  ['Monthly procurement', '₹42.8L', '128.4 tonnes', Box, 'green'],
-  ['Average saving', '8.4%', '₹3.92L saved', ArrowDownRight, 'blue'],
-  ['Credit available', '₹3.8L', 'of ₹5L limit', CreditCard, 'lime'],
+  ['Available sellers', '1', 'Complete demo farmer', Store, 'green'],
+  ['Active orders', '1', 'Single tracked example', ShoppingBasket, 'blue'],
+  ['In transit', '1', 'Arriving today', Truck, 'amber'],
+  ['Demo procurement', '₹1.06L', '4 tonnes', Box, 'green'],
+  ['Landed-cost view', 'Ready', 'One verified route', ArrowDownRight, 'blue'],
+  ['Buyer profile', '1', 'Credit history retained', CreditCard, 'lime'],
 ] as const;
 
 function Brand() {
@@ -442,20 +412,20 @@ function Overview({
             <Sparkles /> Procurement intelligence
           </span>
           <h2>
-            Fulfil your 10T tomato requirement with <em>3 verified sellers.</em>
+            Review one complete procurement example with <em>one verified seller.</em>
           </h2>
           <p>
-            Clubbed logistics keeps freshness risk low while reducing landed
-            cost by ₹1.40/kg.
+            Follow the same farmer lot from marketplace selection through quality,
+            credit, shipment tracking, and receipt.
           </p>
           <div className="opp-stats">
             <span>
               <small>Expected landed cost</small>
-              <b>₹28.70/kg</b>
+              <b>₹27.00/kg</b>
             </span>
             <span>
               <small>Potential saving</small>
-              <b>₹14,000</b>
+              <b>Single example</b>
             </span>
             <span>
               <small>Delivery</small>
@@ -483,19 +453,10 @@ function Overview({
           <Shipment
             crop="Tomato"
             qty="4,000 kg"
-            order="ORD-2048 · Nashik Fresh"
+            order="ORD-2041 · Ramesh Prajapati"
             status="In transit"
             eta="ETA 2:10 PM"
-            onClick={() => openShipment('SHP-2048')}
-          />
-          <Shipment
-            crop="Red Onion"
-            qty="2,500 kg"
-            order="ORD-2043 · Lasalgaon FPO"
-            status="Delayed 35m"
-            eta="ETA 4:45 PM"
-            delay
-            onClick={() => openShipment('SHP-2043')}
+            onClick={() => openShipment('SHP-2041')}
           />
         </article>
         <article className="panel quality">
@@ -645,17 +606,21 @@ function Shipment({
 function Marketplace({
   selected,
   toggle,
+  buyer,
 }: {
   selected: string[];
   toggle: (id: string) => void;
+  buyer: string;
 }) {
   const [liveSellers,setLiveSellers]=useState<Seller[]>(sellers);
   const [showComparison,setShowComparison]=useState(false);
   const [farmerDetail,setFarmerDetail]=useState<any>(null);
   const [requirementOpen,setRequirementOpen]=useState(false);
   const [requirementSent,setRequirementSent]=useState(false);
+  const [orderNotice,setOrderNotice]=useState('');
   const [query,setQuery]=useState(''); const [nearOnly,setNearOnly]=useState(false); const [todayOnly,setTodayOnly]=useState(false); const [gradeOnly,setGradeOnly]=useState(false);
   const openFarmer=async(id?:string)=>{if(!id)return;const response=await fetch(`http://127.0.0.1:8000/marketplace/farmers/${id}`);if(response.ok)setFarmerDetail(await response.json())};
+  const createOrder=async(s:Seller)=>{const entered=window.prompt(`How many kg of ${s.crop} do you want to order?`,String(Math.min(1000,s.quantity)));if(!entered)return;const quantity=Number(entered);if(!Number.isFinite(quantity)||quantity<=0){setOrderNotice('Enter a valid quantity.');return}setOrderNotice('Creating saved order…');const response=await fetch('http://127.0.0.1:8000/trade/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({listing_id:s.id,buyer_id:buyer,quantity_kg:quantity,destination:'Buyer warehouse'})});const result=await response.json();if(!response.ok){setOrderNotice(result.detail||'Order could not be created.');return}setOrderNotice(`${result.id} created. It is now visible to the farmer and in Orders.`);window.dispatchEvent(new CustomEvent('agrioptima-order-change',{detail:result.id}))};
   useEffect(()=>{Promise.all([fetch('http://127.0.0.1:8000/marketplace/listings').then((r)=>r.json()),fetch('http://127.0.0.1:8000/marketplace/farmers').then((r)=>r.json())]).then(([listingData,farmerData])=>{const farmersById=new Map((farmerData.farmers||[]).map((farmer:any)=>[farmer.farmer_id,farmer]));const rows=(listingData.listings||[]).map((listing:any,index:number)=>{const farmer:any=farmersById.get(listing.farmer_id)||{};const crop=listing.crop_name||'Produce';const name=farmer.name||listing.farmer_name||'Verified farmer';const grade=String(listing.declared_grade||'GRADE_A').replace('GRADE_','Grade ');const supplied=String(listing.image_data||'');const usable=supplied.startsWith('data:image/')||supplied.startsWith('blob:');return{id:String(listing.listing_id),farmerId:String(listing.farmer_id),crop,name,location:`${listing.district}, ${listing.state}`,variety:`${listing.crop_variety||'Standard'} · ${grade}`,quantity:Number(listing.available_quantity_kg||listing.quantity_kg||0),grade,packaging:String(listing.packaging_type||'Crates').replaceAll('_',' '),harvest:String(listing.harvest_date||listing.expected_harvest_date||'Latest harvest'),price:Number(Number(listing.price_per_kg||0).toFixed(2)),freshness:88+(index%10),reliability:90+(index%8),distance:45+index*13,delivery:index%2?'Tomorrow, 8 AM':'Today, 7 PM',image:usable?supplied:marketplacePhoto(crop)}});if(rows.length)setLiveSellers(rows)}).catch(()=>undefined)},[]);
   const visibleSellers=liveSellers.filter(s=>(!query||`${s.crop} ${s.name} ${s.location}`.toLowerCase().includes(query.toLowerCase()))&&(!nearOnly||s.distance<=150)&&(!todayOnly||s.delivery.startsWith('Today'))&&(!gradeOnly||s.variety.toLowerCase().includes('grade_a')||s.variety.toLowerCase().includes('grade a')));
   const portalTarget=document.querySelector<HTMLElement>('.buyer-exact-host')?.shadowRoot||document.body;
@@ -687,6 +652,7 @@ function Marketplace({
         <span>{visibleSellers.length} verified farmer listings</span>
       </section>
       <section className="seller-grid">
+        {orderNotice&&<div className="requirement-success" role="status"><b>{orderNotice}</b></div>}
         {visibleSellers.map((s, i) => (
           <article className="seller-card" key={s.id}>
             <div className="seller-img">
@@ -762,7 +728,7 @@ function Marketplace({
               )}
               <div className="seller-actions">
                 <Button variant="outline" onClick={()=>openFarmer(s.farmerId)}>View farmer</Button>
-                <Button onClick={() => toggle(s.id)}>{selected.includes(s.id)?'Added to plan':'Add to plan'}</Button>
+                <Button onClick={() => createOrder(s)}>Create order</Button>
               </div>
             </div>
           </article>
@@ -779,7 +745,7 @@ function Marketplace({
           </Button>
         </div>
       )}
-      {showComparison&&createPortal(<div className="comparison-overlay" onClick={()=>setShowComparison(false)}><section className="comparison-panel" onClick={e=>e.stopPropagation()}><button className="comparison-close" onClick={()=>setShowComparison(false)}><X/></button><span className="eyebrow">Side-by-side supplier comparison</span><h2>Compare selected farmers</h2><p>Price, freshness, reliability, distance, and estimated landed cost from the selected listings.</p><div className="comparison-grid">{liveSellers.filter(s=>selected.includes(s.id)).map(s=><article key={s.id}><img src={s.image} alt={s.crop}/><h3>{s.name}</h3><small>{s.crop} · {s.location}</small><dl><div><dt>Farmer price</dt><dd>₹{s.price}/kg</dd></div><div><dt>Est. landed cost</dt><dd>₹{(s.price+Math.max(1.2,s.distance*.025)).toFixed(2)}/kg</dd></div><div><dt>Freshness</dt><dd>{s.freshness}%</dd></div><div><dt>Reliability</dt><dd>{s.reliability}%</dd></div><div><dt>Distance</dt><dd>{s.distance} km</dd></div><div><dt>Available</dt><dd>{s.quantity.toLocaleString('en-IN')} kg</dd></div></dl></article>)}</div><Button onClick={()=>setShowComparison(false)}>Done</Button></section></div>,portalTarget)}
+      {showComparison&&createPortal(<div className="comparison-overlay" role="dialog" aria-modal="true" aria-label="Seller comparison" onClick={()=>setShowComparison(false)}><section className="comparison-panel" onClick={e=>e.stopPropagation()}><button type="button" aria-label="Close seller comparison" className="comparison-close" onClick={()=>setShowComparison(false)}><X/></button><span className="eyebrow">Side-by-side supplier comparison</span><h2>Compare selected produce</h2><p>Price, freshness, reliability, distance, and estimated landed cost from the selected listings.</p><div className="comparison-grid">{liveSellers.filter(s=>selected.includes(s.id)).map(s=><article key={s.id}><img src={s.image} alt={s.crop}/><h3>{s.crop}</h3><small>{s.variety} · Sold by {s.name}<br/>{s.location}</small><dl><div><dt>Farmer price</dt><dd>₹{s.price}/kg</dd></div><div><dt>Est. landed cost</dt><dd>₹{(s.price+Math.max(1.2,s.distance*.025)).toFixed(2)}/kg</dd></div><div><dt>Freshness</dt><dd>{s.freshness}%</dd></div><div><dt>Reliability</dt><dd>{s.reliability}%</dd></div><div><dt>Distance</dt><dd>{s.distance} km</dd></div><div><dt>Available</dt><dd>{s.quantity.toLocaleString('en-IN')} kg</dd></div></dl></article>)}</div><Button onClick={()=>setShowComparison(false)}>Done</Button></section></div>,portalTarget)}
       {farmerDetail&&createPortal(<div className="comparison-overlay" onClick={()=>setFarmerDetail(null)}><section className="farmer-detail-modal" onClick={e=>e.stopPropagation()}><button className="comparison-close" onClick={()=>setFarmerDetail(null)}><X/></button><span className="eyebrow">Verified farmer profile</span><h2>{farmerDetail.farmer.name}</h2><p><MapPin/> {farmerDetail.farmer.village}, {farmerDetail.farmer.district}, {farmerDetail.farmer.state}</p><div className="farmer-detail-grid">{farmerDetail.farms.map((farm:any)=><article key={farm.farm_id}><small>{farm.farm_name}</small><b>{farm.area_acres} acres</b><span>{farm.irrigation_type} irrigation · Soil pH {farm.ph??'—'}</span><span>N {farm.nitrogen??'—'} · P {farm.phosphorus??'—'} · K {farm.potassium??'—'}</span></article>)}</div><h3>Available produce</h3>{farmerDetail.listings.length?farmerDetail.listings.map((listing:any)=><div className="farmer-listing-row" key={listing.listing_id}><b>{listing.crop_name} · {listing.crop_variety}</b><span>{Number(listing.available_quantity_kg).toLocaleString('en-IN')} kg</span><strong>₹{listing.price_per_kg}/kg</strong></div>):<p>No active listings.</p>}<Button onClick={()=>{setFarmerDetail(null);setRequirementOpen(true)}}>Post requirement for this farmer</Button></section></div>,portalTarget)}
       {requirementOpen&&createPortal(<div className="comparison-overlay" onClick={()=>setRequirementOpen(false)}><section className="requirement-modal" onClick={e=>e.stopPropagation()}><button className="comparison-close" onClick={()=>setRequirementOpen(false)}><X/></button><span className="eyebrow">Buyer requirement</span><h2>Post a produce requirement</h2>{requirementSent?<div className="requirement-success"><CheckCircle2/><b>Requirement posted</b><p>Matching farmers will appear in your procurement plan.</p><Button onClick={()=>setRequirementOpen(false)}>Done</Button></div>:<form onSubmit={e=>{e.preventDefault();setRequirementSent(true)}}><label>Crop<input required placeholder="Tomato, onion, wheat…"/></label><label>Quantity (kg)<input required type="number" min="1" placeholder="1000"/></label><label>Maximum price per kg<input required type="number" min="1" placeholder="30"/></label><label>Delivery location<input required placeholder="Mumbai warehouse"/></label><Button type="submit">Find matching farmers <ArrowRight/></Button></form>}</section></div>,portalTarget)}
     </div>
@@ -1351,17 +1317,16 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
 }
 
 const buyerOrders=[
-  {id:'ORD-2041',shipment:'SHP-2041',crop:'Tomato',qty:'4,000 kg',supplier:'Nashik Fresh Collective',status:'In transit',eta:'Today, 2:10 PM',amount:'₹1,06,000'},
-  {id:'ORD-2043',shipment:'SHP-2043',crop:'Red Onion',qty:'2,500 kg',supplier:'Lasalgaon Farmer Producer Co.',status:'Delayed 35m',eta:'Today, 4:45 PM',amount:'₹62,500'},
-  {id:'ORD-2050',shipment:'SHP-2050',crop:'Orange',qty:'3,200 kg',supplier:'Vijay Deshmukh · Katol',status:'Dispatched',eta:'Tomorrow, 8:30 AM',amount:'₹1,12,000'},
+  {id:'ORD-2041',shipment:'SHP-2041',crop:'Orange (Kinnow)',qty:'4,799 kg',supplier:'Ramesh Prajapati · Chandraganj',status:'In transit',eta:'Today, 2:10 PM',amount:'₹1,31,110'},
 ];
 
-function OrdersPage({openPassport}:{openPassport:(id:string)=>void}){
-  return <div className="page"><Heading title="Orders" copy="Track active procurement orders from farmer pickup to warehouse receipt."/><section className="order-list">{buyerOrders.map((order)=><button key={order.id} className="order-row" onClick={()=>openPassport(order.shipment)}><span className={`produce ${order.crop==='Tomato'?'tomato':'onion'}`}/><span><small>{order.id}</small><b>{order.qty} {order.crop}</b><small>{order.supplier}</small></span><span><small>Order value</small><b>{order.amount}</b></span><span><small>Status</small><b>{order.status}</b><small>{order.eta}</small></span><ArrowRight/></button>)}</section></div>
+function useBuyerOrders(buyer:string){const [orders,setOrders]=useState<any[]>([]);useEffect(()=>{const load=()=>fetch(`http://127.0.0.1:8000/trade/orders?buyer_id=${encodeURIComponent(buyer)}`).then(r=>r.ok?r.json():Promise.reject()).then(d=>setOrders(d.orders||[])).catch(()=>setOrders([]));load();window.addEventListener('agrioptima-order-change',load);return()=>window.removeEventListener('agrioptima-order-change',load)},[buyer]);return orders}
+function OrdersPage({buyer,openPassport}:{buyer:string;openPassport:(id:string)=>void}){
+  const orders=useBuyerOrders(buyer);return <div className="page"><Heading title="Orders" copy="Track the same saved order and shipment record visible to the farmer."/><section className="order-list">{orders.map((order)=><button key={order.id} className="order-row" onClick={()=>openPassport(order.shipment?.id)}><span className="produce onion"/><span><small>{order.id}</small><b>{Number(order.quantity_kg).toLocaleString('en-IN')} kg {order.crop}</b><small>{order.farmer_id} · {order.shipment?.origin}</small></span><span><small>Order value</small><b>₹{Number(order.total_amount).toLocaleString('en-IN')}</b></span><span><small>Status</small><b>{String(order.shipment?.status||order.status).replaceAll('_',' ')}</b><small>{order.shipment?.eta}</small></span><ArrowRight/></button>)}</section></div>
 }
 
-function PassportsPage({openPassport}:{openPassport:(id:string)=>void}){
-  return <div className="page"><Heading title="Produce passports" copy="Review current shipment passports and verify received quality with the freshness engine."/><section className="passport-order-grid">{buyerOrders.map((order)=><article key={order.id} className="passport-order-card"><span className="eyebrow">Digital produce passport</span><h2>{order.crop} · {order.qty}</h2><p>{order.shipment} · {order.supplier}</p><div><Badge><ShieldCheck/> Dispatch verified</Badge><Badge variant="outline">{order.status}</Badge></div><Button onClick={()=>openPassport(order.shipment)}>Open passport & tracking <ArrowRight/></Button></article>)}</section><section className="connected-engine"><div><span className="eyebrow">Receiving quality verification</span><h2>Upload received produce images</h2><p>The trained freshness engine grades the received shipment and provides confidence evidence before acceptance.</p></div><FreshnessPanel/></section></div>
+function PassportsPage({buyer,openPassport}:{buyer:string;openPassport:(id:string)=>void}){
+  const orders=useBuyerOrders(buyer);return <div className="page"><Heading title="Produce passports" copy="Review current shipment passports and verify received quality with the freshness engine."/><section className="passport-order-grid">{orders.map((order)=><article key={order.id} className="passport-order-card"><span className="eyebrow">Digital produce passport</span><h2>{order.crop} · {Number(order.quantity_kg).toLocaleString('en-IN')} kg</h2><p>{order.shipment?.id} · {order.farmer_id}</p><div><Badge><ShieldCheck/> {order.passport?.dispatch_verified?'Dispatch verified':'Awaiting dispatch check'}</Badge><Badge variant="outline">{String(order.shipment?.status||order.status).replaceAll('_',' ')}</Badge></div><Button onClick={()=>openPassport(order.shipment?.id)}>Open passport & tracking <ArrowRight/></Button></article>)}</section><section className="connected-engine"><div><span className="eyebrow">Receiving quality verification</span><h2>Upload received produce images</h2><p>The trained freshness engine grades the received shipment and provides confidence evidence before acceptance.</p></div><FreshnessPanel/></section></div>
 }
 
 function CreditEnginePage(){return <div className="page"><Heading title="Credit" copy="Live procurement-credit scores, limits, repayment behaviour, and risk evidence."/><section className="connected-engine"><CreditPanel/></section></div>}
@@ -1492,12 +1457,12 @@ function Negotiation({ seller, close }: { seller: Seller; close: () => void }) {
 export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>void; onFarmer:()=>void }) {
   const [active, setActive] = useState('Overview');
   const [buyers,setBuyers]=useState<string[]>([]);
-  const [buyer,setBuyer]=useState(()=>localStorage.getItem('agrioptima_buyer_id')||'BUYER_0000');
+  const [buyer,setBuyer]=useState(()=>localStorage.getItem('agrioptima_buyer_id')||'BUYER_0002');
   const [buyerProfile,setBuyerProfile]=useState<any>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [passport, setPassport] = useState<string | null>(null);
   const [menu, setMenu] = useState(false);
-  useEffect(()=>{fetch('http://127.0.0.1:8000/credit/buyers').then(r=>r.json()).then(d=>setBuyers(d.buyers||[])).catch(()=>setBuyers([]))},[]);
+  useEffect(()=>{fetch('http://127.0.0.1:8000/credit/buyers').then(r=>r.json()).then(d=>{const available:string[]=d.buyers||[];setBuyers(available);if(available.length&&!available.includes(buyer))changeBuyer(available[0])}).catch(()=>setBuyers([]))},[]);
   useEffect(()=>{fetch(`http://127.0.0.1:8000/credit/buyer/${buyer}/profile`).then(r=>r.json()).then(setBuyerProfile).catch(()=>setBuyerProfile(null))},[buyer]);
   const changeBuyer=(id:string)=>{setBuyer(id);setSelected([]);setPassport(null);localStorage.setItem('agrioptima_buyer_id',id);window.dispatchEvent(new CustomEvent('agrioptima-buyer-change',{detail:id}))};
   let content: React.ReactNode;
@@ -1513,6 +1478,7 @@ export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>voi
   else if (active === 'Marketplace')
     content = (
       <Marketplace
+        buyer={buyer}
         selected={selected}
         toggle={(id) =>
           setSelected((v) =>
@@ -1522,8 +1488,8 @@ export default function BuyerExactContent({ onHome, onFarmer }: { onHome:()=>voi
       />
     );
   else if (active === 'Smart procurement') content = <SmartPlan />;
-  else if (active === 'Orders') content = <OrdersPage openPassport={setPassport}/>;
-  else if (active === 'Produce passports') content = <PassportsPage openPassport={setPassport}/>;
+  else if (active === 'Orders') content = <OrdersPage buyer={buyer} openPassport={setPassport}/>;
+  else if (active === 'Produce passports') content = <PassportsPage buyer={buyer} openPassport={setPassport}/>;
   else if (active === 'Credit') content = <CreditEnginePage/>;
   else if (active === 'Suppliers') content = <SupplierLogisticsPage/>;
   else content = <Placeholder title={active} />;

@@ -53,7 +53,7 @@ export default function CreditPanel() {
   const [drawAmount, setDrawAmount] = useState("");
   const [repayAmount, setRepayAmount] = useState("");
 
-  useEffect(()=>{const initial=localStorage.getItem('agrioptima_buyer_id')||'BUYER_0000';loadScore(initial);const handler=(event:Event)=>loadScore((event as CustomEvent<string>).detail);window.addEventListener('agrioptima-buyer-change',handler);return()=>window.removeEventListener('agrioptima-buyer-change',handler)},[]);
+  useEffect(()=>{const initial=localStorage.getItem('agrioptima_buyer_id')||'BUYER_0002';loadScore(initial);const handler=(event:Event)=>loadScore((event as CustomEvent<string>).detail);window.addEventListener('agrioptima-buyer-change',handler);return()=>window.removeEventListener('agrioptima-buyer-change',handler)},[]);
 
   const loadScore = async (bid: string) => {
     setLoading(true);

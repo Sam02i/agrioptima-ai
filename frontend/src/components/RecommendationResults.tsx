@@ -2,6 +2,7 @@ import type { RecommendationResponse, RecommendationItem, RejectedCrop, ClimateC
 
 type Props = {
   data: RecommendationResponse;
+  currentCrop?: string;
 };
 
 function ScoreBar({ label, value }: { label: string; value: number }) {
@@ -176,10 +177,13 @@ function ClimateInsight({ ctx }: { ctx: ClimateContext }) {
   );
 }
 
-export default function RecommendationResults({ data }: Props) {
+export default function RecommendationResults({ data, currentCrop }: Props) {
+  const chosen=data.recommendations.find(item=>item.crop.toLowerCase()===currentCrop?.toLowerCase());
+  const chosenRejected=data.rejected.find(item=>item.crop.toLowerCase()===currentCrop?.toLowerCase());
+  const alternatives=data.recommendations.filter(item=>item!==chosen).slice(0,3);
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-[#1a2e1a] mb-2 text-center">Recommendations</h2>
+      <h2 className="text-2xl font-semibold text-[#1a2e1a] mb-2 text-center">My current crop plan</h2>
       <div className="flex justify-center gap-6 text-sm text-gray-500 mb-6 flex-wrap">
         <span>Season: <strong>{data.season}</strong></span>
         <span>Weather: <strong>{data.data_status.weather}</strong></span>
@@ -192,24 +196,14 @@ export default function RecommendationResults({ data }: Props) {
       {data.climate_context && <ClimateInsight ctx={data.climate_context} />}
 
       <div className="mb-10">
-        <p className="text-xs tracking-[0.1em] text-gray-400 uppercase mb-4">Recommended Crops ({data.recommendations.length})</p>
+        <p className="text-xs tracking-[0.1em] text-gray-400 uppercase mb-4">Plan for {currentCrop||"your selected crop"}</p>
         <div className="space-y-4">
-          {data.recommendations.map((rec, i) => (
-            <CropCard key={rec.crop} rec={rec} rank={i + 1} />
-          ))}
+          {chosen&&<CropCard rec={chosen} rank={1}/>} 
+          {!chosen&&chosenRejected&&<div className="current-crop-caution"><b>Continue with {currentCrop} with caution</b><p>{chosenRejected.explanation} This is guidance—not a command to change crops. Review water, timing, and input risk with a local agriculture officer.</p></div>}
+          {!chosen&&!chosenRejected&&data.recommendations[0]&&<CropCard rec={data.recommendations[0]} rank={1}/>} 
         </div>
       </div>
-
-      {data.rejected.length > 0 && (
-        <div>
-          <p className="text-xs tracking-[0.1em] text-gray-400 uppercase mb-4">Rejected ({data.rejected.length})</p>
-          <div className="space-y-3">
-            {data.rejected.map((rec) => (
-              <RejectedCard key={rec.crop} rec={rec} />
-            ))}
-          </div>
-        </div>
-      )}
+      {alternatives.length>0&&<details className="next-season-options"><summary>Optional ideas for next season</summary><p>These do not replace your current crop. They are shown only for future discussion with your family, FPO, or agriculture officer.</p><div className="space-y-4">{alternatives.map((rec,i)=><CropCard key={rec.crop} rec={rec} rank={i+1}/>)}</div></details>}
     </div>
   );
 }

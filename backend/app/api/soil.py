@@ -1,6 +1,7 @@
 """Automatic soil-health interpretation and fertilizer recommendation engine."""
 from pathlib import Path
-import sqlite3
+from datetime import datetime, timezone
+import base64, json, sqlite3, uuid
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -27,6 +28,27 @@ class SoilSample(BaseModel):
     potassium: float
     area_acres: float = 1
     current_crop: str | None = None
+
+class SoilCardUpload(BaseModel):
+    farmer_id: str
+    filename: str
+    content_type: str = "image/jpeg"
+    image_data: str
+
+class SoilCardConfirmation(BaseModel):
+    ph: float
+    nitrogen: float
+    phosphorus: float
+    potassium: float
+    test_date: str | None = None
+
+SOIL_CARD_DB = DB_PATH.parent / "soil_cards.db"
+SOIL_CARD_FILES = DB_PATH.parent / "soil_cards"
+
+def soil_card_connection():
+    db=sqlite3.connect(SOIL_CARD_DB); db.row_factory=sqlite3.Row
+    db.execute("""CREATE TABLE IF NOT EXISTS soil_cards(id TEXT PRIMARY KEY, farmer_id TEXT NOT NULL, filename TEXT NOT NULL, stored_path TEXT NOT NULL, status TEXT NOT NULL, draft_values TEXT NOT NULL, confirmed_values TEXT, extraction_method TEXT NOT NULL, created_at TEXT NOT NULL, confirmed_at TEXT)""")
+    db.commit(); return db
 
 
 def analyse(sample: SoilSample) -> dict:
@@ -110,6 +132,32 @@ def analyse(sample: SoilSample) -> dict:
 @router.post("/analyze")
 def analyze_soil(sample: SoilSample):
     return analyse(sample)
+
+@router.post("/cards/extract", status_code=201)
+def extract_soil_card(payload: SoilCardUpload):
+    """Store the card and return an explicitly unverified draft for farmer confirmation."""
+    encoded=payload.image_data.split(",",1)[-1]
+    try: raw=base64.b64decode(encoded,validate=True)
+    except Exception: raise HTTPException(422,"The Soil Health Card file could not be read")
+    if not raw or len(raw)>10_000_000: raise HTTPException(422,"Upload a non-empty file smaller than 10 MB")
+    suffix=Path(payload.filename).suffix.lower() if Path(payload.filename).suffix.lower() in {".jpg",".jpeg",".png",".webp",".pdf"} else ".bin"
+    card_id=f"SHC-{uuid.uuid4().hex[:10].upper()}"; SOIL_CARD_FILES.mkdir(parents=True,exist_ok=True)
+    target=SOIL_CARD_FILES/f"{card_id}{suffix}"; target.write_bytes(raw)
+    # Until OCR/model data is supplied, prefill from the connected farm record and
+    # never present these values as extracted measurements.
+    advisory=farmer_soil_advisory(payload.farmer_id)
+    draft={"ph":advisory["ph"]["value"],**{n["name"].lower():n["value"] for n in advisory["nutrients"]}}
+    stamp=datetime.now(timezone.utc).isoformat(); db=soil_card_connection()
+    db.execute("INSERT INTO soil_cards VALUES(?,?,?,?,?,?,?,?,?,?)",(card_id,payload.farmer_id,payload.filename,str(target),"NEEDS_CONFIRMATION",json.dumps(draft),None,"connected_record_prefill_no_ocr",stamp,None)); db.commit(); db.close()
+    return {"card_id":card_id,"status":"NEEDS_CONFIRMATION","values":draft,"confidence":0,"extraction_method":"connected_record_prefill_no_ocr","message":"Check these draft values against the card, then confirm them."}
+
+@router.post("/cards/{card_id}/confirm")
+def confirm_soil_card(card_id:str,payload:SoilCardConfirmation):
+    db=soil_card_connection(); row=db.execute("SELECT * FROM soil_cards WHERE id=?",(card_id,)).fetchone()
+    if not row: db.close(); raise HTTPException(404,"Soil Health Card upload not found")
+    stamp=datetime.now(timezone.utc).isoformat(); values=payload.model_dump()
+    db.execute("UPDATE soil_cards SET status='CONFIRMED',confirmed_values=?,confirmed_at=? WHERE id=?",(json.dumps(values),stamp,card_id)); db.commit(); db.close()
+    return {"card_id":card_id,"status":"CONFIRMED","values":values,"source":"farmer_confirmed_soil_health_card"}
 
 
 @router.get("/advisory/{farmer_id}")

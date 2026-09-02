@@ -3,6 +3,7 @@ from pathlib import Path
 import sqlite3
 
 from fastapi import APIRouter, HTTPException, Query
+from statistics import median
 from pydantic import BaseModel
 from datetime import datetime
 import uuid
@@ -176,7 +177,7 @@ def remove_listing(listing_id: str, farmer_id: str = Query(...)):
         db.commit()
     return {"listing_id": listing_id, "removed": True}
 @router.get("/mandi-prices")
-async def mandi_prices(crop: str = Query(..., min_length=2)):
+async def mandi_prices(crop: str = Query(..., min_length=2), district: str | None = Query(default=None)):
     result = await fetch_mandi_records(crop)
     records = (result or {}).get("records", [])
     prices = []
@@ -187,5 +188,13 @@ async def mandi_prices(crop: str = Query(..., min_length=2)):
             continue
         if modal > 0:
             prices.append({"market": row.get("market") or row.get("market_name") or "Mandi", "district": row.get("district") or "", "modal_price": modal, "price_per_kg": round(modal / 100, 2), "arrival_date": row.get("arrival_date") or row.get("price_date")})
+    if district:
+        local=[row for row in prices if district.lower() in str(row["district"]).lower()]
+        if local: prices=local
     per_kg = [row["price_per_kg"] for row in prices]
-    return {"crop": crop, "prices": prices, "average_price_per_kg": round(sum(per_kg) / len(per_kg), 2) if per_kg else None, "minimum_price_per_kg": min(per_kg) if per_kg else None, "maximum_price_per_kg": max(per_kg) if per_kg else None, "source": "AGMARKNET via data.gov.in", "fetched_at": (result or {}).get("fetched_at")}
+    realistic = [price for price in per_kg if price >= 2]
+    market_set = realistic or per_kg
+    recommended = round(median(market_set), 2) if market_set else None
+    previous=market_set[1] if len(market_set)>1 else None
+    change=round((market_set[0]-previous)/previous*100,1) if previous else None
+    return {"crop": crop, "district_filter": district, "prices": prices, "average_price_per_kg": round(sum(market_set) / len(market_set), 2) if market_set else None, "recommended_price_per_kg": recommended, "recommended_listing_low": round(recommended * .97, 2) if recommended else None, "recommended_listing_high": round(recommended * 1.08, 2) if recommended else None, "minimum_price_per_kg": min(market_set) if market_set else None, "maximum_price_per_kg": max(market_set) if market_set else None, "trend":{"direction":"up" if change and change>0 else "down" if change and change<0 else "steady","change_percent":change}, "data_status":"live" if prices else "unavailable", "source": "AGMARKNET via data.gov.in", "fetched_at": (result or {}).get("fetched_at")}

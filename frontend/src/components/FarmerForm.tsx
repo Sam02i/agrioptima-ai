@@ -45,6 +45,8 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
   const [soilEstimate, setSoilEstimate] = useState(false);
   const [pincode, setPincode] = useState("");
   const [pincodeStatus, setPincodeStatus] = useState<"idle" | "loading" | "found" | "not-found">("idle");
+  const [voiceStatus,setVoiceStatus]=useState("");
+  const startVoice=()=>{const Voice=(window as any).SpeechRecognition||(window as any).webkitSpeechRecognition;if(!Voice){setVoiceStatus("Voice input is not supported in this browser.");return}const recognition=new Voice();recognition.lang="en-IN";recognition.interimResults=false;setVoiceStatus("Listening… say your crop and village");recognition.onresult=(event:any)=>{const spoken=String(event.results?.[0]?.[0]?.transcript||"");const crop=CROPS.find(item=>spoken.toLowerCase().includes(item.toLowerCase()));const village=spoken.match(/(?:village|from|in)\s+([a-z ]+)/i)?.[1]?.trim();setForm(current=>({...current,previous_crop:crop||current.previous_crop,village:village||current.village}));setVoiceStatus(`Heard: ${spoken}`)};recognition.onerror=()=>setVoiceStatus("Could not hear clearly. Please try again or use the form.");recognition.start()};
 
   const set = (field: keyof FarmerRecommendationRequest, value: string | number) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -134,9 +136,11 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
         </div>
       )}
 
+      <div className="crop-choice-note"><span>✓</span><div><b>Your crop choice comes first</b><p>We will build a plan for the crop you already grow. Alternative crops are shown only as optional ideas for next season.</p></div></div>
+      <button type="button" className="farmer-voice-input" onClick={startVoice}>🎙 Tell us my crop and village</button>{voiceStatus&&<p className="voice-status">{voiceStatus}</p>}
       {/* Personal */}
       <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
-        <p className="text-[10px] tracking-[0.15em] text-gray-400 uppercase mb-3">Personal Information</p>
+        <p className="text-[10px] tracking-[0.15em] text-gray-400 uppercase mb-3">Connected farmer</p>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className={label}>Farmer Name</label>
@@ -158,7 +162,8 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
       </div>
 
       {/* Location */}
-      <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+      <details className="advanced-farm-details bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+        <summary>Location details <small>Optional · already connected</small></summary>
         <p className="text-[10px] tracking-[0.15em] text-gray-400 uppercase mb-3">Farm Location</p>
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
@@ -193,7 +198,7 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
             <input type="number" className={input} value={form.longitude} onChange={(e) => set("longitude", parseFloat(e.target.value) || 0)} step="0.001" />
           </div>
         </div>
-      </div>
+      </details>
 
       {/* Farm */}
       <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
@@ -216,7 +221,7 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
             </select>
           </div>
           <div>
-            <label className={label}>Previous Crop</label>
+            <label className={label}>Crop I am growing</label>
             <select className={select} value={form.previous_crop} onChange={(e) => set("previous_crop", e.target.value)}>
               {CROPS.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -233,7 +238,8 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
       </div>
 
       {/* Soil */}
-      <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+      <details className="advanced-farm-details bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+        <summary>Advanced soil values <small>Optional · filled automatically</small></summary>
         <div className="flex items-center justify-between mb-3">
           <p className="text-[10px] tracking-[0.15em] text-gray-400 uppercase">Soil Data</p>
           {soilEstimate && (
@@ -242,6 +248,7 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
             </span>
           )}
         </div>
+        <label className="soil-card-upload">📄 Upload Soil Health Card photo<input type="file" accept="image/*,.pdf" onChange={e=>{if(e.target.files?.[0]){set("soil_source","soil_health_card");setSoilEstimate(true)}}}/><small>{soilEstimate?"✓ Connected values will be used; you do not need to type N, P, or K.":"Optional JPG, PNG, or PDF"}</small></label>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className={label}>Soil pH</label>
@@ -268,14 +275,14 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
             </select>
           </div>
         </div>
-      </div>
+      </details>
 
       <button
         type="submit"
         disabled={loading}
         className="w-full bg-[#1a3c2a] hover:bg-[#244d36] text-white py-3 px-6 rounded-xl font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {loading ? "Analyzing..." : "Get Crop Recommendations"}
+        {loading ? "Building my plan..." : `Build my ${form.previous_crop} plan`}
       </button>
     </form>
   );
