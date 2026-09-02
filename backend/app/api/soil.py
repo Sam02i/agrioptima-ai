@@ -5,6 +5,9 @@ import base64, json, sqlite3, uuid
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from app.services.soil_ocr import extract as extract_document
+from app.db.session import SessionLocal
+from app.db.models import MarketFarmer, MarketFarm, SoilCardRecord
 
 router = APIRouter(prefix="/soil", tags=["Soil Intelligence"])
 DB_PATH = Path(__file__).resolve().parents[2] / "data" / "farmer_marketplace.db"
@@ -146,36 +149,26 @@ def extract_soil_card(payload: SoilCardUpload):
     # Until OCR/model data is supplied, prefill from the connected farm record and
     # never present these values as extracted measurements.
     advisory=farmer_soil_advisory(payload.farmer_id)
-    draft={"ph":advisory["ph"]["value"],**{n["name"].lower():n["value"] for n in advisory["nutrients"]}}
-    stamp=datetime.now(timezone.utc).isoformat(); db=soil_card_connection()
-    db.execute("INSERT INTO soil_cards VALUES(?,?,?,?,?,?,?,?,?,?)",(card_id,payload.farmer_id,payload.filename,str(target),"NEEDS_CONFIRMATION",json.dumps(draft),None,"connected_record_prefill_no_ocr",stamp,None)); db.commit(); db.close()
-    return {"card_id":card_id,"status":"NEEDS_CONFIRMATION","values":draft,"confidence":0,"extraction_method":"connected_record_prefill_no_ocr","message":"Check these draft values against the card, then confirm them."}
+    connected={"ph":advisory["ph"]["value"],**{n["name"].lower():n["value"] for n in advisory["nutrients"]}}
+    extraction=extract_document(target);draft={**connected,**extraction["values"]};method=extraction["provider"] if extraction["values"] else "connected_record_prefill_no_ocr"
+    stamp=datetime.now(timezone.utc);db=SessionLocal();db.add(SoilCardRecord(id=card_id,farmer_id=payload.farmer_id,filename=payload.filename,object_reference=str(target),status="NEEDS_CONFIRMATION",draft_values=draft,confirmed_values=None,extraction_method=method,created_at=stamp));db.commit();db.close()
+    return {"card_id":card_id,"status":"NEEDS_CONFIRMATION","values":draft,"confidence":extraction["confidence"],"extraction_method":method,"extracted_fields":sorted(extraction["values"]),"message":"Check every draft value against the card, then confirm it."}
 
 @router.post("/cards/{card_id}/confirm")
 def confirm_soil_card(card_id:str,payload:SoilCardConfirmation):
-    db=soil_card_connection(); row=db.execute("SELECT * FROM soil_cards WHERE id=?",(card_id,)).fetchone()
-    if not row: db.close(); raise HTTPException(404,"Soil Health Card upload not found")
-    stamp=datetime.now(timezone.utc).isoformat(); values=payload.model_dump()
-    db.execute("UPDATE soil_cards SET status='CONFIRMED',confirmed_values=?,confirmed_at=? WHERE id=?",(json.dumps(values),stamp,card_id)); db.commit(); db.close()
+    db=SessionLocal();row=db.get(SoilCardRecord,card_id)
+    if not row:db.close();raise HTTPException(404,"Soil Health Card upload not found")
+    stamp=datetime.now(timezone.utc);values=payload.model_dump();row.status="CONFIRMED";row.confirmed_values=values;row.confirmed_at=stamp;db.commit();db.close()
     return {"card_id":card_id,"status":"CONFIRMED","values":values,"source":"farmer_confirmed_soil_health_card"}
 
 
 @router.get("/advisory/{farmer_id}")
 def farmer_soil_advisory(farmer_id: str):
-    if not DB_PATH.exists():
-        raise HTTPException(503, "Farmer soil records are unavailable")
-    db = sqlite3.connect(DB_PATH)
-    db.row_factory = sqlite3.Row
-    row = db.execute("""SELECT fa.ph, fa.nitrogen, fa.phosphorus, fa.potassium,
-        fa.area_acres, fa.current_crop, f.district, f.state
-        FROM farms fa JOIN farmers f ON f.id=fa.farmer_id
-        WHERE fa.farmer_id=? ORDER BY fa.area_acres DESC LIMIT 1""", (farmer_id,)).fetchone()
-    db.close()
-    if not row:
+    db=SessionLocal();farmer=db.get(MarketFarmer,farmer_id);farm=db.query(MarketFarm).filter_by(farmer_id=farmer_id).order_by(MarketFarm.area_acres.desc()).first()
+    if not farmer or not farm:
+        db.close()
         raise HTTPException(404, "No Soil Health Card found for this farmer")
-    values = dict(row)
-    district = str(values.pop("district") or "").strip()
-    state = str(values.pop("state") or "").strip()
+    values={"ph":farm.ph,"nitrogen":farm.nitrogen,"phosphorus":farm.phosphorus,"potassium":farm.potassium,"area_acres":farm.area_acres,"current_crop":farm.current_crop};district=farmer.district.strip();state=farmer.state.strip();db.close()
     baseline = MAHARASHTRA_SOIL.get(district.lower(), MAHARASHTRA_DEFAULT)
     # Preserve the supplied seed's farmer-level N-P-K values. Only fill values
     # that are genuinely absent; pH uses the district estimate when needed.

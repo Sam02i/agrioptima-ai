@@ -1,6 +1,12 @@
 from unittest.mock import patch, AsyncMock
 from fastapi.testclient import TestClient
 from app.main import app
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
+from app.db.session import Base
+from app.db.models import MarketFarmer, MarketFarm, CropListing
+from app.api import marketplace
 
 client = TestClient(app)
 
@@ -200,7 +206,8 @@ def test_crop_recommend_includes_economics(_mandi, _nasa, _weather):
 @patch("app.services.recommendation_service.fetch_open_meteo", new_callable=AsyncMock, return_value=FAKE_WEATHER)
 @patch("app.services.recommendation_service.fetch_nasa_power", new_callable=AsyncMock, return_value=FAKE_NASA)
 @patch("app.services.recommendation_service.fetch_mandi_records", new_callable=AsyncMock, side_effect=_fake_mandi)
-def test_crop_recommend_includes_farmer_id(_mandi, _nasa, _weather):
+@patch("app.main.persist_recommendation", return_value="FARMER_TEST")
+def test_crop_recommend_includes_farmer_id(_persist, _mandi, _nasa, _weather):
     """Verify farmer_id is returned for DB persistence."""
     payload = {
         "name": "Test Farmer",
@@ -225,7 +232,7 @@ def test_crop_recommend_includes_farmer_id(_mandi, _nasa, _weather):
     data = response.json()
     assert "farmer_id" in data
     assert data["farmer_id"] is not None
-    assert data["farmer_id"].startswith("FARMER_")
+    assert data["farmer_id"] == "FARMER_TEST"
 
 
 def test_credit_buyers_returns_selectable_buyers():
@@ -284,16 +291,14 @@ def test_logistics_buyer_quote_compares_models(_osrm):
 
 
 def test_marketplace_exposes_imported_farmer_data():
-    summary = client.get("/marketplace/summary")
-    assert summary.status_code == 200
-    assert summary.json()["farmer_count"] == 3
-    assert summary.json()["available_listing_count"] == 5
-
-    farmers = client.get("/marketplace/farmers")
-    assert farmers.status_code == 200
-    assert farmers.json()["count"] == 3
-    assert all("phone" not in farmer for farmer in farmers.json()["farmers"])
-
-    listings = client.get("/marketplace/listings")
-    assert listings.status_code == 200
-    assert listings.json()["count"] == 5
+    engine=create_engine("sqlite://",connect_args={"check_same_thread":False},poolclass=StaticPool);Base.metadata.create_all(engine);TestingSession=sessionmaker(bind=engine);db=TestingSession();db.add(MarketFarmer(id="FARM-1",name="Farmer",state="Maharashtra",district="Nashik",village="Village"));db.add(MarketFarm(id="FARMLOT-1",farmer_id="FARM-1",area_acres=2));db.flush();db.add(CropListing(id="LOT-1",farmer_id="FARM-1",farm_id="FARMLOT-1",crop_name="Tomato",quantity_kg=1000,available_quantity_kg=1000,price_per_kg=20,listing_status="AVAILABLE",district="Nashik",state="Maharashtra"));db.commit();db.close()
+    def override_db():
+        session=TestingSession()
+        try:yield session
+        finally:session.close()
+    app.dependency_overrides[marketplace.get_db]=override_db
+    try:
+        summary=client.get("/marketplace/summary");assert summary.status_code==200;assert summary.json()["farmer_count"]==1;assert summary.json()["available_listing_count"]==1
+        farmers=client.get("/marketplace/farmers");assert farmers.json()["count"]==1;assert "phone" not in farmers.json()["farmers"][0]
+        assert client.get("/marketplace/listings").json()["count"]==1
+    finally:app.dependency_overrides.clear()

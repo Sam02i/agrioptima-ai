@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Request
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 import os, time, uuid
 
@@ -15,11 +16,28 @@ from app.api.logistics import router as logistics_router
 from app.api.marketplace import router as marketplace_router
 from app.api.soil import router as soil_router
 from app.api.trade import router as trade_router
+from app.api.auth import router as auth_router
+
+@asynccontextmanager
+async def lifespan(_app:FastAPI):
+    # Ensure new production tables exist, then import the one demo journey once.
+    try:
+        from app.db.session import Base, engine, SessionLocal
+        from app.db import models  # noqa: F401
+        from app.services.platform_seed import seed_platform
+        Base.metadata.create_all(engine)
+        db=SessionLocal()
+        try: seed_platform(db)
+        finally: db.close()
+    except Exception as exc:
+        print(f"Platform database initialization unavailable: {exc}")
+    yield
 
 app = FastAPI(
     title="AgriOptima AI Platform",
     version="2.0.0",
-    description="Integrated agricultural intelligence: crop recommendation, credit scoring, freshness assessment, and supplier ranking."
+    description="Integrated agricultural intelligence: crop recommendation, credit scoring, freshness assessment, and supplier ranking.",
+    lifespan=lifespan,
 )
 
 origins=[item.strip() for item in os.getenv("ALLOWED_ORIGINS","http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174").split(",") if item.strip()]
@@ -49,6 +67,7 @@ app.include_router(logistics_router)     # /logistics/*
 app.include_router(marketplace_router)   # /marketplace/*
 app.include_router(soil_router)          # /soil/*
 app.include_router(trade_router)         # /trade/*
+app.include_router(auth_router)          # /auth/*
 
 
 @app.get("/")

@@ -15,3 +15,6 @@ WEATHER_CACHE_MINUTES = int(os.getenv("WEATHER_CACHE_MINUTES", "360"))
 MANDI_CACHE_MINUTES = int(os.getenv("MANDI_CACHE_MINUTES", "720"))
 
 DEMO_MODE = os.getenv("DEMO_MODE", "false").lower() == "true"
+AUTH_REQUIRED = os.getenv("AUTH_REQUIRED", "false").lower() == "true"
+AUTH_SECRET = os.getenv("AUTH_SECRET", "development-only-change-me")
+ACCESS_TOKEN_MINUTES = int(os.getenv("ACCESS_TOKEN_MINUTES", "30"))

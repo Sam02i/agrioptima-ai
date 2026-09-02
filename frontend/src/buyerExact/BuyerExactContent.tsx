@@ -66,7 +66,7 @@ type Seller = {
   harvest?: string;
 };
 const cropPhotoModules = import.meta.glob(
-  "../assets/marketplace/crops/*.{jpg,png}",
+  "../assets/marketplace/crops/*.{jpg,webp}",
   { eager: true, query: "?url", import: "default" },
 ) as Record<string, string>;
 const cropSlugs: Record<string, string> = {
@@ -115,7 +115,7 @@ const cropSlugs: Record<string, string> = {
 function marketplacePhoto(crop: string) {
   const slug = cropSlugs[crop.trim().toLowerCase()];
   return (
-    cropPhotoModules[`../assets/marketplace/crops/${slug}.png`] ||
+    cropPhotoModules[`../assets/marketplace/crops/${slug}.webp`] ||
     cropPhotoModules[`../assets/marketplace/crops/${slug}.jpg`] ||
     cropVisual(crop, "Verified produce")
   );
