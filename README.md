@@ -2,6 +2,10 @@
 
 **Connected agricultural intelligence for farmers, buyers, quality verification, and farm-to-market trade.**
 
+[![Try the live demo](https://img.shields.io/badge/Try%20the%20live%20demo-Vercel-000000?style=for-the-badge&logo=vercel)](https://agrioptima-rczdd6u2n-samikshas-projects-3b436fe6.vercel.app/)
+
+**[Open AgriOptimaᴬᴵ live →](https://agrioptima-rczdd6u2n-samikshas-projects-3b436fe6.vercel.app/)**
+
 AgriOptimaᴬᴵ brings crop planning, soil-health guidance, mandi price discovery, produce listings, buyer intelligence, freshness assessment, credit scoring, logistics optimization, shipment tracking, and digital produce passports into one connected platform.
 
 The application is designed around a simple principle: recommendations should be explainable, and measured, estimated, predicted, and demonstration data should never be presented as the same thing.
