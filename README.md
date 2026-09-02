@@ -1,121 +1,184 @@
+<div align="center">
+
 # AgriOptimaᴬᴵ
 
-**Connected agricultural intelligence for farmers, buyers, quality verification, and farm-to-market trade.**
+### From soil intelligence to trusted sale—one connected agricultural platform
 
-[![Try the live demo](https://img.shields.io/badge/Try%20the%20live%20demo-Vercel-000000?style=for-the-badge&logo=vercel)](https://agrioptima-rczdd6u2n-samikshas-projects-3b436fe6.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/OPEN_LIVE_DEMO-AgriOptimaᴬᴵ-c7f633?style=for-the-badge&labelColor=153f2e)](https://agrioptima-rczdd6u2n-samikshas-projects-3b436fe6.vercel.app/)
 
-**[Open AgriOptimaᴬᴵ live →](https://agrioptima-rczdd6u2n-samikshas-projects-3b436fe6.vercel.app/)**
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?logo=postgresql&logoColor=white)](https://neon.tech/)
+[![Vercel](https://img.shields.io/badge/Frontend-Vercel-000?logo=vercel)](https://vercel.com/)
+[![Render](https://img.shields.io/badge/API-Render-6c4cff)](https://render.com/)
 
-AgriOptimaᴬᴵ brings crop planning, soil-health guidance, mandi price discovery, produce listings, buyer intelligence, freshness assessment, credit scoring, logistics optimization, shipment tracking, and digital produce passports into one connected platform.
+**Farmer guidance · Soil health · Mandi prices · Produce quality · Buyer intelligence · Logistics · Traceable trade**
 
-The application is designed around a simple principle: recommendations should be explainable, and measured, estimated, predicted, and demonstration data should never be presented as the same thing.
+</div>
 
-> **Status:** Hackathon-ready integrated prototype with a production-oriented data foundation. Authentication, managed infrastructure, field validation, and security hardening are still required before public production deployment.
+---
 
-## Highlights
+## Why AgriOptimaᴬᴵ?
+
+Agricultural decisions are usually fragmented. A farmer may receive crop advice in one place, check mandi prices somewhere else, negotiate without reliable quality evidence, and lose visibility after dispatch. Buyers face the reverse problem: scattered farmer records, uncertain quality, unclear credit risk, and expensive logistics.
+
+AgriOptimaᴬᴵ connects these decisions into one explainable workflow for farmers and buyers. It does not treat estimates as facts: every important result is identified as confirmed, externally sourced, model-predicted, or a regional planning estimate.
+
+| Farmer needs | Buyer needs | AgriOptimaᴬᴵ connects |
+|---|---|---|
+| Simple crop and fertilizer actions | Reliable produce discovery | Shared farmer and listing records |
+| Fair price context | Comparable suppliers | Mandi references and landed cost |
+| Proof of produce quality | Reduced receiving risk | Freshness evidence and passports |
+| Visibility after sale | Delivery visibility | Shared orders and route tracking |
+
+## Three-minute demo
+
+1. Open the **Farmer workspace** and select the example farmer.
+2. Review the current-crop plan and explainable recommendations.
+3. Open **Soil & fertilizer** to see deficiencies, alternatives, and data provenance.
+4. Use **Prices & listing** to compare mandi references and publish produce.
+5. Switch to the **Buyer workspace** and open Marketplace.
+6. Compare sellers, inspect a farmer, and create an order.
+7. Open Orders or Produce Passports to track delivery and verify received quality.
+
+> Render’s free backend can sleep while inactive. The first data request may take approximately one minute while it wakes up.
+
+## Connected workflow
+
+```mermaid
+flowchart LR
+    A["Farmer profile"] --> B["Soil and crop guidance"]
+    B --> C["Mandi-informed listing"]
+    C --> D["Buyer marketplace"]
+    D --> E["Supplier comparison"]
+    E --> F["Saved order"]
+    F --> G["Shipment route"]
+    G --> H["Produce passport"]
+    H --> I["Receiving inspection"]
+    I --> J["Payment record"]
+```
+
+## What works today
 
 ### Farmer workspace
 
-- Farmer profiles with farm, location, irrigation, crop, budget, and soil context
-- Current-crop guidance that preserves the farmer's crop choice
-- Explainable crop recommendations and rejection reasons
-- Soil-health interpretation with practical fertilizer alternatives
-- Soil Health Card upload, editable extraction draft, and farmer confirmation
-- AGMARKNET mandi price references for better listing decisions
-- Manual produce listings with images, quantity, grade, packaging, and price
-- Produce freshness and quality assessment
-- Shared orders, shipment progress, route maps, passports, and payment status
+- Connected farmer, farm, irrigation, crop, budget, and soil profiles
+- Current-crop guidance designed not to force an unfamiliar crop choice
+- Explainable crop rankings, economics, confidence, and rejection reasons
+- Soil Health Card upload with editable draft and confirmation
+- Nutrient status translated into understandable field actions
+- Multiple fertilizer alternatives with dosage and timing guidance
+- Recent AGMARKNET mandi references for pricing decisions
+- Manual produce listings with images, grade, quantity, packaging, and price
+- Freshness assessment before listing or dispatch
+- Orders, shipment route, passport, inspection, and payment visibility
 - Multilingual interface and read-aloud support
 
 ### Buyer workspace
 
-- Produce marketplace backed by farmer listing records
-- Crop-specific marketplace photographs and supplier profiles
-- Side-by-side supplier comparison and estimated landed cost
-- Persistent order creation from a marketplace listing
-- Shared shipment tracking and digital produce passports
-- Received-produce freshness verification
-- Explainable buyer credit position and simulations
-- Supplier scoring and logistics optimization
-- Buyer-specific workspace state
+- Farmer-backed produce marketplace with crop-specific imagery
+- Search and filters for crop, grade, distance, and availability
+- Farmer profiles and side-by-side supplier comparison
+- Price, freshness, reliability, distance, quantity, and landed-cost evidence
+- Persistent marketplace order creation
+- Buyer-specific orders and digital produce passports
+- Receiving-image verification through the freshness engine
+- Explainable credit score, position, draw, and repayment simulations
+- Supplier scoring and direct/pooled/hub logistics optimization
 
-### Trust and traceability
+### Shared trust layer
 
-- One shared order record across the farmer and buyer portals
+- One order record visible to both farmer and buyer
 - Persistent shipments, passports, payments, inspections, and audit events
 - Dispatch and receiving quality checkpoints
-- Explicit provenance labels for confirmed, estimated, predicted, and demo data
-- Safe fallbacks when an external data source or model is unavailable
+- Explicit source and confidence labels
+- Graceful unavailable states instead of fabricated live data
 
-## End-to-end journey
+## Architecture
 
-```mermaid
-flowchart LR
-    A[Farmer profile] --> B[Soil and crop guidance]
-    B --> C[Mandi-informed produce listing]
-    C --> D[Buyer marketplace]
-    D --> E[Supplier comparison]
-    E --> F[Saved order]
-    F --> G[Shipment and live route]
-    G --> H[Digital produce passport]
-    H --> I[Receiving quality check]
-    I --> J[Payment record]
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ React + TypeScript frontend                                 │
+│ Landing experience │ Farmer workspace │ Buyer workspace    │
+└────────────────────────────┬────────────────────────────────┘
+                             │ HTTPS JSON API
+┌────────────────────────────▼────────────────────────────────┐
+│ FastAPI application                                         │
+│ Crop │ Soil │ Marketplace │ Freshness │ Credit │ Logistics │
+│ Orders │ Shipments │ Passports │ Inspections │ Payments     │
+└──────────────┬───────────────────────┬──────────────────────┘
+               │                       │
+┌──────────────▼─────────────┐  ┌──────▼──────────────────────┐
+│ PostgreSQL / local stores  │  │ External/model intelligence │
+│ Farmers, results, trade    │  │ AGMARKNET, weather, Keras   │
+└────────────────────────────┘  └─────────────────────────────┘
 ```
-
-## Technology
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, TypeScript, Vite, Tailwind CSS, Motion |
+| Web experience | React 19, TypeScript, Vite, Tailwind CSS, Motion |
 | Maps | Leaflet and OpenStreetMap |
-| Backend | Python 3.12, FastAPI, Pydantic |
-| Data | PostgreSQL/SQLAlchemy for core persistence; SQLite for the integrated marketplace and trade prototype |
-| ML and image processing | TensorFlow/Keras, Pillow, NumPy |
-| External intelligence | Open-Meteo and data.gov.in/AGMARKNET |
-| Testing | pytest, TypeScript compiler, Vite production build |
+| API | Python 3.12, FastAPI, Pydantic |
+| Persistence | PostgreSQL/Neon, SQLAlchemy; SQLite prototype stores |
+| ML and images | TensorFlow/Keras, Pillow, NumPy |
+| External data | Open-Meteo and data.gov.in/AGMARKNET |
+| Hosting | Vercel frontend and Render API |
+| Verification | pytest, TypeScript compiler, Vite production build |
 
-## Repository structure
+## Data integrity by design
+
+| Label | Meaning |
+|---|---|
+| **Confirmed** | Reviewed by a farmer, operator, laboratory, or buyer |
+| **Live/cached external** | Retrieved from a named provider with a timestamp |
+| **Model prediction** | Produced by a versioned model with confidence evidence |
+| **Regional estimate** | Planning fallback—not a laboratory measurement |
+| **Demo record** | Synthetic example retained only to demonstrate the workflow |
+
+No unconfirmed Soil Health Card extraction should be used as a fertilizer measurement. Fertilizer guidance is decision support and requires regional agronomic validation before field deployment.
+
+## Repository map
 
 ```text
 agrioptima-ai/
-├── frontend/                  # React farmer, buyer, and landing experiences
+├── frontend/
 │   └── src/
+│       ├── agriloop/          # Landing experience
 │       ├── buyerExact/        # Buyer intelligence workspace
-│       ├── components/        # Farmer workspace and shared components
-│       ├── agriloop/          # Animated landing experience
-│       ├── api/               # Typed frontend API clients
-│       └── i18n/              # Global language support
+│       ├── components/        # Farmer and shared experiences
+│       ├── api/               # Frontend API clients
+│       └── i18n/              # Language support
 ├── backend/
 │   ├── app/
-│   │   ├── api/               # Farmer, soil, marketplace, trade, credit, etc.
+│   │   ├── api/               # Domain API routes
 │   │   ├── adapters/          # Weather and mandi integrations
 │   │   ├── services/          # Recommendation and persistence logic
 │   │   ├── db/                # SQLAlchemy models and sessions
-│   │   └── tests/             # Backend tests
-│   ├── models/                # Freshness model artifacts
-│   └── data/                  # Local development databases and uploads
-├── data/                      # Credit and model-supporting datasets
-├── docs/                      # Supporting documentation
-└── docker-compose.yml         # Local PostgreSQL service
+│   │   └── tests/             # Backend verification
+│   ├── models/                # Freshness model artifact
+│   └── data/                  # Development stores and uploads
+├── data/                      # Supporting model datasets
+├── docs/
+└── docker-compose.yml
 ```
 
-## Local setup
+## Run locally
 
 ### Requirements
 
 - Python 3.12
-- Node.js 20 or newer
+- Node.js 20+
 - npm
-- Docker Desktop, if using PostgreSQL
+- Docker Desktop for local PostgreSQL
 
-### 1. Configure the backend
+### Backend
 
 ```bash
 cd backend
 python3.12 -m venv .agrioptima-ai
 source .agrioptima-ai/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
 cp .env.example .env
 ```
 
@@ -123,36 +186,28 @@ Configure `backend/.env`:
 
 ```dotenv
 DATABASE_URL=postgresql+psycopg://agrioptima:agrioptima_local_only@localhost:5432/agrioptima
-DATA_GOV_API_KEY=your_data_gov_api_key
-DATA_GOV_MANDI_RESOURCE_ID=your_agmarknet_resource_id
+DATA_GOV_API_KEY=your_optional_data_gov_key
+DATA_GOV_MANDI_RESOURCE_ID=your_optional_resource_id
 WEATHER_CACHE_MINUTES=360
 MANDI_CACHE_MINUTES=720
 ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 ```
 
-The data.gov.in credentials are optional for basic local operation. When they are absent or the public service is unavailable, the interface should identify mandi data as unavailable rather than inventing prices.
-
-### 2. Start PostgreSQL
-
-From the repository root:
+Start PostgreSQL and the API:
 
 ```bash
 docker compose up -d
-```
-
-### 3. Start the API
-
-```bash
 cd backend
 source .agrioptima-ai/bin/activate
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-API documentation is available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+API health and documentation:
 
-### 4. Start the frontend
+- `http://127.0.0.1:8000/health`
+- `http://127.0.0.1:8000/docs`
 
-In another terminal:
+### Frontend
 
 ```bash
 cd frontend
@@ -160,126 +215,84 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
+The frontend uses this production-safe API configuration:
+
+```dotenv
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+Open `http://localhost:5173`.
 
 ## Freshness model
 
-The tomato freshness engine expects the Keras model at:
+The tomato classifier is loaded lazily from:
 
 ```text
 backend/models/tomato_fgrade_5class/tomato_fgrade_5class.keras
 ```
 
-Check model availability with:
+Check readiness through `GET /freshness/health`. If the artifact cannot load, the API returns an explicit unavailable response rather than generating a fake score.
 
-```text
-GET /freshness/health
-```
+## Main API groups
 
-If the model is absent or cannot load, the API returns an explicit model-unavailable response instead of a fabricated score.
-
-## Important API groups
-
-| Area | Example endpoints |
+| Domain | Endpoints |
 |---|---|
-| Platform | `GET /health` |
-| Crop planning | `POST /crop/recommend` |
+| Platform | `GET /health`, `GET /docs` |
+| Crop guidance | `POST /crop/recommend` |
 | Farmers | `GET /farmers`, `GET /farmers/{farmer_id}` |
-| Soil health | `GET /soil/advisory/{farmer_id}`, `POST /soil/cards/extract` |
-| Marketplace | `GET /marketplace/listings`, `POST /marketplace/listings` |
-| Mandi prices | `GET /marketplace/mandi-prices?crop=Tomato&district=Nashik` |
+| Soil | `GET /soil/advisory/{farmer_id}`, `POST /soil/cards/extract` |
+| Marketplace | `GET/POST /marketplace/listings`, `GET /marketplace/mandi-prices` |
 | Freshness | `POST /freshness/tomato/predict`, `POST /freshness/tomato/inspect` |
-| Trade workflow | `POST /trade/orders`, `GET /trade/orders` |
-| Shipments | `GET /trade/shipments/{shipment_id}` |
-| Quality inspections | `POST /trade/orders/{order_id}/inspections` |
-| Payments | `PATCH /trade/orders/{order_id}/payment` |
-| Buyer credit | `GET /credit/buyer/{buyer_id}/profile` |
-| Supplier ranking | `POST /ranking/score` |
-| Logistics | `POST /logistics/optimize` |
+| Trade | `POST /trade/orders`, `GET /trade/orders` |
+| Tracking | `GET /trade/shipments/{shipment_id}` |
+| Inspection/payment | `POST /trade/orders/{id}/inspections`, `PATCH /trade/orders/{id}/payment` |
+| Buyer intelligence | `/credit`, `/ranking`, and `/logistics` groups |
 
-The interactive Swagger documentation is the canonical reference for request and response schemas.
+The interactive FastAPI documentation is the canonical schema reference.
 
-## Soil Health Card workflow
-
-The current workflow deliberately separates a saved document from a verified measurement:
-
-1. The farmer uploads a photograph or PDF.
-2. The backend stores the original file and creates a draft.
-3. Draft values are displayed for review.
-4. The farmer or assisted operator corrects and confirms the values.
-5. Confirmed values can be used for soil and fertilizer guidance.
-
-The current extractor uses the connected farm record as an explicitly labelled draft; it does **not** claim OCR accuracy. A production deployment should connect a tested OCR/document-understanding provider, validate units, preserve per-field confidence, and require manual review for uncertain values.
-
-## Data provenance
-
-AgriOptimaᴬᴵ uses four data classes:
-
-| Label | Meaning |
-|---|---|
-| Confirmed | Entered or reviewed by the farmer, operator, laboratory, or buyer |
-| Live/cached external | Retrieved from a named external source with a timestamp |
-| Model prediction | Generated by a versioned model and accompanied by confidence/evidence |
-| Regional estimate/demo | Planning fallback that must not be treated as a measured fact |
-
-Fertilizer guidance is decision support, not a replacement for a laboratory test or qualified local agronomist.
-
-## Testing
-
-Backend:
+## Verify changes
 
 ```bash
 cd backend
 source .agrioptima-ai/bin/activate
 pytest -q
-```
 
-Frontend:
-
-```bash
-cd frontend
+cd ../frontend
 npm run lint
 npm run build
 ```
 
-The trade workflow test verifies that an order created from a listing is visible to both the corresponding buyer and farmer and that available listing quantity is reduced.
+## Production status
 
-## Current limitations
+The integrated prototype is appropriate for a hackathon demonstration. Before field production, it still needs:
 
-- Authentication and role-based access control are not yet implemented.
-- Marketplace and trade persistence currently use local SQLite files for the integrated prototype.
-- Soil-card OCR requires a production document-understanding provider and labelled validation set.
-- Live mandi coverage depends on the availability and quality of data.gov.in records.
-- Recommendation and fertilizer rules require regional agronomist validation before field deployment.
-- Payments are recorded as workflow state; no real payment gateway is connected.
-- Map tracking represents saved shipment coordinates; a vehicle GPS feed is required for true real-time tracking.
-- Large marketplace assets should be converted to optimized WebP/AVIF variants before deployment.
-
-## Production roadmap
-
-- Farmer and buyer authentication, consent, and role permissions
-- Managed PostgreSQL and object storage with encryption and backups
-- OCR integration with field-level confidence and unit normalization
+- Authentication, farmer consent, and role-based permissions
+- Complete migration of local SQLite workflows to managed PostgreSQL
+- Private object storage for soil cards and produce images
+- Tested OCR with unit detection and field-level confidence
+- Agronomist-reviewed regional recommendation rules
 - Real GPS, notification, and payment integrations
-- Offline-first farmer flows for weak connectivity
-- Monitoring, rate limiting, secrets management, and security testing
-- Model registry, evaluation reports, drift monitoring, and rollback support
-- Accessibility testing and complete reviewed translations
-- Pilot validation with farmers, FPOs, buyers, laboratories, and agronomists
+- Monitoring, rate limiting, backups, secret rotation, and security testing
+- Offline-first workflows and reviewed language translations
+- Field validation with farmers, FPOs, buyers, laboratories, and agronomists
 
 ## Security
 
-- Never commit `backend/.env`, API keys, farmer documents, model credentials, or production databases.
-- Use anonymized datasets for demonstrations and model development.
-- Collect and retain farmer data only with explicit consent.
-- Treat Soil Health Cards and financial records as sensitive information.
-
-If you discover a security issue, report it privately to the project maintainers rather than opening a public issue containing sensitive details.
+- Never commit `.env`, connection strings, API keys, farmer documents, or credentials.
+- Treat soil reports and financial records as sensitive personal information.
+- Use anonymized data for demonstrations and model development.
+- Rotate a credential immediately if it is exposed in an issue, commit, screenshot, or chat.
 
 ## License
 
-No open-source license has been declared yet. Until a license is added, the repository should be treated as **all rights reserved**.
+No open-source license has been declared. Until one is added, this repository should be treated as **all rights reserved**.
 
 ---
 
-Built to make agricultural decision support more understandable, connected, and accountable—from the field to the buyer's warehouse.
+<div align="center">
+
+**AgriOptimaᴬᴵ — understandable decisions, verifiable quality, connected trade.**
+
+[Try the live platform](https://agrioptima-rczdd6u2n-samikshas-projects-3b436fe6.vercel.app/) · [Explore the API locally](http://127.0.0.1:8000/docs)
+
+</div>
