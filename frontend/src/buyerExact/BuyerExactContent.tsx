@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   ArrowDownRight,
@@ -41,9 +41,9 @@ import {
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Progress, ProgressIndicator, ProgressTrack } from "./ui/progress";
-import CreditPanel from "../components/CreditPanel";
-import FreshnessPanel from "../components/FreshnessPanel";
-import LogisticsOptimizerPanel from "../components/LogisticsOptimizerPanel";
+const CreditPanel=lazy(()=>import("../components/CreditPanel"));
+const FreshnessPanel=lazy(()=>import("../components/FreshnessPanel"));
+const LogisticsOptimizerPanel=lazy(()=>import("../components/LogisticsOptimizerPanel"));
 
 const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 

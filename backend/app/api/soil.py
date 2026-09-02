@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from app.services.soil_ocr import extract as extract_document
 from app.db.session import SessionLocal
 from app.db.models import MarketFarmer, MarketFarm, SoilCardRecord
+from app.services.object_store import store_bytes
 
 router = APIRouter(prefix="/soil", tags=["Soil Intelligence"])
 DB_PATH = Path(__file__).resolve().parents[2] / "data" / "farmer_marketplace.db"
@@ -145,13 +146,13 @@ def extract_soil_card(payload: SoilCardUpload):
     if not raw or len(raw)>10_000_000: raise HTTPException(422,"Upload a non-empty file smaller than 10 MB")
     suffix=Path(payload.filename).suffix.lower() if Path(payload.filename).suffix.lower() in {".jpg",".jpeg",".png",".webp",".pdf"} else ".bin"
     card_id=f"SHC-{uuid.uuid4().hex[:10].upper()}"; SOIL_CARD_FILES.mkdir(parents=True,exist_ok=True)
-    target=SOIL_CARD_FILES/f"{card_id}{suffix}"; target.write_bytes(raw)
+    target=SOIL_CARD_FILES/f"{card_id}{suffix}";object_reference=store_bytes(f"soil-cards/{payload.farmer_id}/{card_id}{suffix}",raw,payload.content_type,target)
     # Until OCR/model data is supplied, prefill from the connected farm record and
     # never present these values as extracted measurements.
     advisory=farmer_soil_advisory(payload.farmer_id)
     connected={"ph":advisory["ph"]["value"],**{n["name"].lower():n["value"] for n in advisory["nutrients"]}}
-    extraction=extract_document(target);draft={**connected,**extraction["values"]};method=extraction["provider"] if extraction["values"] else "connected_record_prefill_no_ocr"
-    stamp=datetime.now(timezone.utc);db=SessionLocal();db.add(SoilCardRecord(id=card_id,farmer_id=payload.farmer_id,filename=payload.filename,object_reference=str(target),status="NEEDS_CONFIRMATION",draft_values=draft,confirmed_values=None,extraction_method=method,created_at=stamp));db.commit();db.close()
+    extraction=extract_document(target) if target.exists() else {"provider":"cloud_object_stored","values":{},"confidence":0};draft={**connected,**extraction["values"]};method=extraction["provider"] if extraction["values"] else "connected_record_prefill_no_ocr"
+    stamp=datetime.now(timezone.utc);db=SessionLocal();db.add(SoilCardRecord(id=card_id,farmer_id=payload.farmer_id,filename=payload.filename,object_reference=object_reference,status="NEEDS_CONFIRMATION",draft_values=draft,confirmed_values=None,extraction_method=method,created_at=stamp));db.commit();db.close()
     return {"card_id":card_id,"status":"NEEDS_CONFIRMATION","values":draft,"confidence":extraction["confidence"],"extraction_method":method,"extracted_fields":sorted(extraction["values"]),"message":"Check every draft value against the card, then confirm it."}
 
 @router.post("/cards/{card_id}/confirm")

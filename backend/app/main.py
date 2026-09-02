@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Request
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 import os, time, uuid
+from sqlalchemy import text as sql_text
 
 from app.schemas.farmer import FarmerRecommendationRequest
 from app.services.recommendation_service import build_recommendation
@@ -47,6 +48,7 @@ app.add_middleware(
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
     allow_headers=["Content-Type", "Authorization"],
+    allow_origin_regex=os.getenv("ALLOWED_ORIGIN_REGEX") or None,
 )
 
 @app.middleware("http")
@@ -87,6 +89,19 @@ def health():
         "freshness_assessment", "supplier_ranking", "logistics_optimization",
         "buyer_cost_quote", "farmer_marketplace", "soil_intelligence", "persistent_trade_workflow"
     ]}
+
+@app.get("/readiness")
+def readiness():
+    checks={"database":False,"freshness_model":False,"authentication_secret":os.getenv("AUTH_SECRET","") not in {"","development-only-change-me"},"object_storage":False,"payment_gateway":False}
+    try:
+        db=SessionLocal();db.execute(sql_text("SELECT 1"));db.close();checks["database"]=True
+    except Exception:pass
+    from app.api.freshness import MODEL_PATH
+    from app.services.object_store import configured as storage_configured
+    from app.services.payment_gateway import configured as payment_configured
+    checks["freshness_model"]=MODEL_PATH.exists();checks["object_storage"]=storage_configured();checks["payment_gateway"]=payment_configured()
+    required=("database","freshness_model","authentication_secret")
+    return {"status":"ready" if all(checks[x] for x in required) else "degraded","checks":checks,"note":"Optional integrations remain false until credentials are configured."}
 
 
 # Canonical route (PRD section 33.4)
