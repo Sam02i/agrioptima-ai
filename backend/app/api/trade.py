@@ -32,6 +32,7 @@ def order_dict(order:TradeOrder,db:Session):
 
 @router.post("/orders",status_code=201)
 def create_order(payload:NewOrder,db:Session=Depends(get_db),user=Depends(require_roles("BUYER"))):
+    if user and user.profile_id and user.profile_id!=payload.buyer_id:raise HTTPException(403,"You can only create orders for your buyer profile")
     listing=db.query(CropListing).filter_by(id=payload.listing_id,listing_status="AVAILABLE").with_for_update().first()
     if not listing:raise HTTPException(404,"Available listing not found")
     if payload.quantity_kg>listing.available_quantity_kg:raise HTTPException(409,"Requested quantity exceeds available produce")
@@ -63,6 +64,7 @@ def get_shipment_order(shipment_id:str,db:Session=Depends(get_db)):
 def update_status(order_id:str,payload:StatusUpdate,db:Session=Depends(get_db),user=Depends(require_roles("FARMER","BUYER"))):
     order=db.get(TradeOrder,order_id)
     if not order:raise HTTPException(404,"Order not found")
+    if user and user.profile_id and user.profile_id not in {order.farmer_id,order.buyer_id}:raise HTTPException(403,"This order does not belong to your profile")
     order.status=payload.status;order.updated_at=now();shipment=db.query(TradeShipment).filter_by(order_id=order.id).first()
     if shipment and payload.progress is not None:shipment.status=payload.status;shipment.progress=payload.progress
     db.add(TradeAuditEvent(order_id=order.id,event_type="STATUS_UPDATED",actor_id=payload.actor_id,payload=payload.model_dump()));db.commit();return order_dict(order,db)
@@ -71,6 +73,8 @@ def update_status(order_id:str,payload:StatusUpdate,db:Session=Depends(get_db),u
 def update_location(shipment_id:str,payload:LocationUpdate,db:Session=Depends(get_db),user=Depends(require_roles("FARMER"))):
     shipment=db.get(TradeShipment,shipment_id)
     if not shipment:raise HTTPException(404,"Shipment not found")
+    order=db.get(TradeOrder,shipment.order_id)
+    if user and user.profile_id and user.profile_id!=order.farmer_id:raise HTTPException(403,"This shipment does not belong to your profile")
     shipment.current_lat=payload.latitude;shipment.current_lng=payload.longitude;shipment.status="IN_TRANSIT";shipment.updated_at=now()
     if payload.eta:shipment.eta=payload.eta
     if payload.progress is not None:shipment.progress=payload.progress
@@ -80,6 +84,7 @@ def update_location(shipment_id:str,payload:LocationUpdate,db:Session=Depends(ge
 def add_inspection(order_id:str,payload:InspectionCreate,db:Session=Depends(get_db),user=Depends(require_roles("FARMER","BUYER"))):
     order=db.get(TradeOrder,order_id)
     if not order:raise HTTPException(404,"Order not found")
+    if user and user.profile_id and user.profile_id not in {order.farmer_id,order.buyer_id}:raise HTTPException(403,"This order does not belong to your profile")
     item=TradeInspection(id=f"INS-{uuid.uuid4().hex[:8].upper()}",order_id=order.id,**payload.model_dump());db.add(item);passport=db.query(TradePassport).filter_by(order_id=order.id).first()
     if passport:
         if payload.stage=="DISPATCH":passport.dispatch_verified=True
@@ -91,6 +96,7 @@ def add_inspection(order_id:str,payload:InspectionCreate,db:Session=Depends(get_
 def update_payment(order_id:str,payload:PaymentUpdate,db:Session=Depends(get_db),user=Depends(require_roles("BUYER"))):
     payment=db.query(TradePayment).filter_by(order_id=order_id).first();order=db.get(TradeOrder,order_id)
     if not payment or not order:raise HTTPException(404,"Payment record not found")
+    if user and user.profile_id and user.profile_id!=order.buyer_id:raise HTTPException(403,"This payment does not belong to your buyer profile")
     payment.amount_paid=payload.amount_paid;payment.status=payload.status;db.add(TradeAuditEvent(order_id=order_id,event_type="PAYMENT_UPDATED",actor_id=payload.actor_id,payload=payload.model_dump()));db.commit();return order_dict(order,db)
 
 @router.post("/orders/{order_id}/payment-intent")

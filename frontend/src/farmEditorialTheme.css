@@ -1,0 +1,180 @@
+/* Earthy editorial theme inspired by traditional family-farm visual language. */
+:root {
+  --forest: #5b2a39;
+  --forest-2: #744255;
+  --lime: #ccd3bb;
+  --ivory: #f3f0e7;
+  --paper: #fffdf7;
+  --ink: #34252b;
+  --line: #d8d4c5;
+  --farm-wine: #5b2a39;
+  --farm-sage: #8d9475;
+  --farm-sage-soft: #ccd3bb;
+  --farm-cream: #f3f0e7;
+  --farm-paper: #fffdf7;
+  --farm-charcoal: #34252b;
+}
+
+body {
+  background: var(--farm-cream);
+  color: var(--farm-charcoal);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection { background: var(--farm-wine); color: #fff; }
+::-webkit-scrollbar-track { background: var(--farm-cream); }
+::-webkit-scrollbar-thumb { background: var(--farm-sage); }
+
+.font-serif,
+h1, h2,
+.buyer-brand,
+.buyer-heading h1,
+.buyer-hero h2,
+.demo-panel > h3,
+.market-filter b,
+.listing-card h3,
+.farmer-card h3,
+.profile-overlay h2,
+.farmer-record-card h2,
+.farmer-welcome h2,
+.soil-head h2,
+.fertilizer-title h3,
+.manual-listing h2,
+.my-listings h2,
+.farmer-order-list h2,
+.today-hero h2,
+.today-section-head h3,
+.today-grid h3 {
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+
+/* Landing page: creamy canvas, ink-like headings and simple farm-sign buttons. */
+#root > div,
+.min-h-screen.bg-\[\#fafafa\] { background-color: var(--farm-cream) !important; }
+#main-header > div { border-color: rgba(91, 42, 57, .16) !important; }
+#header-logo { color: var(--farm-wine) !important; }
+#desktop-nav a { color: #5f6254 !important; }
+#desktop-nav a:hover { color: var(--farm-wine) !important; }
+#btn-get-started-header {
+  background: var(--farm-wine) !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+#btn-login-header { color: var(--farm-wine) !important; }
+
+main section { scroll-margin-top: 80px; }
+main section h1, main section h2 { color: var(--farm-wine) !important; }
+main section p { color: #636556; }
+#hero h1, #hero h1 span { color: #fffdf7 !important; }
+#hero p { color: rgba(255, 253, 247, .86) !important; }
+#hero-badge { border-radius: 4px !important; background: rgba(91, 42, 57, .72) !important; }
+#hero-badge > span:first-child { background: var(--farm-sage-soft) !important; box-shadow: none !important; }
+#btn-hero-get-started {
+  background: var(--farm-sage-soft) !important;
+  color: var(--farm-wine) !important;
+  border-radius: 4px !important;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+}
+main section button:not(.profile-close),
+footer button {
+  border-radius: 4px !important;
+}
+
+/* Portal shells */
+.buyer-app, .farmer-app { background: var(--farm-cream) !important; }
+.buyer-sidebar, .farmer-sidebar { background: var(--farm-wine) !important; }
+.buyer-sidebar nav > button:hover,
+.buyer-sidebar nav > button.active,
+.farmer-sidebar nav > button:hover,
+.farmer-sidebar nav > button.active { background: var(--forest-2) !important; }
+.buyer-sidebar nav > button.active,
+.farmer-sidebar nav > button.active { box-shadow: inset 3px 0 var(--farm-sage-soft) !important; }
+.buyer-sidebar nav em,
+.buyer-brand > span { background: var(--farm-sage-soft) !important; color: var(--farm-wine) !important; }
+.buyer-topbar { background: rgba(243, 240, 231, .92) !important; border-color: var(--line) !important; }
+.buyer-heading > div > span, .panel-kicker { color: var(--farm-sage) !important; }
+.buyer-heading h1 { color: var(--farm-wine) !important; }
+
+/* Cards become flatter, warmer, and more tactile. */
+.demo-panel,
+.dashboard-stats article,
+.market-filter,
+.listing-card,
+.farmer-card,
+.farmer-record-card,
+.soil-advisory,
+.manual-listing,
+.my-listings,
+.farmer-order-list,
+.order-status-summary article,
+.today-grid > article {
+  background: var(--farm-paper) !important;
+  border-color: var(--line) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 0 rgba(91, 42, 57, .07) !important;
+}
+
+.buyer-hero {
+  background: linear-gradient(125deg, var(--farm-sage-soft), #e4e6d8) !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+}
+.buyer-hero h2, .buyer-hero h2 em { color: var(--farm-wine) !important; }
+.market-signal-card,
+.farmer-welcome,
+.today-hero,
+.soil-source { background: var(--farm-wine) !important; border-radius: 8px !important; }
+.farmer-welcome h2, .today-hero h2 { color: #fff !important; }
+.farmer-welcome h2 em, .today-hero h2 em { color: var(--farm-sage-soft) !important; }
+
+.lime-button,
+.market-signal-card > button,
+.farmer-welcome button,
+.today-hero button,
+.publish-listing,
+.mandi-price-summary button {
+  background: var(--farm-wine) !important;
+  border-color: var(--farm-wine) !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+}
+.market-signal-card > button,
+.farmer-welcome button,
+.today-hero button { background: var(--farm-sage-soft) !important; color: var(--farm-wine) !important; }
+
+.hero-chip,
+.verified-pill,
+.crop-tag,
+.listing-message,
+.crop-choice-note,
+.assisted-use { background: rgba(204, 211, 187, .65) !important; color: var(--farm-wine) !important; }
+.soil-score { background: conic-gradient(var(--farm-sage) 0 78%, #e4e1d7 78%) !important; }
+.nutrient-track i,
+.order-progress i { background: var(--farm-sage) !important; }
+
+input, select, textarea, .global-search {
+  background-color: var(--farm-paper) !important;
+  border-color: var(--line) !important;
+}
+
+button, a { transition: color .18s ease, background-color .18s ease, transform .18s ease; }
+button:hover:not(:disabled) { transform: translateY(-1px); }
+button:active:not(:disabled) { transform: translateY(0); }
+
+.global-language-dock {
+  background: rgba(255, 253, 247, .94) !important;
+  border-color: var(--line) !important;
+  border-radius: 6px !important;
+}
+
+@media (max-width: 760px) {
+  .buyer-hero, .farmer-welcome, .today-hero { border-radius: 6px !important; }
+}

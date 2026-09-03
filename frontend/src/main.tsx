@@ -5,6 +5,7 @@ import './fixes.css'
 import './nearby.css'
 import './buyerMarketplaceFixes.css'
 import './buyerInteractive.css'
+import './farmEditorialTheme.css'
 import App from './App.tsx'
 import { LanguageProvider } from './agriloop/i18n/LanguageContext'
 

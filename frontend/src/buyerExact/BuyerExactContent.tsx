@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   ArrowDownRight,
@@ -44,6 +44,7 @@ import { Progress, ProgressIndicator, ProgressTrack } from "./ui/progress";
 const CreditPanel=lazy(()=>import("../components/CreditPanel"));
 const FreshnessPanel=lazy(()=>import("../components/FreshnessPanel"));
 const LogisticsOptimizerPanel=lazy(()=>import("../components/LogisticsOptimizerPanel"));
+import { apiFetch } from "../api/client";
 
 const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
@@ -744,7 +745,7 @@ function Marketplace({
       return;
     }
     setOrderNotice("Creating saved order…");
-    const response = await fetch(`${API}/trade/orders`, {
+    const response = await apiFetch(`${API}/trade/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

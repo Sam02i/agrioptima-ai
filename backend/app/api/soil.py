@@ -3,12 +3,13 @@ from pathlib import Path
 from datetime import datetime, timezone
 import base64, json, sqlite3, uuid
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from app.services.soil_ocr import extract as extract_document
 from app.db.session import SessionLocal
 from app.db.models import MarketFarmer, MarketFarm, SoilCardRecord
 from app.services.object_store import store_bytes
+from app.security import require_roles
 
 router = APIRouter(prefix="/soil", tags=["Soil Intelligence"])
 DB_PATH = Path(__file__).resolve().parents[2] / "data" / "farmer_marketplace.db"
@@ -138,8 +139,9 @@ def analyze_soil(sample: SoilSample):
     return analyse(sample)
 
 @router.post("/cards/extract", status_code=201)
-def extract_soil_card(payload: SoilCardUpload):
+def extract_soil_card(payload: SoilCardUpload,user=Depends(require_roles("FARMER"))):
     """Store the card and return an explicitly unverified draft for farmer confirmation."""
+    if user and user.profile_id and user.profile_id!=payload.farmer_id:raise HTTPException(403,"You can only upload a card for your own profile")
     encoded=payload.image_data.split(",",1)[-1]
     try: raw=base64.b64decode(encoded,validate=True)
     except Exception: raise HTTPException(422,"The Soil Health Card file could not be read")
@@ -156,9 +158,10 @@ def extract_soil_card(payload: SoilCardUpload):
     return {"card_id":card_id,"status":"NEEDS_CONFIRMATION","values":draft,"confidence":extraction["confidence"],"extraction_method":method,"extracted_fields":sorted(extraction["values"]),"message":"Check every draft value against the card, then confirm it."}
 
 @router.post("/cards/{card_id}/confirm")
-def confirm_soil_card(card_id:str,payload:SoilCardConfirmation):
+def confirm_soil_card(card_id:str,payload:SoilCardConfirmation,user=Depends(require_roles("FARMER"))):
     db=SessionLocal();row=db.get(SoilCardRecord,card_id)
     if not row:db.close();raise HTTPException(404,"Soil Health Card upload not found")
+    if user and user.profile_id and user.profile_id!=row.farmer_id:db.close();raise HTTPException(403,"You can only confirm your own Soil Health Card")
     stamp=datetime.now(timezone.utc);values=payload.model_dump();row.status="CONFIRMED";row.confirmed_values=values;row.confirmed_at=stamp;db.commit();db.close()
     return {"card_id":card_id,"status":"CONFIRMED","values":values,"source":"farmer_confirmed_soil_health_card"}
 

@@ -59,12 +59,14 @@ def listings(crop:str|None=Query(default=None),status:str="AVAILABLE",db:Session
 
 @router.post("/listings",status_code=201)
 def create_listing(payload:NewListing,db:Session=Depends(get_db),user=Depends(require_roles("FARMER"))):
+    if user and user.profile_id and user.profile_id!=payload.farmer_id:raise HTTPException(403,"You can only publish for your own farmer profile")
     farmer=db.get(MarketFarmer,payload.farmer_id);farm=db.query(MarketFarm).filter_by(farmer_id=payload.farmer_id).order_by(MarketFarm.area_acres.desc()).first()
     if not farmer or not farm:raise HTTPException(404,"Farmer or farm record not found")
     item=CropListing(id=f"LOT-{uuid.uuid4().hex[:10].upper()}",farmer_id=farmer.id,farm_id=farm.id,crop_name=payload.crop_name,crop_variety=payload.crop_variety,quantity_kg=payload.quantity_kg,available_quantity_kg=payload.quantity_kg,price_per_kg=payload.price_per_kg,minimum_order_quantity_kg=payload.minimum_order_quantity_kg,declared_grade=payload.declared_grade,packaging_type=payload.packaging_type,listing_status="AVAILABLE",latitude=farm.latitude,longitude=farm.longitude,district=farmer.district,state=farmer.state,image_data=payload.image_data,created_at=datetime.now(timezone.utc),updated_at=datetime.now(timezone.utc));db.add(item);db.commit();return {"listing_id":item.id,"status":item.listing_status}
 
 @router.delete("/listings/{listing_id}")
 def remove_listing(listing_id:str,farmer_id:str=Query(...),db:Session=Depends(get_db),user=Depends(require_roles("FARMER"))):
+    if user and user.profile_id and user.profile_id!=farmer_id:raise HTTPException(403,"You can only remove your own listing")
     item=db.query(CropListing).filter_by(id=listing_id,farmer_id=farmer_id).first()
     if not item:raise HTTPException(404,"Listing was not found for this farmer")
     db.delete(item);db.commit();return {"listing_id":listing_id,"removed":True}

@@ -120,7 +120,7 @@ flowchart LR
 | Web experience | React 19, TypeScript, Vite, Tailwind CSS, Motion |
 | Maps | Leaflet and OpenStreetMap |
 | API | Python 3.12, FastAPI, Pydantic |
-| Persistence | PostgreSQL/Neon, SQLAlchemy; SQLite prototype stores |
+| Persistence | PostgreSQL/Neon and SQLAlchemy; idempotent legacy seed import |
 | ML and images | TensorFlow/Keras, Pillow, NumPy |
 | External data | Open-Meteo and data.gov.in/AGMARKNET |
 | Hosting | Vercel frontend and Render API |
@@ -264,17 +264,21 @@ npm run build
 
 ## Production status
 
-The integrated prototype is appropriate for a hackathon demonstration. Before field production, it still needs:
+The integrated prototype is appropriate for a hackathon demonstration. PostgreSQL trade persistence, signed account sessions, role-aware mutations, private object-storage support, GPS ingestion, and payment-provider boundaries are implemented. Before field production, it still needs:
 
-- Authentication, farmer consent, and role-based permissions
-- Complete migration of local SQLite workflows to managed PostgreSQL
-- Private object storage for soil cards and produce images
+- Verified farmer/buyer onboarding, consent capture, password recovery, and MFA
+- A reviewed Alembic release process and production backup-restore drills
+- Production object-storage and Razorpay credentials
 - Tested OCR with unit detection and field-level confidence
 - Agronomist-reviewed regional recommendation rules
 - Real GPS, notification, and payment integrations
 - Monitoring, rate limiting, backups, secret rotation, and security testing
 - Offline-first workflows and reviewed language translations
 - Field validation with farmers, FPOs, buyers, laboratories, and agronomists
+
+Production authentication is opt-in so the public demo remains accessible. Set a strong `AUTH_SECRET`, test account ownership, and then set `AUTH_REQUIRED=true`. Use `GET /readiness` to see which production integrations are configured.
+
+Follow the [production deployment checklist](docs/PRODUCTION_DEPLOYMENT.md) for the Render, Neon, and Vercel rollout and post-deployment checks.
 
 ## Security
 
