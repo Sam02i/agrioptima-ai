@@ -1,9 +1,9 @@
 import { CapabilityItem, FeatureCard, StepItem, ImpactStat } from '../types';
 import landingFieldPlough from '../assets/images/landing-field-plough.jpeg';
 import landingRiceFarmer from '../assets/images/landing-rice-farmer.jpeg';
+import farmValley from '../../assets/theme/farm-valley.webp';
 
-export const HERO_BACKGROUND_IMAGE =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCwjuk3Eug9vyc23MtLFSpN_jFO0hpMWyah-nuysD5u4ipslKvgbEvBIQt2OAZ8XFkMKqwgi29ayPfYoscUtGcTdqr0JZbP8TnH_m19OeaaXDIJ_JbKdxB_aPj9dgG_N2j_zWhGd6JzKtw2tcjJl7U2Txy-agPjvsndeZz2e5Q_58UbsvaWpPIGyjOmS-a0XsHCsAaWLjsJ74X-w8ignv2VMltaM7bIx2uf0eWbaBMfAIcO5MtoX90w';
+export const HERO_BACKGROUND_IMAGE = farmValley;
 
 export const CAPABILITIES: CapabilityItem[] = [
   {

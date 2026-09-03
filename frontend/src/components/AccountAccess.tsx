@@ -50,7 +50,7 @@ export default function AccountAccess() {
     <>
       <button
         onClick={() => (user ? setOpen(true) : setOpen(true))}
-        className="fixed right-4 bottom-4 z-[10000] rounded-full bg-[#153f2e] px-5 py-3 text-sm font-semibold text-white shadow-xl"
+        className="account-access-trigger fixed right-4 bottom-4 z-[10000] rounded-full bg-[#153f2e] px-5 py-3 text-sm font-semibold text-white shadow-xl"
       >
         {user ? `${user.role.toLowerCase()} account` : `Secure sign in`}
       </button>
@@ -60,7 +60,7 @@ export default function AccountAccess() {
           onClick={() => setOpen(false)}
         >
           <section
-            className="w-full max-w-md rounded-3xl bg-[#fffdf5] p-7 text-[#172235] shadow-2xl"
+            className="account-access-panel w-full max-w-md rounded-3xl bg-[#fffdf5] p-7 text-[#172235] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button

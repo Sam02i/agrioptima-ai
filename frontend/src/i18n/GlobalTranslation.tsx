@@ -59,6 +59,104 @@ const extras: Record<string, Partial<Record<LanguageCode,string>>> = {
   'Close':{hi:'बंद करें',pa:'ਬੰਦ ਕਰੋ',hr:'बंद करो',mr:'बंद करा',or:'ବନ୍ଦ କରନ୍ତୁ'},
 };
 
+Object.assign(extras, {
+  'Smarter procurement.':{hi:'बेहतर खरीदारी।',pa:'ਸਮਝਦਾਰ ਖਰੀਦ।',hr:'समझदार खरीद।',mr:'अधिक स्मार्ट खरेदी.',or:'ଅଧିକ ସ୍ମାର୍ଟ କ୍ରୟ।'},
+  'Stronger margins.':{hi:'बेहतर मुनाफ़ा।',pa:'ਵਧੀਆ ਮੁਨਾਫ਼ਾ।',hr:'बेहतर मुनाफा।',mr:'अधिक मजबूत नफा.',or:'ଅଧିକ ଲାଭ।'},
+  'Build procurement plan':{hi:'खरीद योजना बनाएँ',pa:'ਖਰੀਦ ਯੋਜਨਾ ਬਣਾਓ',hr:'खरीद योजना बनाओ',mr:'खरेदी योजना तयार करा',or:'କ୍ରୟ ଯୋଜନା କରନ୍ତୁ'},
+  'Explore verified produce':{hi:'सत्यापित उपज देखें',pa:'ਪ੍ਰਮਾਣਿਤ ਉਪਜ ਵੇਖੋ',hr:'सत्यापित उपज देखो',mr:'सत्यापित उत्पादन पहा',or:'ଯାଞ୍ଚିତ ଉତ୍ପାଦ ଦେଖନ୍ତୁ'},
+  'Live market signal':{hi:'लाइव बाज़ार संकेत',pa:'ਲਾਈਵ ਮਾਰਕੀਟ ਸੰਕੇਤ',hr:'लाइव बाजार संकेत',mr:'थेट बाजार संकेत',or:'ସିଧା ବଜାର ସଙ୍କେତ'},
+  'Matched supply':{hi:'मिलान की गई आपूर्ति',pa:'ਮੇਲ ਖਾਂਦੀ ਸਪਲਾਈ',hr:'मिलान आपूर्ति',mr:'जुळलेला पुरवठा',or:'ମେଳ ଖାଉଥିବା ଯୋଗାଣ'},
+  'Best landed cost':{hi:'सर्वोत्तम कुल लागत',pa:'ਸਭ ਤੋਂ ਵਧੀਆ ਕੁੱਲ ਲਾਗਤ',hr:'सबतै बढ़िया कुल लागत',mr:'सर्वोत्तम पोहोच खर्च',or:'ସର୍ବୋତ୍ତମ ପହଞ୍ଚ ମୂଲ୍ୟ'},
+  'Freshness confidence':{hi:'ताज़गी विश्वसनीयता',pa:'ਤਾਜ਼ਗੀ ਭਰੋਸਾ',hr:'ताजगी भरोसा',mr:'ताजेपणा विश्वास',or:'ସତେଜତା ବିଶ୍ୱାସ'},
+  'Potential saving':{hi:'संभावित बचत',pa:'ਸੰਭਾਵੀ ਬਚਤ',hr:'संभावित बचत',mr:'संभाव्य बचत',or:'ସମ୍ଭାବ୍ୟ ସଞ୍ଚୟ'},
+  'What to do now':{hi:'अब क्या करें',pa:'ਹੁਣ ਕੀ ਕਰਨਾ ਹੈ',hr:'इब के करना सै',mr:'आता काय करावे',or:'ଏବେ କଣ କରିବେ'},
+  'Three simple actions':{hi:'तीन आसान काम',pa:'ਤਿੰਨ ਸੌਖੇ ਕੰਮ',hr:'तीन आसान काम',mr:'तीन सोप्या कृती',or:'ତିନୋଟି ସହଜ କାମ'},
+  'Current crop':{hi:'वर्तमान फसल',pa:'ਮੌਜੂਦਾ ਫਸਲ',hr:'मौजूदा फसल',mr:'सध्याचे पीक',or:'ବର୍ତ୍ତମାନ ଫସଲ'},
+  'Farmer choice preserved':{hi:'किसान की पसंद सुरक्षित',pa:'ਕਿਸਾਨ ਦੀ ਚੋਣ ਬਰਕਰਾਰ',hr:'किसान की पसंद कायम',mr:'शेतकऱ्याची निवड कायम',or:'ଚାଷୀଙ୍କ ପସନ୍ଦ ବଜାୟ'},
+  'Open crop plan':{hi:'फसल योजना खोलें',pa:'ਫਸਲ ਯੋਜਨਾ ਖੋਲ੍ਹੋ',hr:'फसल योजना खोलो',mr:'पीक योजना उघडा',or:'ଫସଲ ଯୋଜନା ଖୋଲନ୍ତୁ'},
+  'Your selling journey':{hi:'आपकी बिक्री यात्रा',pa:'ਤੁਹਾਡੀ ਵਿਕਰੀ ਯਾਤਰਾ',hr:'थारी बिक्री यात्रा',mr:'तुमचा विक्री प्रवास',or:'ଆପଣଙ୍କ ବିକ୍ରୟ ଯାତ୍ରା'},
+  'Farm profile connected':{hi:'खेत प्रोफ़ाइल जुड़ी है',pa:'ਖੇਤ ਪ੍ਰੋਫਾਈਲ ਜੁੜੀ ਹੈ',hr:'खेत प्रोफाइल जुड़ी सै',mr:'शेत प्रोफाइल जोडले आहे',or:'ଚାଷ ପ୍ରୋଫାଇଲ ସଂଯୁକ୍ତ'},
+  'Secure sign in':{hi:'सुरक्षित साइन इन',pa:'ਸੁਰੱਖਿਅਤ ਸਾਈਨ ਇਨ',hr:'सुरक्षित साइन इन',mr:'सुरक्षित साइन इन',or:'ସୁରକ୍ଷିତ ସାଇନ୍ ଇନ'},
+  'Opening your workspace…':{hi:'आपका कार्यक्षेत्र खुल रहा है…',pa:'ਤੁਹਾਡਾ ਵਰਕਸਪੇਸ ਖੁੱਲ ਰਿਹਾ ਹੈ…',hr:'थारा काम का हिस्सा खुल रहा सै…',mr:'तुमचे कार्यक्षेत्र उघडत आहे…',or:'ଆପଣଙ୍କ କାର୍ଯ୍ୟକ୍ଷେତ୍ର ଖୋଲୁଛି…'}
+});
+
+Object.assign(extras, {
+  'Global Agronomy Network':{hi:'वैश्विक कृषि विज्ञान नेटवर्क'},
+  'Over 1.2 million hectares actively monitored with zero data downtime.':{hi:'12 लाख हेक्टेयर से अधिक कृषि भूमि की बिना किसी डेटा रुकावट के निगरानी की जा रही है।'},
+  '+28% Avg Yield Lift':{hi:'औसत उपज में 28% वृद्धि'},
+  '-35% Input Waste':{hi:'कृषि सामग्री की बर्बादी में 35% कमी'},
+  'Precision Agronomy':{hi:'सटीक कृषि विज्ञान'},
+  'Verified Demand':{hi:'सत्यापित माँग'},
+  'Smart Logistics':{hi:'कुशल परिवहन'},
+  'Fleet Efficiency':{hi:'वाहन दक्षता'},
+  'Enterprise Buyer':{hi:'संस्थागत खरीदार'},
+  'Fintech Credit':{hi:'डिजिटल कृषि ऋण'},
+  '+38% Energy Savings':{hi:'ऊर्जा खर्च में 38% बचत'},
+  '100% Pre-Sold Harvest':{hi:'पूरी उपज की अग्रिम बिक्री'},
+  '-44% Freight Cost':{hi:'ढुलाई खर्च में 44% कमी'},
+  '94% Trailer Utilization':{hi:'वाहन क्षमता का 94% उपयोग'},
+  '$3.4M Direct Volume':{hi:'34 लाख डॉलर का सीधा कारोबार'},
+  '98.2% Repayment Rate':{hi:'98.2% समय पर ऋण भुगतान'},
+  'AgriOptimaᴬᴵ cut our irrigation energy bill by 38% in the first season while improving fruit brix sugar levels consistently across all blocks with zero manual guesswork.':{hi:'AgriOptimaᴬᴵ की मदद से पहले ही मौसम में सिंचाई की ऊर्जा लागत 38% घटी और बिना अनुमान लगाए पूरे खेत में फलों की मिठास बेहतर हुई।'},
+  'The forward contract matching enabled us to secure buyers 4 months before harvest at a guaranteed price, removing speculative volatility and price collapse risks.':{hi:'अग्रिम अनुबंध मिलान से हमें कटाई से चार महीने पहले तय भाव पर खरीदार मिले और भाव गिरने का जोखिम कम हुआ।'},
+  'Multi-farmer load aggregation grouped our small daily lettuce harvests into single refrigerated trucks. Our transport cost plummeted by 44% immediately.':{hi:'कई किसानों की छोटी दैनिक उपज को एक शीतित वाहन में भेजने से हमारा परिवहन खर्च तुरंत 44% घट गया।'},
+  'Having verified dispatch freshness timestamps and dual-gate AI inspection logs before trucks arrive gives our procurement teams total operational certainty.':{hi:'वाहन पहुँचने से पहले सत्यापित ताज़गी समय और दोनों सिरों की AI जाँच मिलने से हमारी खरीद टीम सही निर्णय ले पाती है।'},
+  'Vehicle capacity matching algorithm eliminated 32% of dead-head miles. We fill our reefer trailers to 94% capacity across every multi-stop farm pickup.':{hi:'वाहन क्षमता मिलान से खाली चलने वाली दूरी 32% घटी और हर बहु-खेत संग्रह में शीतित वाहन 94% तक भरते हैं।'},
+  'Today on my farm':{hi:'आज मेरे खेत पर'},
+  'Simple actions for the crop you already grow, selling price, orders, and payment.':{hi:'आपकी मौजूदा फसल, बिक्री भाव, ऑर्डर और भुगतान के लिए आसान कदम।'},
+  'Connected farmer data':{hi:'जुड़ा हुआ किसान डेटा'},
+  'Review farms or help several farmers through an FPO or assisted operator.':{hi:'खेतों की जानकारी देखें या FPO के माध्यम से कई किसानों की सहायता करें।'},
+  'My current crop plan':{hi:'मेरी मौजूदा फसल की योजना'},
+  'Keep your crop choice and get practical guidance for this season. Other crops are optional next-season ideas.':{hi:'अपनी चुनी हुई फसल जारी रखें और इस मौसम के लिए व्यावहारिक सलाह पाएँ। दूसरी फसलें केवल अगले मौसम के वैकल्पिक सुझाव हैं।'},
+  'Soil and fertilizer guidance':{hi:'मिट्टी और उर्वरक की सलाह'},
+  'Soil values load automatically. See what is missing, when to act, and choose one suitable fertilizer option.':{hi:'मिट्टी के आँकड़े अपने आप भर जाते हैं। कमी पहचानें, सही समय जानें और उपयुक्त उर्वरक चुनें।'},
+  'Prices and produce listing':{hi:'भाव और उपज की बिक्री सूची'},
+  'Compare recent mandi references, estimated transport, and buyer-ready listing prices.':{hi:'हाल के मंडी भाव, अनुमानित ढुलाई खर्च और खरीदार के लिए उचित बिक्री भाव की तुलना करें।'},
+  'Profile status':{hi:'प्रोफ़ाइल की स्थिति'},
+  'Preferred language':{hi:'पसंदीदा भाषा'},
+  'Primary goal':{hi:'मुख्य लक्ष्य'},
+  'Risk preference':{hi:'जोखिम की पसंद'},
+  'Current crop':{hi:'मौजूदा फसल'},
+  'Irrigation':{hi:'सिंचाई का प्रकार'},
+  'Farmers in the same area':{hi:'इसी क्षेत्र के किसान'},
+  'What does my soil need?':{hi:'मेरी मिट्टी को किस पोषक तत्व की आवश्यकता है?'},
+  'You do not need to enter N, P, or K. We use the connected Soil Health Card or area estimate and turn it into practical actions for Orange (Kinnow).':{hi:'आपको N, P या K भरने की आवश्यकता नहीं है। जुड़े हुए मृदा स्वास्थ्य कार्ड या क्षेत्रीय अनुमान के आधार पर किन्नू के लिए उपयोगी सलाह दी जाती है।'},
+  'Use my Soil Health Card':{hi:'मेरा मृदा स्वास्थ्य कार्ड इस्तेमाल करें'},
+  'Upload a photo or PDF. Draft values are never treated as measurements until you confirm them.':{hi:'फोटो या PDF अपलोड करें। आपकी पुष्टि के बिना निकाले गए आँकड़ों को अंतिम माप नहीं माना जाएगा।'},
+  'Upload card':{hi:'मृदा स्वास्थ्य कार्ड अपलोड करें'},
+  'Enough for planning':{hi:'योजना के लिए पर्याप्त'},
+  'Needs attention':{hi:'सुधार की आवश्यकता'},
+  'See technical soil values (advanced)':{hi:'तकनीकी मृदा आँकड़े देखें (उन्नत)'},
+  'Choose one fertilizer option':{hi:'उपयुक्त उर्वरक विकल्प चुनें'},
+  'List produce for buyers':{hi:'खरीदारों के लिए उपज सूचीबद्ध करें'},
+  'Set the produce, available quantity, price, grade, and an optional real image.':{hi:'उपज, उपलब्ध मात्रा, भाव, ग्रेड और चाहें तो वास्तविक फोटो जोड़ें।'},
+  'My active listings':{hi:'मेरी सक्रिय बिक्री सूचियाँ'},
+  'Latest local selling guidance':{hi:'नवीनतम स्थानीय बिक्री सलाह'},
+  'Market range':{hi:'मंडी भाव की सीमा'},
+  'Suggested listing range':{hi:'सुझाई गई बिक्री भाव सीमा'},
+  'Suggested price':{hi:'सुझाया गया भाव'},
+  'Estimated transport and fees (₹/kg)':{hi:'अनुमानित ढुलाई और शुल्क (₹/किलो)'}
+});
+
+// These cards used to fall through to individual-word replacement, producing
+// mixed strings such as "Smart परिवहन & Load Aggregation". Keep complete UI
+// phrases here so each selected language receives a natural, complete sentence.
+Object.assign(extras, {
+  'Closed-Loop Journey View':{hi:'संपूर्ण कृषि यात्रा का दृश्य',pa:'ਪੂਰੀ ਖੇਤੀ ਯਾਤਰਾ ਦਾ ਦ੍ਰਿਸ਼',hr:'पूरी खेती यात्रा का नजारा',mr:'संपूर्ण शेती प्रवास दृश्य',or:'ସମ୍ପୂର୍ଣ୍ଣ କୃଷି ଯାତ୍ରା ଦୃଶ୍ୟ'},
+  'End-to-End Ag Lifecycle':{hi:'शुरुआत से अंत तक कृषि चक्र',pa:'ਸ਼ੁਰੂ ਤੋਂ ਅੰਤ ਤੱਕ ਖੇਤੀ ਚੱਕਰ',hr:'शुरू तै आखिर तक खेती चक्र',mr:'सुरुवातीपासून शेवटपर्यंत कृषी चक्र',or:'ଆରମ୍ଭରୁ ଶେଷ ପର୍ଯ୍ୟନ୍ତ କୃଷି ଚକ୍ର'},
+  'Digital Produce Passport':{hi:'डिजिटल उपज पासपोर्ट',pa:'ਡਿਜ਼ਿਟਲ ਉਪਜ ਪਾਸਪੋਰਟ',hr:'डिजिटल उपज पासपोर्ट',mr:'डिजिटल उत्पादन पासपोर्ट',or:'ଡିଜିଟାଲ ଉତ୍ପାଦ ପାସପୋର୍ଟ'},
+  'Quality AI & Verification':{hi:'एआई गुणवत्ता और सत्यापन',pa:'ਏਆਈ ਗੁਣਵੱਤਾ ਅਤੇ ਤਸਦੀਕ',hr:'एआई गुणवत्ता अर जांच',mr:'एआय गुणवत्ता आणि पडताळणी',or:'ଏଆଇ ଗୁଣବତ୍ତା ଓ ଯାଞ୍ଚ'},
+  'Procurement Credit Intelligence':{hi:'खरीद ऋण विश्लेषण',pa:'ਖਰੀਦ ਕਰਜ਼ਾ ਵਿਸ਼ਲੇਸ਼ਣ',hr:'खरीद उधार की समझ',mr:'खरेदी पत विश्लेषण',or:'କ୍ରୟ ଋଣ ବିଶ୍ଳେଷଣ'},
+  'Fintech & Risk Scoring':{hi:'वित्तीय तकनीक और जोखिम आकलन',pa:'ਵਿੱਤੀ ਤਕਨੀਕ ਅਤੇ ਜੋਖਮ ਮੁਲਾਂਕਣ',hr:'वित्त तकनीक अर जोखिम आकलन',mr:'वित्तीय तंत्रज्ञान आणि जोखीम मूल्यांकन',or:'ଆର୍ଥିକ ପ୍ରଯୁକ୍ତି ଓ ବିପଦ ମୂଲ୍ୟାଙ୍କନ'},
+  'Smart Logistics & Load Aggregation':{hi:'सुव्यवस्थित परिवहन और साझा माल ढुलाई',pa:'ਸੁਚੱਜੀ ਆਵਾਜਾਈ ਅਤੇ ਸਾਂਝੀ ਮਾਲ ਢੁਆਈ',hr:'समझदार ढुलाई अर साझा माल व्यवस्था',mr:'सुव्यवस्थित वाहतूक आणि एकत्रित मालवाहतूक',or:'ସୁବ୍ୟବସ୍ଥିତ ପରିବହନ ଓ ମିଳିତ ମାଲ ପରିବହନ'},
+  'Multi-Farmer Freight Optimization':{hi:'कई किसानों के लिए किफायती माल ढुलाई',pa:'ਕਈ ਕਿਸਾਨਾਂ ਲਈ ਕਿਫਾਇਤੀ ਮਾਲ ਢੁਆਈ',hr:'कई किसानां खातर सस्ती माल ढुलाई',mr:'अनेक शेतकऱ्यांसाठी किफायतशीर मालवाहतूक',or:'ଏକାଧିକ ଚାଷୀଙ୍କ ପାଇଁ ସୁଲଭ ମାଲ ପରିବହନ'},
+  'Predictive Growth & Outcome Intelligence':{hi:'उपज और परिणाम का पूर्वानुमान',pa:'ਉਪਜ ਅਤੇ ਨਤੀਜਿਆਂ ਦੀ ਭਵਿੱਖਬਾਣੀ',hr:'उपज अर नतीजे का पूर्वानुमान',mr:'उत्पादन आणि परिणामांचा अंदाज',or:'ଉତ୍ପାଦନ ଓ ଫଳାଫଳ ପୂର୍ବାନୁମାନ'},
+  'Yield & Market Foresight':{hi:'उपज और बाज़ार का पूर्वानुमान',pa:'ਉਪਜ ਅਤੇ ਮੰਡੀ ਦੀ ਭਵਿੱਖਬਾਣੀ',hr:'उपज अर बाजार का अंदाजा',mr:'उत्पादन आणि बाजाराचा अंदाज',or:'ଉତ୍ପାଦନ ଓ ବଜାର ପୂର୍ବାନୁମାନ'},
+  'Connected System':{hi:'जुड़ी हुई व्यवस्था',pa:'ਜੁੜੀ ਹੋਈ ਪ੍ਰਣਾਲੀ',hr:'जुड़ी व्यवस्था',mr:'जोडलेली व्यवस्था',or:'ସଂଯୁକ୍ତ ବ୍ୟବସ୍ଥା'},
+  'Pause auto-rotation':{hi:'स्वचालित बदलाव रोकें',pa:'ਆਪਣੇ ਆਪ ਬਦਲਣਾ ਰੋਕੋ',hr:'अपने आप बदलणा रोको',mr:'स्वयंचलित बदल थांबवा',or:'ସ୍ୱୟଂଚାଳିତ ପରିବର୍ତ୍ତନ ବନ୍ଦ କରନ୍ତୁ'},
+  'Resume auto-rotation':{hi:'स्वचालित बदलाव फिर चलाएँ',pa:'ਆਪਣੇ ਆਪ ਬਦਲਣਾ ਮੁੜ ਚਲਾਓ',hr:'अपने आप बदलणा फेर चालू करो',mr:'स्वयंचलित बदल पुन्हा सुरू करा',or:'ସ୍ୱୟଂଚାଳିତ ପରିବର୍ତ୍ତନ ପୁଣି ଚାଲୁ କରନ୍ତୁ'}
+});
+
 const vocabulary:Partial<Record<LanguageCode,Record<string,string>>>={
  hi:{automatic:'स्वचालित',soil:'मिट्टी',health:'स्वास्थ्य',intelligence:'बुद्धिमत्ता',area:'क्षेत्र',regional:'क्षेत्रीय',baseline:'आधार मान',common:'सामान्य',values:'मान',district:'जिला',nutrient:'पोषक तत्व',nutrients:'पोषक तत्व',nitrogen:'नाइट्रोजन',phosphorus:'फॉस्फोरस',potassium:'पोटैशियम',missing:'कमी',sufficient:'पर्याप्त',moderate:'मध्यम',low:'कम',target:'लक्ष्य',recommended:'अनुशंसित',fertilizer:'उर्वरक',plan:'योजना',farmer:'किसान',farm:'खेत',buyer:'खरीदार',buyers:'खरीदार',produce:'उपज',listing:'सूची',listings:'सूचियाँ',marketplace:'बाज़ार',price:'मूल्य',quantity:'मात्रा',available:'उपलब्ध',remove:'हटाएँ',publish:'प्रकाशित करें',image:'चित्र',grade:'ग्रेड',order:'ऑर्डर',orders:'ऑर्डर',shipment:'शिपमेंट',shipments:'शिपमेंट',shipped:'भेजा गया',pending:'लंबित',transit:'रास्ते में',status:'स्थिति',current:'वर्तमान',active:'सक्रिय',total:'कुल',freshness:'ताज़गी',credit:'ऋण',supplier:'आपूर्तिकर्ता',suppliers:'आपूर्तिकर्ता',logistics:'परिवहन',tracking:'ट्रैकिंग',digital:'डिजिटल',passport:'पासपोर्ट',verified:'सत्यापित',open:'खोलें',close:'बंद करें',back:'वापस',search:'खोजें',select:'चुनें',create:'बनाएँ',profile:'प्रोफ़ाइल',overview:'अवलोकन',recommendation:'सुझाव',crop:'फसल',delivery:'वितरण',today:'आज',tomorrow:'कल',loading:'लोड हो रहा है',save:'सहेजें',cancel:'रद्द करें',upload:'अपलोड करें',received:'प्राप्त',quality:'गुणवत्ता',score:'स्कोर',risk:'जोखिम',location:'स्थान',details:'विवरण',name:'नाम',language:'भाषा'},
  mr:{automatic:'स्वयंचलित',soil:'माती',health:'आरोग्य',intelligence:'बुद्धिमत्ता',area:'क्षेत्र',regional:'प्रादेशिक',baseline:'मूलभूत मान',common:'सामान्य',values:'मूल्ये',district:'जिल्हा',nutrient:'पोषक घटक',nutrients:'पोषक घटक',nitrogen:'नायट्रोजन',phosphorus:'फॉस्फरस',potassium:'पोटॅशियम',missing:'कमतरता',sufficient:'पुरेसे',moderate:'मध्यम',low:'कमी',target:'लक्ष्य',recommended:'शिफारस केलेले',fertilizer:'खत',plan:'योजना',farmer:'शेतकरी',farm:'शेत',buyer:'खरेदीदार',buyers:'खरेदीदार',produce:'उत्पादन',listing:'सूची',listings:'सूची',marketplace:'बाजारपेठ',price:'किंमत',quantity:'प्रमाण',available:'उपलब्ध',remove:'काढा',publish:'प्रकाशित करा',image:'प्रतिमा',grade:'दर्जा',order:'ऑर्डर',orders:'ऑर्डर',shipment:'मालवाहतूक',shipments:'मालवाहतूक',shipped:'पाठवले',pending:'प्रलंबित',transit:'मार्गावर',status:'स्थिती',current:'सध्याचे',active:'सक्रिय',total:'एकूण',freshness:'ताजेपणा',credit:'पत',supplier:'पुरवठादार',suppliers:'पुरवठादार',logistics:'वाहतूक',tracking:'मागोवा',digital:'डिजिटल',passport:'पासपोर्ट',verified:'सत्यापित',open:'उघडा',close:'बंद करा',back:'मागे',search:'शोधा',select:'निवडा',create:'तयार करा',profile:'प्रोफाइल',overview:'आढावा',recommendation:'शिफारस',crop:'पीक',delivery:'वितरण',today:'आज',tomorrow:'उद्या',loading:'लोड होत आहे',save:'जतन करा',cancel:'रद्द करा',upload:'अपलोड करा',received:'प्राप्त',quality:'गुणवत्ता',score:'गुण',risk:'जोखीम',location:'स्थान',details:'तपशील',name:'नाव',language:'भाषा'},
@@ -70,6 +168,8 @@ const vocabulary:Partial<Record<LanguageCode,Record<string,string>>>={
 const originals=new WeakMap<Node,string>();
 const lastApplied=new WeakMap<Node,string>();
 const attrOriginals=new WeakMap<Element,Record<string,string>>();
+const attrLastApplied=new WeakMap<Element,Record<string,string>>();
+const escapeRegExp=(value:string)=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
 function dictionary(lang:LanguageCode){
   const map=new Map<string,string>();
@@ -80,23 +180,56 @@ function dictionary(lang:LanguageCode){
   return map;
 }
 
+function restoreEnglish(value:string){
+  let output=value;
+
+  // React can reuse a text node when the language changes. Convert any text
+  // from the previous language back to the single English source before the
+  // next translation pass, so translations never stack on one another.
+  (['hi','pa','hr','mr','or'] as LanguageCode[]).forEach((sourceLanguage)=>{
+    const reverse=[...dictionary(sourceLanguage).entries()]
+      .filter(([english,translated])=>english!==translated)
+      .sort((a,b)=>b[1].length-a[1].length);
+    reverse.forEach(([english,translated])=>{
+      output=output.replace(new RegExp(escapeRegExp(translated),'g'),english);
+    });
+
+    const reverseWords=Object.entries(vocabulary[sourceLanguage]||{})
+      .sort((a,b)=>b[1].length-a[1].length);
+    reverseWords.forEach(([english,translated])=>{
+      output=output.replace(new RegExp(escapeRegExp(translated),'g'),english);
+    });
+  });
+  return output;
+}
+
 function translateValue(value:string,map:Map<string,string>,lang:LanguageCode){
   if(lang==='en')return value;
   const trimmed=value.trim(); const exact=map.get(trimmed);
   if(exact)return value.replace(trimmed,exact);
-  let output=value;
-  [...map.entries()].sort((a,b)=>b[0].length-a[0].length).forEach(([from,to])=>{if(from.length>3)output=output.replaceAll(from,to)});
-  Object.entries(vocabulary[lang]||{}).sort((a,b)=>b[0].length-a[0].length).forEach(([from,to])=>{
-    output=output.replace(new RegExp(`\\b${from}\\b`,'gi'),to);
-  });
-  return output;
+  if(lang==='hi'){
+    const patterns:Array<[RegExp,(match:RegExpMatchArray)=>string]>=[
+      [/^Keep growing (.+)\.$/,m=>`${m[1]} की खेती जारी रखें।`],
+      [/^Open my (.+) plan$/,m=>`${m[1]} की मेरी योजना खोलें`],
+      [/^(.+) market guidance$/,m=>`${m[1]} के मंडी भाव की सलाह`],
+      [/^Other farmers near (.+)$/,m=>`${m[1]} के आसपास के अन्य किसान`],
+      [/^Your (.+) plan will appear here$/,m=>`${m[1]} की आपकी योजना यहाँ दिखाई जाएगी`],
+      [/^(\d+) active buyer listing$/,m=>`${m[1]} सक्रिय खरीदार सूची`],
+      [/^(\d+) active buyer listings$/,m=>`${m[1]} सक्रिय खरीदार सूचियाँ`],
+    ];
+    for(const [pattern,replacement] of patterns){const match=trimmed.match(pattern);if(match)return value.replace(trimmed,replacement(match));}
+  }
+  // Never translate isolated words inside an otherwise untranslated sentence.
+  // A missing phrase remains readable English until a reviewed full translation
+  // is added, instead of producing confusing mixed-language text.
+  return value;
 }
 
 function apply(root:Document|ShadowRoot,lang:LanguageCode){
   const map=dictionary(lang); const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
   let node:Node|null;
-  while((node=walker.nextNode())){const parent=node.parentElement;if(!parent||parent.closest('.global-language-dock')||['SCRIPT','STYLE'].includes(parent.tagName))continue;const current=node.textContent||'';if(!originals.has(node)||(lastApplied.has(node)&&current!==lastApplied.get(node)))originals.set(node,current);const original=originals.get(node)||'';const next=translateValue(original,map,lang);if(current!==next)node.textContent=next;lastApplied.set(node,next)}
-  root.querySelectorAll('input,textarea,button,[aria-label],[title]').forEach((element)=>{if(element.closest('.global-language-dock'))return;let saved=attrOriginals.get(element);if(!saved){saved={};attrOriginals.set(element,saved)};['placeholder','aria-label','title'].forEach((attr)=>{const current=element.getAttribute(attr);if(current&&!saved![attr])saved![attr]=current;if(saved![attr])element.setAttribute(attr,translateValue(saved![attr],map,lang))})});
+  while((node=walker.nextNode())){const parent=node.parentElement;if(!parent||parent.closest('.global-language-dock,[data-i18n-native]')||['SCRIPT','STYLE'].includes(parent.tagName))continue;const current=node.textContent||'';if(!originals.has(node)||(lastApplied.has(node)&&current!==lastApplied.get(node)))originals.set(node,restoreEnglish(current));const original=originals.get(node)||'';const next=translateValue(original,map,lang);if(current!==next)node.textContent=next;lastApplied.set(node,next)}
+  root.querySelectorAll('input,textarea,button,[aria-label],[title]').forEach((element)=>{if(element.closest('.global-language-dock,[data-i18n-native]'))return;let saved=attrOriginals.get(element);let applied=attrLastApplied.get(element);if(!saved){saved={};attrOriginals.set(element,saved)}if(!applied){applied={};attrLastApplied.set(element,applied)};['placeholder','aria-label','title','value'].forEach((attr)=>{const current=element.getAttribute(attr);if(current&&(!saved![attr]||current!==applied![attr]))saved![attr]=restoreEnglish(current);if(saved![attr]){const next=translateValue(saved![attr],map,lang);if(current!==next)element.setAttribute(attr,next);applied![attr]=next}})});
 }
 
 export function GlobalTranslation({ showSelector }:{showSelector:boolean}){

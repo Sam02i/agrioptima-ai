@@ -6,7 +6,8 @@ from dotenv import load_dotenv
 _env_path = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(_env_path)
 
-DATABASE_URL = os.environ["DATABASE_URL"]
+_local_database = Path(__file__).resolve().parent.parent / "data" / "agrioptima_local.db"
+DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{_local_database}")
 
 DATA_GOV_API_KEY = os.getenv("DATA_GOV_API_KEY", "")
 DATA_GOV_MANDI_RESOURCE_ID = os.getenv("DATA_GOV_MANDI_RESOURCE_ID", "")

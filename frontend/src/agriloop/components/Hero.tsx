@@ -19,13 +19,14 @@ export function Hero({ onOpenGetStarted }: HeroProps) {
       <div className="absolute inset-0 z-0 select-none pointer-events-none">
         <img
           src={HERO_BACKGROUND_IMAGE}
-          alt="Lush green agricultural fields"
-          className="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000"
+          alt="Sunlit agricultural valley and forested hills"
+          className="w-full h-full object-cover object-[center_58%] transform scale-105 transition-transform duration-1000"
           loading="eager"
         />
         {/* Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#29151d]/95 via-[#4d2635]/62 to-[#8e493f]/16" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#201216]/80 via-transparent to-[#2f1d21]/34" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_25%,rgba(229,182,109,0.22),transparent_32%)]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto">
