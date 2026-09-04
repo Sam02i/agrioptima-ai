@@ -7,7 +7,6 @@ import { LocalizedText } from "../i18n/LocalizedText";
 import { useState } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { Introduction } from './components/Introduction';
 import { FeaturesGrid } from './components/FeaturesGrid';
 import { HowItWorks } from './components/HowItWorks';
 import { Footer } from './components/Footer';
@@ -81,10 +80,30 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
           onOpenGetStarted={() => handleOpenGetStarted(1)}
         />
 
-        {/* 2. Introduction Section ("Farming Made Smarter" / "Bringing Technology to Agriculture") */}
-        <Introduction onLearnMore={() => handleOpenGetStarted(1)} />
+        <section className="role-paths" aria-labelledby="role-paths-title">
+          <div className="role-paths-inner">
+            <header>
+              <span><LocalizedText source="Choose your workspace" /></span>
+              <h2 id="role-paths-title"><LocalizedText source="One platform. Two clear paths." /></h2>
+            </header>
+            <div className="role-path-grid">
+              <button onClick={() => setPortalChoiceOpen(true)}>
+                <span className="role-number">01</span>
+                <strong><LocalizedText source="Farmer portal" /></strong>
+                <p><LocalizedText source="No soil numbers to enter. Your connected farm record, local market prices, quality checks, buyers, and delivery are brought together here." /></p>
+                <b><LocalizedText source="Open workspace" /> →</b>
+              </button>
+              <button onClick={onBuyer}>
+                <span className="role-number">02</span>
+                <strong><LocalizedText source="Buyer portal" /></strong>
+                <p><LocalizedText source="One intelligent workspace to discover verified supply, optimize landed cost, and track every shipment from farm to warehouse." /></p>
+                <b><LocalizedText source="Open Buyer dashboard" /> →</b>
+              </button>
+            </div>
+          </div>
+        </section>
 
-        {/* 3. Features Grid Section ("Smart Solutions for Modern Farming") */}
+        {/* Three working capabilities, followed by a short workflow. */}
         <FeaturesGrid onSelectFeature={handleSelectFeature} />
 
         {/* A short path from the problem to the two working portals. */}

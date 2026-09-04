@@ -1002,3 +1002,34 @@ button:disabled, [aria-disabled='true'] { opacity: .55 !important; cursor: not-a
   transform: none !important;
   filter: none !important;
 }
+
+/* Clear role selection and restrained landing typography. */
+#root #header-logo { font-family: Georgia, 'Times New Roman', serif !important; letter-spacing: -.035em; }
+#root :is(#solutions, #how-it-works, #introduction, #footer) h3 {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -.01em !important;
+}
+.role-paths { padding: clamp(64px, 8vw, 110px) 24px; background: #EAE7DD; }
+.role-paths-inner { width: min(1180px, 100%); margin: auto; }
+.role-paths header { max-width: 760px; margin-bottom: 34px; }
+.role-paths header > span { color: #405C51; font: 700 13px/1.4 Arial, sans-serif; letter-spacing: .13em; text-transform: uppercase; }
+.role-paths h2 { margin: 10px 0 0; color: #182F28; font-size: clamp(38px, 5vw, 64px); line-height: 1.05; }
+.role-path-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.role-path-grid > button {
+  min-height: 310px; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(26px, 4vw, 46px);
+  border: 1px solid rgba(38,72,62,.22); border-radius: 22px; background: rgba(255,253,247,.92);
+  color: #182F28; text-align: left; cursor: pointer; box-shadow: 0 12px 38px rgba(24,47,40,.07);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.role-path-grid > button:hover { transform: translateY(-3px); border-color: #26483E; box-shadow: 0 18px 42px rgba(24,47,40,.12); }
+.role-path-grid > button:focus-visible { outline: 3px solid #26483E; outline-offset: 4px; }
+.role-path-grid .role-number { color: #51695E; font: 700 13px/1 Arial, sans-serif; letter-spacing: .12em; }
+.role-path-grid strong { margin-top: 38px; color: #182F28; font: 700 clamp(28px, 3vw, 40px)/1.1 Georgia, serif; }
+.role-path-grid p { max-width: 520px; margin: 18px 0 30px; color: #405C51; font: 400 17px/1.65 Arial, sans-serif; }
+.role-path-grid b { margin-top: auto; color: #26483E; font: 700 16px/1.4 Arial, sans-serif; }
+@media (max-width: 760px) {
+  .role-path-grid { grid-template-columns: 1fr; }
+  .role-path-grid > button { min-height: 270px; }
+}
+@media (prefers-reduced-motion: reduce) { .role-path-grid > button { transition: none; } }
