@@ -1,0 +1,22 @@
+# AgriOptima AI
+
+AgriOptima AI is a web platform for agricultural decision support and produce trade in India.
+
+## Main capabilities
+
+- Farmer crop planning using connected farm information
+- Plain-language soil health and fertilizer guidance
+- Recent mandi price references and produce listing support
+- Produce discovery and comparison for buyers
+- Quality, order, shipment and payment records
+- Interfaces in English and selected Indian languages
+
+## Canonical website
+
+https://agrioptima-ai.vercel.app/
+
+## API
+
+https://agrioptima-ai-r0h2.onrender.com/docs
+
+The platform distinguishes user-entered, externally sourced, estimated and model-generated information. Model recommendations are decision support and should not replace qualified agricultural advice.

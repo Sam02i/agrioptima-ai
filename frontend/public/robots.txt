@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agrioptima-ai.vercel.app/sitemap.xml

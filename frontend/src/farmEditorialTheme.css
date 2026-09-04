@@ -725,7 +725,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #182F28; outline-offs
   width: 100%;
   height: 100%;
   /* Purpose-built full-frame artwork: no blank source margins or distortion. */
-  background-image: linear-gradient(#EAE7DD55, #EAE7DD55), url('./assets/theme/farm-illustration-full.png') !important;
+  background-image: linear-gradient(rgba(255,253,247,.76), rgba(255,253,247,.76)), url('./assets/theme/farm-illustration-full.png') !important;
   background-position: center, center center !important;
   background-size: cover, cover !important;
   background-color: #EAE7DD;
@@ -940,8 +940,8 @@ button:disabled, [aria-disabled='true'] { opacity: .55 !important; cursor: not-a
 }
 @supports ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
   :is(#root .farmer-app, #root .buyer-app, .app) {
-    --portal-glass: rgba(255, 253, 247, .92);
-    --portal-dark-glass: rgba(38, 72, 62, .95);
+    --portal-glass: rgba(255, 253, 247, .97);
+    --portal-dark-glass: rgba(38, 72, 62, .90);
     --portal-blur: blur(16px) saturate(115%);
   }
 }
@@ -971,6 +971,23 @@ button:disabled, [aria-disabled='true'] { opacity: .55 !important; cursor: not-a
 :is(#root .farmer-app, #root .buyer-app, .app) :is(input, select, textarea) {
   background-color: #FFFDF7 !important;
   color: #182F28 !important;
+}
+/* Final contrast guard for content placed on pale glass. */
+:is(#root .farmer-app, #root .buyer-app, .app) :is(
+  .panel, .demo-panel, .manual-listing, .my-listings, .soil-advisory,
+  .farmer-record-card, .farmer-order-list, .order-row, .listing-card,
+  .farmer-card, .comparison-panel, .stat-card, .metric,
+  .today-actions article, .today-grid > article, .assisted-use,
+  .topbar, .buyer-topbar
+) :is(h1, h2, h3, h4, p, span, small, label, b, strong, em, li, dt, dd) {
+  color: #182F28 !important;
+  text-shadow: none !important;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(
+  .sidebar, .farmer-sidebar, .buyer-sidebar, .today-hero,
+  .opening-hero, .buyer-hero, .farmer-welcome
+) :is(h1, h2, h3, h4, p, span, small, label, b, strong, em) {
+  color: #FFFDF7 !important;
 }
 @media (prefers-reduced-transparency: reduce) {
   :is(#root .farmer-app, #root .buyer-app, .app) {
