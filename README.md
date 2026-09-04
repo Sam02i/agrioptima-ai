@@ -1,8 +1,6 @@
 <div align="center">
 
-# AgriOptimaᴬᴵ
-
-### From soil intelligence to trusted sale—one connected agricultural platform
+![AgriOptima banner](docs/banner.svg)
 
 [![Live Demo](https://img.shields.io/badge/OPEN_LIVE_DEMO-AgriOptimaᴬᴵ-c7f633?style=for-the-badge&labelColor=153f2e)](https://agrioptima-rczdd6u2n-samikshas-projects-3b436fe6.vercel.app/)
 
@@ -42,7 +40,7 @@ AgriOptimaᴬᴵ connects these decisions into one explainable workflow for farm
 6. Compare sellers, inspect a farmer, and create an order.
 7. Open Orders or Produce Passports to track delivery and verify received quality.
 
-> Render’s free backend can sleep while inactive. The first data request may take approximately one minute while it wakes up.
+> Render's free backend can sleep while inactive. The first data request may take approximately one minute while it wakes up.
 
 ## Connected workflow
 
