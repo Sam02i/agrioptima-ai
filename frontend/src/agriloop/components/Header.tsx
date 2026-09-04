@@ -124,10 +124,10 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
               className={`font-medium text-gray-600 hover:text-[#26483E] transition-all duration-200 py-1 relative group ${
                 isScrolled ? 'text-xs sm:text-sm' : 'text-sm'
               }`}
-              href="#core-solutions"
+              href="#how-it-works"
             ><LocalizedText source={" {0} "} values={[t('nav_how_it_works')]} /><span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#26483E] transition-all duration-200 group-hover:w-full"></span>
             </a>
-            <a
+            <a hidden
               id="nav-link-impact"
               className={`font-medium text-gray-600 hover:text-[#26483E] transition-all duration-200 py-1 relative group ${
                 isScrolled ? 'text-xs sm:text-sm' : 'text-sm'
@@ -135,7 +135,7 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
               href="#impact"
             ><LocalizedText source={" {0} "} values={[t('nav_impact')]} /><span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#26483E] transition-all duration-200 group-hover:w-full"></span>
             </a>
-            <a
+            <a hidden
               id="nav-link-stories"
               className={`font-medium text-gray-600 hover:text-[#26483E] transition-all duration-200 py-1 relative group ${
                 isScrolled ? 'text-xs sm:text-sm' : 'text-sm'

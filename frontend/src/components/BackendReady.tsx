@@ -11,7 +11,7 @@ export default function BackendReady({ children }: { children: ReactNode }) {
     let cancelled = false;
     let retry: ReturnType<typeof setTimeout>;
     let controller: AbortController;
-    const deadline = Date.now() + 180_000;
+    const deadline = Date.now() + 45_000;
     setFailed(false);
     async function check() {
       controller = new AbortController();
@@ -36,7 +36,7 @@ export default function BackendReady({ children }: { children: ReactNode }) {
     <section style={{ maxWidth: 480, padding: 32, background: '#FFFDF7', borderRadius: 18 }}>
       <h1 style={{ fontSize: 28 }}>{failed ? 'Unable to connect yet' : 'Server waking up…'}</h1>
       <p role="status" aria-live="polite" style={{ fontSize: 17, lineHeight: 1.6 }}>
-        {failed ? 'Check your internet connection and try again. Your saved data has not been changed.' : 'After some time without visitors, our free server goes to sleep. This can take around two minutes. We’ll open the app automatically when it is ready.'}
+        {failed ? 'The server is taking longer than expected. Try again in a moment. Your saved data has not been changed.' : 'The free server may be asleep. We’ll open your workspace automatically when it is ready.'}
       </p>
       {failed && <button onClick={() => setAttempt(n => n + 1)} style={{ minHeight: 48, padding: '12px 24px', background: '#26483E', color: '#FFFDF7', borderRadius: 8 }}>Try again</button>}
     </section>

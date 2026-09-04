@@ -9,10 +9,7 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Introduction } from './components/Introduction';
 import { FeaturesGrid } from './components/FeaturesGrid';
-import { UniqueFeaturesSection } from './components/UniqueFeaturesSection';
 import { HowItWorks } from './components/HowItWorks';
-import { StoriesSection } from './components/StoriesSection';
-import { ImpactMetrics } from './components/ImpactMetrics';
 import { Footer } from './components/Footer';
 
 // Modals
@@ -90,17 +87,8 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
         {/* 3. Features Grid Section ("Smart Solutions for Modern Farming") */}
         <FeaturesGrid onSelectFeature={handleSelectFeature} />
 
-        {/* 3.2 Unique Core Solutions Section ("Smart Farming Solutions That Deliver Real Results") */}
-        <UniqueFeaturesSection />
-
-        {/* 4. How It Works Section ("Farming Smarter Starts Here" 3-step process) */}
+        {/* A short path from the problem to the two working portals. */}
         <HowItWorks onStartStep={(step) => handleOpenGetStarted(step)} />
-
-        {/* 5. Stories Section ("Real Results from the Field") */}
-        <StoriesSection onOpenStoryDetail={(name) => setContactModalOpen(true)} />
-
-        {/* 6. Impact Metrics Section ("Our Growing Impact" 10k+, 500+, $50M, 95%) */}
-        <ImpactMetrics onExploreImpact={() => setPortalChoiceOpen(true)} />
       </main>
 
       {/* Footer */}

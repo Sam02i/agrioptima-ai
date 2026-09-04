@@ -996,3 +996,9 @@ button:disabled, [aria-disabled='true'] { opacity: .55 !important; cursor: not-a
     --portal-blur: none;
   }
 }
+/* The primary message must remain visible even if an animation is interrupted. */
+#hero .editorial-hero-copy > div {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}

@@ -107,9 +107,8 @@ export function FeaturesGrid({ onSelectFeature }: FeaturesGridProps) {
                   <p className="text-gray-500 font-light leading-relaxed text-base"><LocalizedText source={" {0} "} values={[feature.description]} /></p>
                 </div>
 
-                {/* Card micro-stat */}
+                {/* One honest action; performance claims belong in measured case studies. */}
                 <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 font-medium">
-                  <span className="text-[#26483E] bg-[#EAE7DD] px-2.5 py-0.5 rounded-md border border-[#EAE7DD]"><LocalizedText source={" {0} "} values={[feature.stats]} /></span>
                   <span className="group-hover:text-[#26483E] transition-colors"><LocalizedText source={" View interactive preview → "} /></span>
                 </div>
               </div>
@@ -120,4 +119,3 @@ export function FeaturesGrid({ onSelectFeature }: FeaturesGridProps) {
     </section>
   );
 }
-
