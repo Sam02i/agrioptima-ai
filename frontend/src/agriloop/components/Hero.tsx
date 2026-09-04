@@ -62,7 +62,7 @@ export function Hero({ onOpenGetStarted }: HeroProps) {
           <BlurReveal delay={0.25} duration={0.9} blur={12} yOffset={20}>
             <h1
               id="hero-heading"
-              className="text-4xl sm:text-5xl lg:text-7xl font-serif font-bold text-white leading-[1.12] mb-6 tracking-tight drop-shadow-xs"
+              className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white leading-[1.1] mb-6 tracking-tight drop-shadow-xs"
             ><LocalizedText source={" {0} "} values={[t('hero_title_line1')]} /><br />
               <span className="font-light italic text-white/90"><LocalizedText source={"{0}"} values={[t('hero_title_line2')]} /></span> <br /><LocalizedText source={" {0} "} values={[t('hero_title_line3')]} /></h1>
           </BlurReveal>

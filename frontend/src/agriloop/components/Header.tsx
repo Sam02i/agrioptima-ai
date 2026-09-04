@@ -198,19 +198,9 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
           ><LocalizedText source={" {0} "} values={[t('nav_solutions')]} /></a>
           <a
             className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#26483E] hover:bg-gray-50/80"
-            href="#core-solutions"
+            href="#how-it-works"
             onClick={() => setMobileMenuOpen(false)}
           ><LocalizedText source={" {0} "} values={[t('nav_how_it_works')]} /></a>
-          <a
-            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#26483E] hover:bg-gray-50/80"
-            href="#impact"
-            onClick={() => setMobileMenuOpen(false)}
-          ><LocalizedText source={" {0} "} values={[t('nav_impact')]} /></a>
-          <a
-            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#26483E] hover:bg-gray-50/80"
-            href="#stories"
-            onClick={() => setMobileMenuOpen(false)}
-          ><LocalizedText source={" {0} "} values={[t('nav_stories')]} /></a>
           <div className="pt-3 border-t border-gray-100 flex flex-col gap-2">
             <button
               onClick={() => {

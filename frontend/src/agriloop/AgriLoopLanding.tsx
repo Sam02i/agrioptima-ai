@@ -96,7 +96,7 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
               <button onClick={onBuyer}>
                 <span className="role-number">02</span>
                 <strong><LocalizedText source="Buyer portal" /></strong>
-                <p><LocalizedText source="One intelligent workspace to discover verified supply, optimize landed cost, and track every shipment from farm to warehouse." /></p>
+                <p><LocalizedText source="Find available produce, compare the full delivered price, and follow each shipment from farm to warehouse." /></p>
                 <b><LocalizedText source="Open Buyer dashboard" /> →</b>
               </button>
             </div>

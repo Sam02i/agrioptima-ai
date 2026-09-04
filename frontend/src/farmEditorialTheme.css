@@ -8,13 +8,14 @@
 .slideshow-photo-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(38,72,62,.78), rgba(38,72,62,.38) 55%, rgba(38,72,62,.12)); }
 .slideshow-photo-hero .editorial-hero-layout { display: block; width: 100%; max-width: 1400px; }
 .slideshow-photo-hero .editorial-hero-copy { max-width: 720px; }
-#hero.slideshow-photo-hero h1 { font-size: clamp(46px, 6vw, 88px); line-height: 1.06; }
+#hero.slideshow-photo-hero h1 { font-size: clamp(42px, 5.15vw, 72px); line-height: 1.08; max-width: 680px; }
 #hero.slideshow-photo-hero p { max-width: 570px; }
 .hero-slideshow-control { position: absolute; bottom: 30px; right: 7vw; display: flex; gap: 18px; align-items: center; padding: 12px 20px; border: 1px solid #EAE7DD70; background: #26483E70; color: #EAE7DD; border-radius: 30px; cursor: pointer; backdrop-filter: blur(10px); }
 .hero-slideshow-control:focus-visible { outline: 3px solid #EAE7DD; outline-offset: 4px; }
 @media (max-width: 600px) {
   #hero.slideshow-photo-hero { padding: 125px 6vw 100px; }
   .slideshow-photo-hero .hero-slides { top: 76px; }
+  #hero.slideshow-photo-hero h1 { font-size: clamp(38px, 11vw, 50px); }
 }
 @media (prefers-reduced-motion: reduce) { #hero.slideshow-photo-hero .hero-photo-frame { transition: none; } }
 /* Editorial homepage photo stack. Scoped to leave the portals unchanged. */

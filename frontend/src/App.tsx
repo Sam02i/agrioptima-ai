@@ -20,5 +20,5 @@ export default function App() {
   const loading=<div className="min-h-screen grid place-items-center bg-[#EAE7DD] text-[#26483E]"><div><b><LocalizedText source={"AgriOptimaᴬᴵ"} /></b><p><LocalizedText source={"Opening your workspace…"} /></p></div></div>;
   if(view==="buyer") return <BackendReady><Suspense fallback={loading}><GlobalTranslation showSelector/><BuyerExactDashboard onHome={()=>go("landing")} onFarmer={()=>openFarmer()}/><AccountAccess/></Suspense></BackendReady>;
   if(view==="farmer") return <BackendReady><Suspense fallback={loading}><GlobalTranslation showSelector/><FarmerDashboard farmerId={farmerId} onFarmerChange={(id)=>{setFarmerId(id);localStorage.setItem("agrioptima_farmer_id",id)}} onHome={()=>go("landing")} onBuyer={()=>go("buyer")}/><AccountAccess/></Suspense></BackendReady>;
-  return <Suspense fallback={loading}><GlobalTranslation showSelector={false}/><AgriLoopLanding onBuyer={()=>go("buyer")} onFarmer={openFarmer}/><AccountAccess/></Suspense>;
+  return <Suspense fallback={loading}><GlobalTranslation showSelector={false}/><AgriLoopLanding onBuyer={()=>go("buyer")} onFarmer={openFarmer}/></Suspense>;
 }
