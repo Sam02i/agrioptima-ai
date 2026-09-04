@@ -1011,6 +1011,11 @@ button:disabled, [aria-disabled='true'] { opacity: .55 !important; cursor: not-a
   font-weight: 700 !important;
   letter-spacing: -.01em !important;
 }
+#root :is(.role-paths, #solutions, #how-it-works, #footer) h2 {
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -.025em !important;
+}
 .role-paths { padding: clamp(64px, 8vw, 110px) 24px; background: #EAE7DD; }
 .role-paths-inner { width: min(1180px, 100%); margin: auto; }
 .role-paths header { max-width: 760px; margin-bottom: 34px; }

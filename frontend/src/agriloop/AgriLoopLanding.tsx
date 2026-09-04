@@ -91,13 +91,13 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
                 <span className="role-number">01</span>
                 <strong><LocalizedText source="Farmer portal" /></strong>
                 <p><LocalizedText source="No soil numbers to enter. Your connected farm record, local market prices, quality checks, buyers, and delivery are brought together here." /></p>
-                <b><LocalizedText source="Open workspace" /> →</b>
+                <b><LocalizedText source="Open farmer tools" /> →</b>
               </button>
               <button onClick={onBuyer}>
                 <span className="role-number">02</span>
                 <strong><LocalizedText source="Buyer portal" /></strong>
                 <p><LocalizedText source="Find available produce, compare the full delivered price, and follow each shipment from farm to warehouse." /></p>
-                <b><LocalizedText source="Open Buyer dashboard" /> →</b>
+                <b><LocalizedText source="Open buyer tools" /> →</b>
               </button>
             </div>
           </div>

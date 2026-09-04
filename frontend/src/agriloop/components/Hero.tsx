@@ -1,18 +1,18 @@
 import { LocalizedText } from "../../i18n/LocalizedText";
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import farmerPhoto from '../assets/images/hero-indian-farmer.jpg';
-import onionPhoto from '../../assets/marketplace/crops/onion.webp';
-import grapePhoto from '../../assets/marketplace/crops/grapes.jpg';
-import producePhoto from '../../assets/marketplace/mixed-produce-crates.webp';
 import paddyPhoto from '../assets/images/hero-paddy-field.jpg';
+import ricePlantingPhoto from '../assets/images/hero-rice-planting.jpg';
+import sowingPhoto from '../assets/images/hero-sowing.jpg';
 import { BlurReveal } from './BlurReveal';
 import { useLanguage } from '../i18n/LanguageContext';
 
 interface HeroProps {
   onOpenGetStarted: () => void;
 }
-const photos = [paddyPhoto, producePhoto, onionPhoto, farmerPhoto, grapePhoto];
+// Wide, documentary-style farm scenes give every slide a consistent scale and
+// avoid the extreme cropping caused by portrait and close-up product photos.
+const photos = [paddyPhoto, ricePlantingPhoto, sowingPhoto];
 
 export function Hero({ onOpenGetStarted }: HeroProps) {
   const { t } = useLanguage();
@@ -83,7 +83,7 @@ export function Hero({ onOpenGetStarted }: HeroProps) {
                 onClick={onOpenGetStarted}
                 className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-semibold rounded-full text-[#26483E] bg-[#EAE7DD] hover:bg-[#EAE7DD] transition-all duration-200 shadow-md hover:shadow-lg hover:translate-y-[-1px] cursor-pointer group"
               >
-                <span><LocalizedText source={"{0}"} values={[t('hero_cta_get_started')]} /></span>
+                <span><LocalizedText source="Choose your workspace" /></span>
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
               </button>
 

@@ -69,7 +69,7 @@ export function FeaturesGrid({ onSelectFeature }: FeaturesGridProps) {
           </div>
         </div>
 
-        {/* 3-Column Image Grid */}
+        {/* Three working product paths. */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
           {translatedFeatures.map((feature, idx) => (
             <BlurReveal key={feature.id} delay={0.15 * idx} duration={0.8} blur={12} yOffset={30}>
@@ -107,13 +107,14 @@ export function FeaturesGrid({ onSelectFeature }: FeaturesGridProps) {
                   <p className="text-gray-500 font-light leading-relaxed text-base"><LocalizedText source={" {0} "} values={[feature.description]} /></p>
                 </div>
 
-                {/* One honest action; performance claims belong in measured case studies. */}
-                <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 font-medium">
-                  <span className="group-hover:text-[#26483E] transition-colors"><LocalizedText source={" View interactive preview → "} /></span>
-                </div>
               </div>
             </BlurReveal>
           ))}
+        </div>
+
+        <div className="mt-10 rounded-2xl border border-[#26483E]/20 bg-[#EAE7DD]/55 px-5 py-4 text-sm leading-relaxed text-[#405C51] sm:flex sm:items-center sm:justify-between sm:gap-6">
+          <p><strong className="text-[#26483E]"><LocalizedText source="Data is clearly labelled." /></strong> <LocalizedText source="Market references show their location and update time; recommendations identify whether information is connected, estimated, or an example." /></p>
+          <button type="button" onClick={() => onSelectFeature(FEATURES[0])} className="mt-3 whitespace-nowrap font-bold text-[#26483E] underline decoration-[#26483E]/30 underline-offset-4 sm:mt-0"><LocalizedText source="Open the working demo" /> →</button>
         </div>
       </div>
     </section>
