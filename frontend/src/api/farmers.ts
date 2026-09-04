@@ -22,6 +22,9 @@ export async function getFarmerDetail(id:string): Promise<FarmerDetail> {
 
 export async function createFarmerProfile(payload:{name:string;village:string;district:string;state:string;area_acres:number;soil_ph:number;investment_budget_rupees:number}) {
   const response=await fetch(`${API}/api/v1/farmers`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...payload,season:"Kharif",irrigation:"limited",nitrogen:0,phosphorus:0,potassium:0,soil_source:"manual_entry",previous_crop:"Unknown",sowing_period:"June-July"})});
-  if(!response.ok) throw new Error("Unable to create farmer profile");
+  if(!response.ok) {
+    const error = await response.json().catch(() => null);
+    throw new Error(typeof error?.detail === "string" ? error.detail : "Unable to create farmer profile");
+  }
   return response.json() as Promise<{farmer_id:string;farm_id:string}>;
 }

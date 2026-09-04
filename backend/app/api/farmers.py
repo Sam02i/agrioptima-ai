@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import func, text
 from sqlalchemy.orm import Session
 from app.db.session import SessionLocal
 from app.db.models import Farmer, Farm
 import uuid
+import hashlib
 
 router = APIRouter(prefix="/api/v1/farmers", tags=["farmers"])
 
@@ -67,6 +69,23 @@ def get_farmer(farmer_id: str, db: Session = Depends(get_db)):
 @router.post("")
 def create_farmer(payload: dict, db: Session = Depends(get_db)):
     """Create a new farmer record and return stable IDs."""
+    identity = {key: " ".join(str(payload.get(key) or "").split())
+                for key in ("name", "village", "district", "state")}
+    if not all(identity[key] for key in ("name", "village", "district")):
+        raise HTTPException(422, "Name, village and district are required.")
+    # Serialize matching submissions across workers without locking other farmers.
+    if db.get_bind().dialect.name == "postgresql":
+        digest = hashlib.sha256("|".join(value.lower() for value in identity.values()).encode()).digest()
+        key = int.from_bytes(digest[:8], "big", signed=True)
+        db.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": key})
+    existing = db.query(Farmer).filter(*[
+        func.lower(func.trim(func.coalesce(getattr(Farmer, key), ""))) == value.lower()
+        for key, value in identity.items()
+    ]).first()
+    if existing:
+        # Names are not unique identities: do not silently merge or overwrite farms.
+        raise HTTPException(409, "A farmer with this name and location already exists. Choose the existing profile instead.")
+    payload = {**payload, **identity}
     public_id = f"FARMER_{uuid.uuid4().hex[:8].upper()}"
     farmer = Farmer(
         public_id=public_id,

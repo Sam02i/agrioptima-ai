@@ -21,6 +21,10 @@ from app.api.auth import router as auth_router
 
 @asynccontextmanager
 async def lifespan(_app:FastAPI):
+    # Hosted databases are initialized explicitly, not on every cold start.
+    if os.getenv("INITIALIZE_DATABASE_ON_STARTUP", "false").lower() != "true":
+        yield
+        return
     # Ensure new production tables exist, then import the one demo journey once.
     try:
         from app.db.session import Base, engine, SessionLocal
