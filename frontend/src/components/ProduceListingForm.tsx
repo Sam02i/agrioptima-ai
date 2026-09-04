@@ -1,3 +1,4 @@
+import { LocalizedText } from "../i18n/LocalizedText";
 import { useEffect, useState } from "react";
 import { apiFetch } from "../api/client";
 
@@ -153,24 +154,17 @@ export default function ProduceListingForm({
   return (
     <div className="farmer-listing-layout">
       <form className="manual-listing" onSubmit={submit}>
-        <span className="panel-kicker">Manual produce listing</span>
-        <h2>List produce for buyers</h2>
-        <p>
-          Set the produce, available quantity, price, grade, and an optional
-          real image.
-        </p>
+        <span className="panel-kicker"><LocalizedText source={"Manual produce listing"} /></span>
+        <h2><LocalizedText source={"List produce for buyers"} /></h2>
+        <p><LocalizedText source={" Set the produce, available quantity, price, grade, and an optional real image. "} /></p>
         <div className="listing-form-grid">
-          <label>
-            Produce
-            <input
+          <label><LocalizedText source={" Produce "} /><input
               required
               value={form.crop_name}
               onChange={(e) => setForm({ ...form, crop_name: e.target.value })}
             />
           </label>
-          <label>
-            Variety
-            <input
+          <label><LocalizedText source={" Variety "} /><input
               required
               value={form.crop_variety}
               onChange={(e) =>
@@ -178,9 +172,7 @@ export default function ProduceListingForm({
               }
             />
           </label>
-          <label>
-            Quantity (kg)
-            <input
+          <label><LocalizedText source={" Quantity (kg) "} /><input
               required
               min="1"
               type="number"
@@ -190,9 +182,7 @@ export default function ProduceListingForm({
               }
             />
           </label>
-          <label>
-            Price (₹/kg)
-            <input
+          <label><LocalizedText source={" Price (₹/kg) "} /><input
               required
               min="1"
               step="0.5"
@@ -203,9 +193,7 @@ export default function ProduceListingForm({
               }
             />
           </label>
-          <label>
-            Minimum order (kg)
-            <input
+          <label><LocalizedText source={" Minimum order (kg) "} /><input
               required
               min="1"
               type="number"
@@ -215,51 +203,42 @@ export default function ProduceListingForm({
               }
             />
           </label>
-          <label>
-            Declared grade
-            <select
+          <label><LocalizedText source={" Declared grade "} /><select
               value={form.declared_grade}
               onChange={(e) =>
                 setForm({ ...form, declared_grade: e.target.value })
               }
             >
-              <option value="GRADE_A">Grade A</option>
-              <option value="GRADE_B">Grade B</option>
-              <option value="GRADE_C">Grade C</option>
+              <option value="GRADE_A"><LocalizedText source={"Grade A"} /></option>
+              <option value="GRADE_B"><LocalizedText source={"Grade B"} /></option>
+              <option value="GRADE_C"><LocalizedText source={"Grade C"} /></option>
             </select>
           </label>
         </div>
         <section className="mandi-price-guide">
           <div>
-            <span>Latest local selling guidance</span>
-            <b>{form.crop_name}</b>
-            <small>
-              {mandiLoading
+            <span><LocalizedText source={"Latest local selling guidance"} /></span>
+            <b><LocalizedText source={"{0}"} values={[form.crop_name]} /></b>
+            <small><LocalizedText source={" {0} "} values={[mandiLoading
                 ? "Checking AGMARKNET prices…"
                 : mandi?.prices.length
                   ? `${mandi.prices.length} recent market records · ${mandi.fetched_at ? `updated ${new Date(mandi.fetched_at).toLocaleString("en-IN")}` : "latest available"}`
-                  : "No recent mandi record available"}
-            </small>
+                  : "No recent mandi record available"]} /></small>
           </div>
           {mandi?.recommended_price_per_kg && (
             <>
               <div className="mandi-price-summary">
                 <span>
-                  <small>Market range</small>
-                  <b>
-                    ₹{mandi.minimum_price_per_kg}–₹{mandi.maximum_price_per_kg}
-                  </b>
+                  <small><LocalizedText source={"Market range"} /></small>
+                  <b><LocalizedText source={" ₹{0}–₹{1} "} values={[mandi.minimum_price_per_kg, mandi.maximum_price_per_kg]} /></b>
                 </span>
                 <span>
-                  <small>Suggested listing range</small>
-                  <b>
-                    ₹{mandi.recommended_listing_low}–₹
-                    {mandi.recommended_listing_high}
-                  </b>
+                  <small><LocalizedText source={"Suggested listing range"} /></small>
+                  <b><LocalizedText source={" ₹{0}–₹ {1} "} values={[mandi.recommended_listing_low, mandi.recommended_listing_high]} /></b>
                 </span>
                 <span>
-                  <small>Suggested price</small>
-                  <b>₹{mandi.recommended_price_per_kg}/kg</b>
+                  <small><LocalizedText source={"Suggested price"} /></small>
+                  <b><LocalizedText source={"₹{0}/kg"} values={[mandi.recommended_price_per_kg]} /></b>
                 </span>
                 <button
                   type="button"
@@ -269,49 +248,34 @@ export default function ProduceListingForm({
                       price_per_kg: String(mandi.recommended_price_per_kg),
                     })
                   }
-                >
-                  Use suggested price
-                </button>
+                ><LocalizedText source={" Use suggested price "} /></button>
               </div>
-              <label className="transport-cost">
-                Estimated transport and fees (₹/kg)
-                <input
+              <label className="transport-cost"><LocalizedText source={" Estimated transport and fees (₹/kg) "} /><input
                   type="number"
                   min="0"
                   step="0.5"
                   value={transport}
                   onChange={(e) => setTransport(e.target.value)}
                 />
-                <b>
-                  Estimated net at suggested price: ₹
-                  {Math.max(
+                <b><LocalizedText source={" Estimated net at suggested price: ₹ {0} /kg "} values={[Math.max(
                     0,
                     Number(mandi.recommended_price_per_kg) -
                       Number(transport || 0),
-                  ).toFixed(2)}
-                  /kg
-                </b>
+                  ).toFixed(2)]} /></b>
               </label>
               <div className="mandi-markets">
                 {mandi.prices.slice(0, 3).map((row, index) => (
                   <span key={`${row.market}-${index}`}>
-                    <b>{row.market}</b>
-                    <small>
-                      {row.district || "Regional market"} · ₹{row.price_per_kg}
-                      /kg · net ₹
-                      {Math.max(
+                    <b><LocalizedText source={"{0}"} values={[row.market]} /></b>
+                    <small><LocalizedText source={" {0} · ₹{1} /kg · net ₹ {2} "} values={[row.district || "Regional market", row.price_per_kg, Math.max(
                         0,
                         row.price_per_kg - Number(transport || 0),
-                      ).toFixed(2)}
-                    </small>
-                    <i>{row.arrival_date || "Latest record"}</i>
+                      ).toFixed(2)]} /></small>
+                    <i><LocalizedText source={"{0}"} values={[row.arrival_date || "Latest record"]} /></i>
                   </span>
                 ))}
               </div>
-              <p>
-                Source: {mandi.source}. Compare the amount left after transport
-                and fees—not only the highest market price.
-              </p>
+              <p><LocalizedText source={" Source: {0}. Compare the amount left after transport and fees—not only the highest market price. "} values={[mandi.source]} /></p>
             </>
           )}
         </section>
@@ -324,55 +288,41 @@ export default function ProduceListingForm({
           {image ? (
             <img src={image} alt="Produce listing preview" />
           ) : (
-            <span>
-              ＋ Add produce image
-              <small>JPG, PNG, or WebP · maximum 2 MB</small>
+            <span><LocalizedText source={" ＋ Add produce image "} /><small><LocalizedText source={"JPG, PNG, or WebP · maximum 2 MB"} /></small>
             </span>
           )}
         </label>
-        <button className="publish-listing" disabled={saving || !farmerId}>
-          {saving ? "Publishing…" : "Publish to buyer marketplace →"}
-        </button>
-        {message && <p className="listing-message">{message}</p>}
+        <button className="publish-listing" disabled={saving || !farmerId}><LocalizedText source={" {0} "} values={[saving ? "Publishing…" : "Publish to buyer marketplace →"]} /></button>
+        {message && <p className="listing-message"><LocalizedText source={"{0}"} values={[message]} /></p>}
       </form>
       <section className="my-listings">
-        <span className="panel-kicker">Current inventory</span>
-        <h2>My active listings</h2>
+        <span className="panel-kicker"><LocalizedText source={"Current inventory"} /></span>
+        <h2><LocalizedText source={"My active listings"} /></h2>
         {items.length === 0 ? (
-          <p>No produce listed yet.</p>
+          <p><LocalizedText source={"No produce listed yet."} /></p>
         ) : (
           items.map((item) => (
             <article key={item.listing_id}>
               {item.image_data ? (
                 <img src={item.image_data} alt={item.crop_name} />
               ) : (
-                <div>
-                  {item.crop_name.toLowerCase().includes("tomato")
+                <div><LocalizedText source={" {0} "} values={[item.crop_name.toLowerCase().includes("tomato")
                     ? "🍅"
                     : item.crop_name.toLowerCase().includes("onion")
                       ? "🧅"
-                      : "🌾"}
-                </div>
+                      : "🌾"]} /></div>
               )}
               <span>
-                <b>
-                  {item.crop_name} · {item.crop_variety}
-                </b>
-                <small>
-                  {item.available_quantity_kg.toLocaleString("en-IN")} kg
-                  available
-                </small>
+                <b><LocalizedText source={" {0} · {1} "} values={[item.crop_name, item.crop_variety]} /></b>
+                <small><LocalizedText source={" {0} kg available "} values={[item.available_quantity_kg.toLocaleString("en-IN")]} /></small>
               </span>
-              <strong>
-                ₹{item.price_per_kg}/kg<small>{item.listing_status}</small>
+              <strong><LocalizedText source={" ₹{0}/kg"} values={[item.price_per_kg]} /><small><LocalizedText source={"{0}"} values={[item.listing_status]} /></small>
               </strong>
               <button
                 className="remove-listing"
                 disabled={removing === item.listing_id}
                 onClick={() => remove(item)}
-              >
-                {removing === item.listing_id ? "Removing…" : "Remove produce"}
-              </button>
+              ><LocalizedText source={" {0} "} values={[removing === item.listing_id ? "Removing…" : "Remove produce"]} /></button>
             </article>
           ))
         )}

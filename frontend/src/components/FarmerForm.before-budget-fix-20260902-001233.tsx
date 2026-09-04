@@ -112,7 +112,7 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
     if (errs.length === 0) onSubmit(form);
   };
 
-  const input = "w-full px-3 py-2 bg-[#f8faf6] border border-gray-200 rounded-xl text-[#1a2e1a] text-sm focus:outline-none focus:ring-2 focus:ring-[#4a8c6a]/30 focus:border-[#4a8c6a] transition-colors placeholder:text-gray-300";
+  const input = "w-full px-3 py-2 bg-[#EAE7DD] border border-gray-200 rounded-xl text-[#26483E] text-sm focus:outline-none focus:ring-2 focus:ring-[#26483E]/30 focus:border-[#26483E] transition-colors placeholder:text-gray-300";
   const label = "block text-xs font-medium text-gray-500 mb-1";
   const select = `${input} appearance-none cursor-pointer`;
 
@@ -167,7 +167,7 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-400">Looking up...</span>
               )}
               {pincodeStatus === "found" && (
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#4a8c6a] bg-[#f0f2eb] px-2 py-0.5 rounded-full">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#26483E] bg-[#EAE7DD] px-2 py-0.5 rounded-full">
                   Coordinates auto-filled
                 </span>
               )}
@@ -229,7 +229,7 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
         <div className="flex items-center justify-between mb-3">
           <p className="text-[10px] tracking-[0.15em] text-gray-400 uppercase">Soil Data</p>
           {soilEstimate && (
-            <span className="text-[10px] text-[#4a8c6a] bg-[#f0f2eb] px-2 py-0.5 rounded-full">
+            <span className="text-[10px] text-[#26483E] bg-[#EAE7DD] px-2 py-0.5 rounded-full">
               Estimated from district
             </span>
           )}
@@ -265,7 +265,7 @@ export default function FarmerForm({ onSubmit, loading, initialValues }: Props) 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#1a3c2a] hover:bg-[#244d36] text-white py-3 px-6 rounded-xl font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-[#26483E] hover:bg-[#26483E] text-white py-3 px-6 rounded-xl font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? "Analyzing..." : "Get Crop Recommendations"}
       </button>

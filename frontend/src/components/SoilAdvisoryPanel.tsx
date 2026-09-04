@@ -1,3 +1,4 @@
+import { LocalizedText } from "../i18n/LocalizedText";
 import { useEffect, useState } from "react";
 import { apiFetch } from "../api/client";
 
@@ -111,36 +112,25 @@ export default function SoilAdvisoryPanel({
     <section className="soil-advisory">
       <div className="soil-head">
         <div>
-          <span>Automatic farm record</span>
-          <h2>What does my soil need?</h2>
-          <p>
-            You do not need to enter N, P, or K. We use the connected Soil
-            Health Card or area estimate and turn it into practical actions for{" "}
-            {farm?.current_crop || "your crop"}.
-          </p>
+          <span><LocalizedText source={"Automatic farm record"} /></span>
+          <h2><LocalizedText source={"What does my soil need?"} /></h2>
+          <p><LocalizedText source={" You do not need to enter N, P, or K. We use the connected Soil Health Card or area estimate and turn it into practical actions for  {0}. "} values={[farm?.current_crop || "your crop"]} /></p>
         </div>
         {data && (
           <div className="soil-score">
-            <b>{data.soil_health_score}</b>
-            <small>Soil health score</small>
+            <b><LocalizedText source={"{0}"} values={[data.soil_health_score]} /></b>
+            <small><LocalizedText source={"Soil health score"} /></small>
           </div>
         )}
       </div>
-      {error && <div className="soil-loading">{error}</div>}
+      {error && <div className="soil-loading"><LocalizedText source={"{0}"} values={[error]} /></div>}
       {!data && !error && (
-        <div className="soil-loading">
-          Finding common soil values for this area…
-        </div>
+        <div className="soil-loading"><LocalizedText source={" Finding common soil values for this area… "} /></div>
       )}
       <div className="soil-card-upload">
-        <b>Use my Soil Health Card</b>
-        <p>
-          Upload a photo or PDF. Draft values are never treated as measurements
-          until you confirm them.
-        </p>
-        <label className="soil-read-aloud">
-          Upload card
-          <input
+        <b><LocalizedText source={"Use my Soil Health Card"} /></b>
+        <p><LocalizedText source={" Upload a photo or PDF. Draft values are never treated as measurements until you confirm them. "} /></p>
+        <label className="soil-read-aloud"><LocalizedText source={" Upload card "} /><input
             hidden
             type="file"
             accept="image/*,.pdf"
@@ -149,12 +139,12 @@ export default function SoilAdvisoryPanel({
             }
           />
         </label>
-        {cardStatus && <small>{cardStatus}</small>}
+        {cardStatus && <small><LocalizedText source={"{0}"} values={[cardStatus]} /></small>}
         {card && (
           <div className="farmer-record-grid">
             {Object.entries(card.values).map(([key, value]) => (
               <label key={key}>
-                <small>{key.toUpperCase()}</small>
+                <small><LocalizedText source={"{0}"} values={[key.toUpperCase()]} /></small>
                 <input
                   type="number"
                   step="0.1"
@@ -168,46 +158,40 @@ export default function SoilAdvisoryPanel({
                 />
               </label>
             ))}
-            <button className="soil-read-aloud" onClick={confirmCard}>
-              Confirm these values
-            </button>
+            <button className="soil-read-aloud" onClick={confirmCard}><LocalizedText source={" Confirm these values "} /></button>
           </div>
         )}
       </div>
       {data && (
         <>
           <div className="soil-source">
-            <span>✓ {data.source}</span>
-            <b>{data.summary}</b>
-            <small>
-              pH {data.ph.value} · {data.ph.status}
-            </small>
+            <span><LocalizedText source={"✓ {0}"} values={[data.source]} /></span>
+            <b><LocalizedText source={"{0}"} values={[data.summary]} /></b>
+            <small><LocalizedText source={" pH {0} · {1} "} values={[data.ph.value, data.ph.status]} /></small>
           </div>
           <div className="simple-soil-status">
             {data.nutrients.map((n) => (
               <article key={n.name} className={n.status.toLowerCase()}>
-                <span>{n.status === "Sufficient" ? "✓" : "!"}</span>
+                <span><LocalizedText source={"{0}"} values={[n.status === "Sufficient" ? "✓" : "!"]} /></span>
                 <div>
-                  <b>{n.name}</b>
-                  <small>
-                    {n.status === "Sufficient"
+                  <b><LocalizedText source={"{0}"} values={[n.name]} /></b>
+                  <small><LocalizedText source={" {0} "} values={[n.status === "Sufficient"
                       ? "Enough for planning"
                       : n.status === "Low"
                         ? "Needs attention"
-                        : "Watch this nutrient"}
-                  </small>
+                        : "Watch this nutrient"]} /></small>
                 </div>
               </article>
             ))}
           </div>
           <details className="soil-advanced">
-            <summary>See technical soil values (advanced)</summary>
+            <summary><LocalizedText source={"See technical soil values (advanced)"} /></summary>
             <div className="nutrient-grid">
               {data.nutrients.map((n) => (
                 <article key={n.name} className={n.status.toLowerCase()}>
                   <div>
-                    <span>{n.name}</span>
-                    <b>{n.value}</b>
+                    <span><LocalizedText source={"{0}"} values={[n.name]} /></span>
+                    <b><LocalizedText source={"{0}"} values={[n.value]} /></b>
                   </div>
                   <div className="nutrient-track">
                     <i
@@ -216,46 +200,36 @@ export default function SoilAdvisoryPanel({
                       }}
                     />
                   </div>
-                  <small>
-                    {n.status}
-                    {n.gap > 0 ? ` · Gap ${n.gap}` : " · At target"}
-                  </small>
+                  <small><LocalizedText source={" {0} {1} "} values={[n.status, n.gap > 0 ? ` · Gap ${n.gap}` : " · At target"]} /></small>
                 </article>
               ))}
             </div>
           </details>
           <div className="fertilizer-title">
             <div>
-              <span>Your next field action</span>
-              <h3>Choose one fertilizer option</h3>
+              <span><LocalizedText source={"Your next field action"} /></span>
+              <h3><LocalizedText source={"Choose one fertilizer option"} /></h3>
             </div>
-            <b>
-              {data.missing_nutrients.length
+            <b><LocalizedText source={" {0} "} values={[data.missing_nutrients.length
                 ? `${data.missing_nutrients.join(", ")} need attention`
-                : "Soil nutrients look balanced"}
-            </b>
+                : "Soil nutrients look balanced"]} /></b>
           </div>
           <div className="fertilizer-plan">
             {data.fertilizer_plan.map((item) => (
               <article key={item.fertilizer}>
-                <span>Recommended</span>
-                <h4>{item.fertilizer}</h4>
-                <strong>
-                  {item.quantity.toLocaleString("en-IN")} {item.unit}
-                </strong>
-                <p>{item.purpose}</p>
-                <small>{item.timing}</small>
+                <span><LocalizedText source={"Recommended"} /></span>
+                <h4><LocalizedText source={"{0}"} values={[item.fertilizer]} /></h4>
+                <strong><LocalizedText source={" {0} {1} "} values={[item.quantity.toLocaleString("en-IN"), item.unit]} /></strong>
+                <p><LocalizedText source={"{0}"} values={[item.purpose]} /></p>
+                <small><LocalizedText source={"{0}"} values={[item.timing]} /></small>
               </article>
             ))}
           </div>
           {data.fertilizer_options?.map((group) => (
             <div className="fertilizer-alternatives" key={group.nutrient}>
               <div>
-                <b>{group.nutrient} options</b>
-                <small>
-                  Choose one option after local confirmation—do not apply all
-                  alternatives together.
-                </small>
+                <b><LocalizedText source={"{0} options"} values={[group.nutrient]} /></b>
+                <small><LocalizedText source={" Choose one option after local confirmation—do not apply all alternatives together. "} /></small>
               </div>
               <section>
                 {group.options.map((option, index) => (
@@ -263,16 +237,12 @@ export default function SoilAdvisoryPanel({
                     key={option.fertilizer}
                     className={index === 0 ? "preferred" : ""}
                   >
-                    <span>
-                      {index === 0
+                    <span><LocalizedText source={" {0} "} values={[index === 0
                         ? "Best-value option"
-                        : `Alternative ${index}`}
-                    </span>
-                    <h4>{option.fertilizer}</h4>
-                    <strong>
-                      {option.quantity.toLocaleString("en-IN")} {option.unit}
-                    </strong>
-                    <p>{option.benefit}</p>
+                        : `Alternative ${index}`]} /></span>
+                    <h4><LocalizedText source={"{0}"} values={[option.fertilizer]} /></h4>
+                    <strong><LocalizedText source={" {0} {1} "} values={[option.quantity.toLocaleString("en-IN"), option.unit]} /></strong>
+                    <p><LocalizedText source={"{0}"} values={[option.benefit]} /></p>
                   </article>
                 ))}
               </section>
@@ -290,12 +260,8 @@ export default function SoilAdvisoryPanel({
                 );
               }
             }}
-          >
-            🔊 Read advice aloud
-          </button>
-          <p className="soil-note">
-            ⓘ Regional values are planning estimates. {data.advisory_note}
-          </p>
+          ><LocalizedText source={" 🔊 Read advice aloud "} /></button>
+          <p className="soil-note"><LocalizedText source={" ⓘ Regional values are planning estimates. {0} "} values={[data.advisory_note]} /></p>
         </>
       )}
     </section>

@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import { useState } from 'react';
 import { X, Check, ArrowRight, ArrowLeft, Sprout, Droplets, TrendingUp, CheckCircle, ShieldCheck, Sparkles, Download } from 'lucide-react';
 import { FarmPlanFormData } from '../types';
@@ -70,13 +71,13 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
         {/* Progress Stepper Bar */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
-            <span className={step >= 1 ? 'text-[#166534]' : ''}>1. Farm Profile</span>
-            <span className={step >= 2 ? 'text-[#166534]' : ''}>2. Strategy & Goals</span>
-            <span className={step >= 3 ? 'text-[#166534]' : ''}>3. Custom Plan</span>
+            <span className={step >= 1 ? 'text-[#26483E]' : ''}><LocalizedText source={"1. Farm Profile"} /></span>
+            <span className={step >= 2 ? 'text-[#26483E]' : ''}><LocalizedText source={"2. Strategy & Goals"} /></span>
+            <span className={step >= 3 ? 'text-[#26483E]' : ''}><LocalizedText source={"3. Custom Plan"} /></span>
           </div>
           <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
             <div
-              className="bg-[#166534] h-full transition-all duration-300 rounded-full"
+              className="bg-[#26483E] h-full transition-all duration-300 rounded-full"
               style={{ width: `${(step / 3) * 100}%` }}
             />
           </div>
@@ -86,62 +87,48 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
         {step === 1 && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <div>
-              <div className="inline-block px-3 py-1 rounded-full bg-[#f0fdf4] text-xs font-semibold text-[#166534] uppercase tracking-wider mb-2">
-                Step 1 of 3
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900">
-                Tell Us About Your Farm
-              </h3>
-              <p className="text-gray-500 text-sm mt-1">
-                Help us understand your current soil profile, acreage, and crop mix.
-              </p>
+              <div className="inline-block px-3 py-1 rounded-full bg-[#EAE7DD] text-xs font-semibold text-[#26483E] uppercase tracking-wider mb-2"><LocalizedText source={" Step 1 of 3 "} /></div>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900"><LocalizedText source={" Tell Us About Your Farm "} /></h3>
+              <p className="text-gray-500 text-sm mt-1"><LocalizedText source={" Help us understand your current soil profile, acreage, and crop mix. "} /></p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                  Farm or Enterprise Name
-                </label>
+                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"><LocalizedText source={" Farm or Enterprise Name "} /></label>
                 <input
                   type="text"
                   value={formData.farmName}
                   onChange={(e) => setFormData({ ...formData, farmName: e.target.value })}
                   placeholder="e.g. Oak Ridge Farm"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#166534] text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#26483E] text-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                  Total Acreage (Acres)
-                </label>
+                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"><LocalizedText source={" Total Acreage (Acres) "} /></label>
                 <input
                   type="number"
                   value={formData.farmSizeAcres}
                   onChange={(e) => setFormData({ ...formData, farmSizeAcres: e.target.value })}
                   placeholder="e.g. 250"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#166534] text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#26483E] text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                Farm Location / Region
-              </label>
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"><LocalizedText source={" Farm Location / Region "} /></label>
               <input
                 type="text"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 placeholder="State, Country or Postal Code"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#166534] text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#26483E] text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Crops Grown (Select all that apply)
-              </label>
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2"><LocalizedText source={" Crops Grown (Select all that apply) "} /></label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {cropsList.map((crop) => {
                   const selected = formData.cropTypes.includes(crop);
@@ -152,12 +139,12 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
                       onClick={() => handleCropToggle(crop)}
                       className={`p-2.5 rounded-xl border text-xs font-medium text-left transition-all ${
                         selected
-                          ? 'border-[#166534] bg-[#f0fdf4] text-[#166534] font-semibold ring-1 ring-[#166534]'
+                          ? 'border-[#26483E] bg-[#EAE7DD] text-[#26483E] font-semibold ring-1 ring-[#26483E]'
                           : 'border-gray-200 text-gray-600 hover:border-gray-300'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="truncate">{crop}</span>
+                        <span className="truncate"><LocalizedText source={"{0}"} values={[crop]} /></span>
                         {selected && <Check className="w-3.5 h-3.5 flex-shrink-0" />}
                       </div>
                     </button>
@@ -170,9 +157,9 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="inline-flex items-center px-6 py-3 rounded-full bg-[#166534] hover:bg-[#1b4332] text-white text-sm font-semibold transition-all shadow-sm"
+                className="inline-flex items-center px-6 py-3 rounded-full bg-[#26483E] hover:bg-[#26483E] text-white text-sm font-semibold transition-all shadow-sm"
               >
-                <span>Continue to Step 2</span>
+                <span><LocalizedText source={"Continue to Step 2"} /></span>
                 <ArrowRight className="ml-2 w-4 h-4" />
               </button>
             </div>
@@ -183,21 +170,13 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
         {step === 2 && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <div>
-              <div className="inline-block px-3 py-1 rounded-full bg-[#f0fdf4] text-xs font-semibold text-[#166534] uppercase tracking-wider mb-2">
-                Step 2 of 3
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900">
-                Tailor Your Technology Goals
-              </h3>
-              <p className="text-gray-500 text-sm mt-1">
-                Select your primary operational goals so we configure the ideal sensor & analytics stack.
-              </p>
+              <div className="inline-block px-3 py-1 rounded-full bg-[#EAE7DD] text-xs font-semibold text-[#26483E] uppercase tracking-wider mb-2"><LocalizedText source={" Step 2 of 3 "} /></div>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900"><LocalizedText source={" Tailor Your Technology Goals "} /></h3>
+              <p className="text-gray-500 text-sm mt-1"><LocalizedText source={" Select your primary operational goals so we configure the ideal sensor & analytics stack. "} /></p>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Primary Operational Priority
-              </label>
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2"><LocalizedText source={" Primary Operational Priority "} /></label>
               <div className="space-y-2">
                 {[
                   {
@@ -226,19 +205,19 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
                     onClick={() => setFormData({ ...formData, primaryGoal: item.title })}
                     className={`p-4 rounded-2xl border cursor-pointer transition-all ${
                       formData.primaryGoal === item.title
-                        ? 'border-[#166534] bg-[#f0fdf4] ring-1 ring-[#166534]'
+                        ? 'border-[#26483E] bg-[#EAE7DD] ring-1 ring-[#26483E]'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <h4 className="text-sm font-semibold text-gray-900">{item.title}</h4>
-                        <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
+                        <h4 className="text-sm font-semibold text-gray-900"><LocalizedText source={"{0}"} values={[item.title]} /></h4>
+                        <p className="text-xs text-gray-500 mt-0.5"><LocalizedText source={"{0}"} values={[item.desc]} /></p>
                       </div>
                       <div
                         className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 ml-3 ${
                           formData.primaryGoal === item.title
-                            ? 'border-[#166534] bg-[#166534] text-white'
+                            ? 'border-[#26483E] bg-[#26483E] text-white'
                             : 'border-gray-300'
                         }`}
                       >
@@ -252,28 +231,24 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                  Contact Name
-                </label>
+                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"><LocalizedText source={" Contact Name "} /></label>
                 <input
                   type="text"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#166534] text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#26483E] text-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                  Email for Plan Delivery
-                </label>
+                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"><LocalizedText source={" Email for Plan Delivery "} /></label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="grower@farm.com"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#166534] text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#26483E] text-sm"
                 />
               </div>
             </div>
@@ -285,24 +260,24 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
                 className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900"
               >
                 <ArrowLeft className="mr-2 w-4 h-4" />
-                <span>Back</span>
+                <span><LocalizedText source={"Back"} /></span>
               </button>
 
               <button
                 type="button"
                 onClick={handleGenerate}
                 disabled={isGenerating}
-                className="inline-flex items-center px-6 py-3 rounded-full bg-[#c4f042] hover:bg-[#b0d83b] text-[#1b4332] text-sm font-bold transition-all shadow-md cursor-pointer"
+                className="inline-flex items-center px-6 py-3 rounded-full bg-[#EAE7DD] hover:bg-[#EAE7DD] text-[#26483E] text-sm font-bold transition-all shadow-md cursor-pointer"
               >
                 {isGenerating ? (
                   <>
-                    <span className="w-4 h-4 border-2 border-[#1b4332] border-t-transparent rounded-full animate-spin mr-2" />
-                    <span>Analyzing Agronomy Data...</span>
+                    <span className="w-4 h-4 border-2 border-[#26483E] border-t-transparent rounded-full animate-spin mr-2" />
+                    <span><LocalizedText source={"Analyzing Agronomy Data..."} /></span>
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-4 h-4 mr-2" />
-                    <span>Generate Custom Plan</span>
+                    <span><LocalizedText source={"Generate Custom Plan"} /></span>
                   </>
                 )}
               </button>
@@ -314,50 +289,40 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
         {step === 3 && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <div className="text-center pb-2">
-              <div className="w-16 h-16 rounded-full bg-[#f0fdf4] text-[#166534] flex items-center justify-center mx-auto mb-3 border-4 border-[#dcfce7]">
+              <div className="w-16 h-16 rounded-full bg-[#EAE7DD] text-[#26483E] flex items-center justify-center mx-auto mb-3 border-4 border-[#EAE7DD]">
                 <CheckCircle className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900">
-                Custom Farm Strategy Ready!
-              </h3>
-              <p className="text-gray-500 text-sm mt-1">
-                Engineered for <span className="font-semibold text-gray-800">{formData.farmName || 'Your Farm'}</span> ({formData.farmSizeAcres} Acres, {formData.location})
-              </p>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900"><LocalizedText source={" Custom Farm Strategy Ready! "} /></h3>
+              <p className="text-gray-500 text-sm mt-1"><LocalizedText source={" Engineered for "} /><span className="font-semibold text-gray-800"><LocalizedText source={"{0}"} values={[formData.farmName || 'Your Farm']} /></span><LocalizedText source={" ({0} Acres, {1}) "} values={[formData.farmSizeAcres, formData.location]} /></p>
             </div>
 
             {/* Projected Impact Card */}
-            <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#1b4332] text-white">
+            <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#26483E] text-white">
               <div className="text-center">
-                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#c4f042]">+27%</p>
-                <p className="text-[11px] text-[#dcfce7] uppercase tracking-wider font-medium">Yield Increase</p>
+                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#EAE7DD]">+27%</p>
+                <p className="text-[11px] text-[#EAE7DD] uppercase tracking-wider font-medium"><LocalizedText source={"Yield Increase"} /></p>
               </div>
               <div className="text-center border-x border-white/15">
-                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#c4f042]">35%</p>
-                <p className="text-[11px] text-[#dcfce7] uppercase tracking-wider font-medium">Water Saved</p>
+                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#EAE7DD]">35%</p>
+                <p className="text-[11px] text-[#EAE7DD] uppercase tracking-wider font-medium"><LocalizedText source={"Water Saved"} /></p>
               </div>
               <div className="text-center">
-                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#c4f042]">$18.4k</p>
-                <p className="text-[11px] text-[#dcfce7] uppercase tracking-wider font-medium">Est. Extra Profit</p>
+                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#EAE7DD]"><LocalizedText source={"$18.4k"} /></p>
+                <p className="text-[11px] text-[#EAE7DD] uppercase tracking-wider font-medium"><LocalizedText source={"Est. Extra Profit"} /></p>
               </div>
             </div>
 
             {/* Recommended Hardware & Software Stack */}
             <div className="space-y-3">
-              <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Recommended Solution Stack
-              </h4>
+              <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider"><LocalizedText source={" Recommended Solution Stack "} /></h4>
 
               <div className="p-3.5 rounded-xl border border-gray-200 bg-gray-50/70 flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-green-100 text-[#166534]">
+                <div className="p-2 rounded-lg bg-green-100 text-[#26483E]">
                   <Droplets className="w-5 h-5" />
                 </div>
                 <div>
-                  <h5 className="text-sm font-semibold text-gray-900">
-                    4x IoT Multi-Depth Soil Moisture Probes
-                  </h5>
-                  <p className="text-xs text-gray-500">
-                    Continuous monitoring at 10cm, 30cm, and 60cm depths with solar charging.
-                  </p>
+                  <h5 className="text-sm font-semibold text-gray-900"><LocalizedText source={" 4x IoT Multi-Depth Soil Moisture Probes "} /></h5>
+                  <p className="text-xs text-gray-500"><LocalizedText source={" Continuous monitoring at 10cm, 30cm, and 60cm depths with solar charging. "} /></p>
                 </div>
               </div>
 
@@ -366,12 +331,8 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
                   <Sprout className="w-5 h-5" />
                 </div>
                 <div>
-                  <h5 className="text-sm font-semibold text-gray-900">
-                    AgriLoop AI Irrigation Scheduler & Telemetry
-                  </h5>
-                  <p className="text-xs text-gray-500">
-                    Auto-adjusts watering duration based on microclimate evapo-transpiration formulas.
-                  </p>
+                  <h5 className="text-sm font-semibold text-gray-900"><LocalizedText source={" AgriLoop AI Irrigation Scheduler & Telemetry "} /></h5>
+                  <p className="text-xs text-gray-500"><LocalizedText source={" Auto-adjusts watering duration based on microclimate evapo-transpiration formulas. "} /></p>
                 </div>
               </div>
 
@@ -380,12 +341,8 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h5 className="text-sm font-semibold text-gray-900">
-                    Verified Buyer Pre-Harvest Exchange
-                  </h5>
-                  <p className="text-xs text-gray-500">
-                    Guaranteed contracts with 3 regional grain & fruit distributors upon verification.
-                  </p>
+                  <h5 className="text-sm font-semibold text-gray-900"><LocalizedText source={" Verified Buyer Pre-Harvest Exchange "} /></h5>
+                  <p className="text-xs text-gray-500"><LocalizedText source={" Guaranteed contracts with 3 regional grain & fruit distributors upon verification. "} /></p>
                 </div>
               </div>
             </div>
@@ -400,7 +357,7 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
                 className="inline-flex items-center justify-center px-5 py-3 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-semibold"
               >
                 <Download className="w-4 h-4 mr-2" />
-                <span>Download PDF Summary</span>
+                <span><LocalizedText source={"Download PDF Summary"} /></span>
               </button>
 
               <button
@@ -409,9 +366,9 @@ export function FarmPlanModal({ isOpen, initialStep = 1, onClose }: FarmPlanModa
                   alert('Thank you! An AgriLoop agronomy specialist will reach out within 24 hours to coordinate onboarding.');
                   onClose();
                 }}
-                className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#166534] hover:bg-[#1b4332] text-white text-sm font-semibold shadow-md"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#26483E] hover:bg-[#26483E] text-white text-sm font-semibold shadow-md"
               >
-                <span>Activate Free Trial Deployment</span>
+                <span><LocalizedText source={"Activate Free Trial Deployment"} /></span>
                 <ArrowRight className="ml-2 w-4 h-4" />
               </button>
             </div>

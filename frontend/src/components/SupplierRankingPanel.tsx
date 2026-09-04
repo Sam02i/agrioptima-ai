@@ -1,3 +1,4 @@
+import { LocalizedText } from "../i18n/LocalizedText";
 import { useState } from "react";
 
 const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
@@ -96,26 +97,21 @@ export default function SupplierRankingPanel() {
     <div className="space-y-6">
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <div className="mb-5">
-          <h3 className="text-base font-semibold text-[#1a2e1a]">Buyer Requirement (RFQ)</h3>
-          <p className="text-xs text-gray-400 mt-1">Set the procurement requirement used to filter and rank supplier lots.</p>
+          <h3 className="text-base font-semibold text-[#26483E]"><LocalizedText source={"Buyer Requirement (RFQ)"} /></h3>
+          <p className="text-xs text-gray-400 mt-1"><LocalizedText source={"Set the procurement requirement used to filter and rank supplier lots."} /></p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          <label className="text-xs text-gray-500">Crop
-            <input value={crop} onChange={(e) => setCrop(e.target.value)} className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
+          <label className="text-xs text-gray-500"><LocalizedText source={"Crop "} /><input value={crop} onChange={(e) => setCrop(e.target.value)} className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
           </label>
-          <label className="text-xs text-gray-500">Variety (optional)
-            <input value={variety} onChange={(e) => setVariety(e.target.value)} placeholder="Any variety" className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
+          <label className="text-xs text-gray-500"><LocalizedText source={"Variety (optional) "} /><input value={variety} onChange={(e) => setVariety(e.target.value)} placeholder="Any variety" className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
           </label>
-          <label className="text-xs text-gray-500">Required quantity (kg)
-            <input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
+          <label className="text-xs text-gray-500"><LocalizedText source={"Required quantity (kg) "} /><input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
           </label>
-          <label className="text-xs text-gray-500">Minimum grade
-            <select value={minGrade} onChange={(e) => setMinGrade(e.target.value)} className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white">
-              <option>A</option><option>B</option><option>C</option>
+          <label className="text-xs text-gray-500"><LocalizedText source={"Minimum grade "} /><select value={minGrade} onChange={(e) => setMinGrade(e.target.value)} className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white">
+              <option><LocalizedText source={"A"} /></option><option><LocalizedText source={"B"} /></option><option><LocalizedText source={"C"} /></option>
             </select>
           </label>
-          <label className="text-xs text-gray-500">Maximum price (₹/kg)
-            <input type="number" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
+          <label className="text-xs text-gray-500"><LocalizedText source={"Maximum price (₹/kg) "} /><input type="number" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
           </label>
         </div>
       </div>
@@ -123,10 +119,10 @@ export default function SupplierRankingPanel() {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-semibold text-[#1a2e1a]">Supplier Lots</h3>
-            <p className="text-xs text-gray-400 mt-1">Edit the demo lots or add another supplier.</p>
+            <h3 className="text-base font-semibold text-[#26483E]"><LocalizedText source={"Supplier Lots"} /></h3>
+            <p className="text-xs text-gray-400 mt-1"><LocalizedText source={"Edit the demo lots or add another supplier."} /></p>
           </div>
-          <button onClick={addCandidate} className="px-3 py-2 rounded-lg bg-[#e8f0eb] text-[#2d5a3d] text-xs font-semibold">+ Add supplier</button>
+          <button onClick={addCandidate} className="px-3 py-2 rounded-lg bg-[#EAE7DD] text-[#26483E] text-xs font-semibold"><LocalizedText source={"+ Add supplier"} /></button>
         </div>
         <div className="space-y-3">
           {candidates.map((candidate, index) => (
@@ -135,54 +131,52 @@ export default function SupplierRankingPanel() {
               <input value={candidate.crop_name} onChange={(e) => updateCandidate(index, "crop_name", e.target.value)} aria-label="Crop" className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs" />
               <input type="number" value={candidate.price_per_unit} onChange={(e) => updateCandidate(index, "price_per_unit", e.target.value)} aria-label="Price per kg" title="Price per kg" className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs" />
               <input type="number" value={candidate.available_quantity} onChange={(e) => updateCandidate(index, "available_quantity", e.target.value)} aria-label="Available quantity" title="Available quantity" className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs" />
-              <select value={candidate.quality_grade} onChange={(e) => updateCandidate(index, "quality_grade", e.target.value)} aria-label="Quality grade" className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs bg-white"><option>A</option><option>B</option><option>C</option></select>
+              <select value={candidate.quality_grade} onChange={(e) => updateCandidate(index, "quality_grade", e.target.value)} aria-label="Quality grade" className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs bg-white"><option><LocalizedText source={"A"} /></option><option><LocalizedText source={"B"} /></option><option><LocalizedText source={"C"} /></option></select>
               <input type="number" value={candidate.farmer_reliability} onChange={(e) => updateCandidate(index, "farmer_reliability", e.target.value)} aria-label="Reliability" title="Reliability score" className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs" />
-              <button onClick={() => setCandidates((current) => current.filter((_, i) => i !== index))} className="text-xs text-red-500 hover:bg-red-50 rounded-lg">Remove</button>
+              <button onClick={() => setCandidates((current) => current.filter((_, i) => i !== index))} className="text-xs text-red-500 hover:bg-red-50 rounded-lg"><LocalizedText source={"Remove"} /></button>
               <div className="lg:col-span-8 flex flex-wrap gap-x-4 text-[10px] text-gray-400 px-1">
-                <span>₹{candidate.price_per_unit}/kg</span><span>{candidate.available_quantity} kg</span><span>Grade {candidate.quality_grade}</span><span>Reliability {candidate.farmer_reliability}/100</span>
+                <span><LocalizedText source={"₹{0}/kg"} values={[candidate.price_per_unit]} /></span><span><LocalizedText source={"{0} kg"} values={[candidate.available_quantity]} /></span><span><LocalizedText source={"Grade {0}"} values={[candidate.quality_grade]} /></span><span><LocalizedText source={"Reliability {0}/100"} values={[candidate.farmer_reliability]} /></span>
               </div>
             </div>
           ))}
         </div>
-        <button onClick={rankSuppliers} disabled={loading || candidates.length === 0} className="mt-5 w-full sm:w-auto px-6 py-2.5 bg-[#2d5a3d] text-white rounded-xl text-sm font-semibold disabled:opacity-50">
-          {loading ? "Ranking suppliers..." : "Rank Suppliers"}
-        </button>
-        {error && <div className="mt-3 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700">{error}</div>}
+        <button onClick={rankSuppliers} disabled={loading || candidates.length === 0} className="mt-5 w-full sm:w-auto px-6 py-2.5 bg-[#26483E] text-white rounded-xl text-sm font-semibold disabled:opacity-50"><LocalizedText source={" {0} "} values={[loading ? "Ranking suppliers..." : "Rank Suppliers"]} /></button>
+        {error && <div className="mt-3 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700"><LocalizedText source={"{0}"} values={[error]} /></div>}
       </div>
 
       {results.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-base font-semibold text-[#1a2e1a]">Ranking Results</h3>
-            <span className="text-xs text-gray-400">{results.filter((r) => r.eligible).length} eligible of {results.length}</span>
+            <h3 className="text-base font-semibold text-[#26483E]"><LocalizedText source={"Ranking Results"} /></h3>
+            <span className="text-xs text-gray-400">{results.filter((r) => r.eligible).length}<LocalizedText source={" eligible of {0}"} values={[results.length]} /></span>
           </div>
           {results.map((result, index) => (
             <div key={result.lot_id} className={`bg-white rounded-2xl border shadow-sm p-5 ${result.eligible ? "border-gray-100" : "border-red-100"}`}>
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                 <div className="flex gap-3">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${result.eligible ? "bg-[#2d5a3d] text-white" : "bg-red-100 text-red-600"}`}>{result.eligible ? index + 1 : "×"}</div>
-                  <div><div className="font-semibold text-[#1a2e1a]">{result.farmer_name}</div><div className="text-xs text-gray-400">{result.lot_id} · {result.crop_name} {result.crop_variety || ""}</div></div>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${result.eligible ? "bg-[#26483E] text-white" : "bg-red-100 text-red-600"}`}><LocalizedText source={"{0}"} values={[result.eligible ? index + 1 : "×"]} /></div>
+                  <div><div className="font-semibold text-[#26483E]"><LocalizedText source={"{0}"} values={[result.farmer_name]} /></div><div className="text-xs text-gray-400"><LocalizedText source={"{0} · {1} {2}"} values={[result.lot_id, result.crop_name, result.crop_variety || ""]} /></div></div>
                 </div>
-                {result.eligible ? <div className="text-right"><div className="text-2xl font-bold text-[#2d5a3d]">{result.ranking_score.toFixed(1)}</div><div className="text-[10px] text-gray-400">ranking score</div></div> : <span className="px-2 py-1 rounded bg-red-50 text-red-600 text-xs">Rejected</span>}
+                {result.eligible ? <div className="text-right"><div className="text-2xl font-bold text-[#26483E]"><LocalizedText source={"{0}"} values={[result.ranking_score.toFixed(1)]} /></div><div className="text-[10px] text-gray-400"><LocalizedText source={"ranking score"} /></div></div> : <span className="px-2 py-1 rounded bg-red-50 text-red-600 text-xs"><LocalizedText source={"Rejected"} /></span>}
               </div>
-              {!result.eligible ? <p className="mt-3 text-xs text-red-600 bg-red-50 rounded-lg p-3">{result.rejection_reason}</p> : (
+              {!result.eligible ? <p className="mt-3 text-xs text-red-600 bg-red-50 rounded-lg p-3"><LocalizedText source={"{0}"} values={[result.rejection_reason]} /></p> : (
                 <>
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mt-4">
-                    {Object.entries(result.scores).map(([label, value]) => <div key={label} className="bg-gray-50 rounded-lg p-2"><div className="text-[10px] text-gray-400 capitalize">{label}</div><div className="text-sm font-semibold text-[#1a2e1a]">{value.toFixed(1)}</div></div>)}
+                    {Object.entries(result.scores).map(([label, value]) => <div key={label} className="bg-gray-50 rounded-lg p-2"><div className="text-[10px] text-gray-400 capitalize"><LocalizedText source={"{0}"} values={[label]} /></div><div className="text-sm font-semibold text-[#26483E]"><LocalizedText source={"{0}"} values={[value.toFixed(1)]} /></div></div>)}
                   </div>
                   <div className="flex flex-wrap gap-2 mt-3 text-xs">
-                    <span className={`px-2 py-1 rounded ${statusColor(result.fair_price.status)}`}>{result.fair_price.status.replaceAll("_", " ")}</span>
-                    <span className="px-2 py-1 rounded bg-purple-50 text-purple-700">{result.confidence.level} confidence · {result.confidence.score.toFixed(0)}</span>
-                    <span className="px-2 py-1 rounded bg-gray-50 text-gray-600">₹{result.price_per_unit}/kg · {result.available_quantity} kg</span>
+                    <span className={`px-2 py-1 rounded ${statusColor(result.fair_price.status)}`}><LocalizedText source={"{0}"} values={[result.fair_price.status.replaceAll("_", " ")]} /></span>
+                    <span className="px-2 py-1 rounded bg-purple-50 text-purple-700"><LocalizedText source={"{0} confidence · {1}"} values={[result.confidence.level, result.confidence.score.toFixed(0)]} /></span>
+                    <span className="px-2 py-1 rounded bg-gray-50 text-gray-600"><LocalizedText source={"₹{0}/kg · {1} kg"} values={[result.price_per_unit, result.available_quantity]} /></span>
                   </div>
-                  <ul className="mt-3 space-y-1">{result.explanation.map((item) => <li key={item} className="text-xs text-gray-600">✓ {item}</li>)}</ul>
+                  <ul className="mt-3 space-y-1">{result.explanation.map((item) => <li key={item} className="text-xs text-gray-600"><LocalizedText source={"✓ {0}"} values={[item]} /></li>)}</ul>
                 </>
               )}
             </div>
           ))}
         </div>
       )}
-      <p className="text-[10px] text-gray-400 text-center">Deterministic decision-support ranking. Verify supplier records, quality, logistics, and pricing before procurement.</p>
+      <p className="text-[10px] text-gray-400 text-center"><LocalizedText source={"Deterministic decision-support ranking. Verify supplier records, quality, logistics, and pricing before procurement."} /></p>
     </div>
   );
 }

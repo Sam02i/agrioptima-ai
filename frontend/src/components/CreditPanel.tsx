@@ -1,3 +1,4 @@
+import { LocalizedText } from "../i18n/LocalizedText";
 import { useState, useEffect } from "react";
 
 const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
@@ -141,13 +142,11 @@ export default function CreditPanel() {
   return (
     <div className="space-y-6">
       {loading && (
-        <div className="p-3 bg-[#e8f0eb] border border-[#c5d9be] rounded-xl text-[#2d5a3d] text-xs text-center">
-          Loading credit assessment...
-        </div>
+        <div className="p-3 bg-[#EAE7DD] border border-[#EAE7DD] rounded-xl text-[#26483E] text-xs text-center"><LocalizedText source={" Loading credit assessment... "} /></div>
       )}
 
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs">{error}</div>
+        <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs"><LocalizedText source={"{0}"} values={[error]} /></div>
       )}
 
       {score && (
@@ -156,16 +155,14 @@ export default function CreditPanel() {
           <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm lg:order-1">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-sm font-semibold text-[#1a2e1a]">Credit Score</h3>
-                <p className="text-[11px] text-gray-400 mt-0.5">{score.buyer_id}</p>
+                <h3 className="text-sm font-semibold text-[#26483E]"><LocalizedText source={"Credit Score"} /></h3>
+                <p className="text-[11px] text-gray-400 mt-0.5"><LocalizedText source={"{0}"} values={[score.buyer_id]} /></p>
               </div>
-              <span className={`px-2 py-0.5 rounded text-xs font-medium ${bandColor(score.risk_band)}`}>
-                {score.risk_band}
-              </span>
+              <span className={`px-2 py-0.5 rounded text-xs font-medium ${bandColor(score.risk_band)}`}><LocalizedText source={" {0} "} values={[score.risk_band]} /></span>
             </div>
             <div className="text-center mb-4">
-              <div className="text-5xl font-bold text-[#2d5a3d]">{score.procurement_credit_score}</div>
-              <div className="text-xs text-gray-400 mt-1">out of 100</div>
+              <div className="text-5xl font-bold text-[#26483E]"><LocalizedText source={"{0}"} values={[score.procurement_credit_score]} /></div>
+              <div className="text-xs text-gray-400 mt-1"><LocalizedText source={"out of 100"} /></div>
             </div>
             {/* Score bar */}
             <div className="h-3 bg-gray-100 rounded-full overflow-hidden mb-4">
@@ -174,30 +171,30 @@ export default function CreditPanel() {
                 style={{ width: `${score.procurement_credit_score}%` }}
               />
             </div>
-            <div className="rounded-xl bg-[#f3f7f4] border border-[#dce9df] p-3 mb-4">
-              <div className="text-xs font-semibold text-[#2d5a3d] mb-1">What this score means</div>
-              <p className="text-xs leading-5 text-gray-600">{scoreMeaning(score.procurement_credit_score)}</p>
+            <div className="rounded-xl bg-[#EAE7DD] border border-[#EAE7DD] p-3 mb-4">
+              <div className="text-xs font-semibold text-[#26483E] mb-1"><LocalizedText source={"What this score means"} /></div>
+              <p className="text-xs leading-5 text-gray-600"><LocalizedText source={"{0}"} values={[scoreMeaning(score.procurement_credit_score)]} /></p>
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="bg-gray-50 rounded-lg p-2">
-                <div className="text-gray-400">30-day DPD Risk</div>
-                <div className="font-semibold text-[#1a2e1a]">{(score.predicted_30dpd_probability * 100).toFixed(1)}%</div>
+                <div className="text-gray-400"><LocalizedText source={"30-day DPD Risk"} /></div>
+                <div className="font-semibold text-[#26483E]"><LocalizedText source={"{0}%"} values={[(score.predicted_30dpd_probability * 100).toFixed(1)]} /></div>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
-                <div className="text-gray-400">7-day Late Risk</div>
-                <div className="font-semibold text-[#1a2e1a]">{percent(score.predicted_7day_late_probability)}</div>
+                <div className="text-gray-400"><LocalizedText source={"7-day Late Risk"} /></div>
+                <div className="font-semibold text-[#26483E]"><LocalizedText source={"{0}"} values={[percent(score.predicted_7day_late_probability)]} /></div>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
-                <div className="text-gray-400">Confidence</div>
-                <div className="font-semibold text-[#1a2e1a]">{score.model_confidence}</div>
+                <div className="text-gray-400"><LocalizedText source={"Confidence"} /></div>
+                <div className="font-semibold text-[#26483E]"><LocalizedText source={"{0}"} values={[score.model_confidence]} /></div>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
-                <div className="text-gray-400">History Quality</div>
-                <div className="font-semibold text-[#1a2e1a]">{score.history_quality}</div>
+                <div className="text-gray-400"><LocalizedText source={"History Quality"} /></div>
+                <div className="font-semibold text-[#26483E]"><LocalizedText source={"{0}"} values={[score.history_quality]} /></div>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
-                <div className="text-gray-400">Verified Transactions</div>
-                <div className="font-semibold text-[#1a2e1a]">{score.verified_transaction_count}</div>
+                <div className="text-gray-400"><LocalizedText source={"Verified Transactions"} /></div>
+                <div className="font-semibold text-[#26483E]"><LocalizedText source={"{0}"} values={[score.verified_transaction_count]} /></div>
               </div>
             </div>
           </div>
@@ -206,10 +203,10 @@ export default function CreditPanel() {
             <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm lg:col-span-2 lg:order-3">
               <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1 mb-4">
                 <div>
-                  <h3 className="text-sm font-semibold text-[#1a2e1a]">Credit Behaviour Details</h3>
-                  <p className="text-[11px] text-gray-400 mt-1">Observed procurement and repayment history used in this assessment</p>
+                  <h3 className="text-sm font-semibold text-[#26483E]"><LocalizedText source={"Credit Behaviour Details"} /></h3>
+                  <p className="text-[11px] text-gray-400 mt-1"><LocalizedText source={"Observed procurement and repayment history used in this assessment"} /></p>
                 </div>
-                <div className="text-[11px] text-gray-400">{Math.round(features.history_days)} days of history</div>
+                <div className="text-[11px] text-gray-400"><LocalizedText source={"{0} days of history"} values={[Math.round(features.history_days)]} /></div>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {[
@@ -227,9 +224,9 @@ export default function CreditPanel() {
                   ["History quality", score.history_quality.replaceAll("_", " "), score.model_confidence.replaceAll("_", " ")],
                 ].map(([label, value, hint]) => (
                   <div key={label} className="rounded-xl border border-gray-100 bg-gray-50 p-3">
-                    <div className="text-[11px] text-gray-400">{label}</div>
-                    <div className="text-sm font-semibold text-[#1a2e1a] mt-1">{value}</div>
-                    <div className="text-[10px] text-gray-400 mt-1">{hint}</div>
+                    <div className="text-[11px] text-gray-400"><LocalizedText source={"{0}"} values={[label]} /></div>
+                    <div className="text-sm font-semibold text-[#26483E] mt-1"><LocalizedText source={"{0}"} values={[value]} /></div>
+                    <div className="text-[10px] text-gray-400 mt-1"><LocalizedText source={"{0}"} values={[hint]} /></div>
                   </div>
                 ))}
               </div>
@@ -241,25 +238,25 @@ export default function CreditPanel() {
             {/* Credit limit */}
             {position && (
               <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-                <h3 className="text-sm font-semibold text-[#1a2e1a] mb-3">Revolving Credit</h3>
+                <h3 className="text-sm font-semibold text-[#26483E] mb-3"><LocalizedText source={"Revolving Credit"} /></h3>
                 <div className="grid grid-cols-3 gap-3 text-xs mb-4">
                   <div className="bg-gray-50 rounded-lg p-2">
-                    <div className="text-gray-400">Approved Limit</div>
-                    <div className="font-semibold text-[#1a2e1a]">₹{position.approved_limit?.toLocaleString()}</div>
+                    <div className="text-gray-400"><LocalizedText source={"Approved Limit"} /></div>
+                    <div className="font-semibold text-[#26483E]"><LocalizedText source={"₹{0}"} values={[position.approved_limit?.toLocaleString()]} /></div>
                   </div>
                   <div className="bg-gray-50 rounded-lg p-2">
-                    <div className="text-gray-400">Utilized</div>
-                    <div className="font-semibold text-orange-600">₹{position.utilized_amount?.toLocaleString()}</div>
+                    <div className="text-gray-400"><LocalizedText source={"Utilized"} /></div>
+                    <div className="font-semibold text-orange-600"><LocalizedText source={"₹{0}"} values={[position.utilized_amount?.toLocaleString()]} /></div>
                   </div>
                   <div className="bg-gray-50 rounded-lg p-2">
-                    <div className="text-gray-400">Available</div>
-                    <div className="font-semibold text-green-600">₹{position.available_limit?.toLocaleString()}</div>
+                    <div className="text-gray-400"><LocalizedText source={"Available"} /></div>
+                    <div className="font-semibold text-green-600"><LocalizedText source={"₹{0}"} values={[position.available_limit?.toLocaleString()]} /></div>
                   </div>
                 </div>
                 <div className="mb-4">
                   <div className="flex justify-between text-[10px] text-gray-400 mb-1">
-                    <span>Credit utilization</span>
-                    <span>{position.approved_limit ? percent(position.utilized_amount / position.approved_limit) : "0.0%"}</span>
+                    <span><LocalizedText source={"Credit utilization"} /></span>
+                    <span><LocalizedText source={"{0}"} values={[position.approved_limit ? percent(position.utilized_amount / position.approved_limit) : "0.0%"]} /></span>
                   </div>
                   <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
                     <div
@@ -278,9 +275,7 @@ export default function CreditPanel() {
                       onChange={(e) => setDrawAmount(e.target.value)}
                       className="min-w-0 w-full px-3 py-2 border border-gray-200 rounded-lg text-xs"
                     />
-                    <button onClick={simulateDraw} className="px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs font-medium hover:bg-orange-600">
-                      Draw
-                    </button>
+                    <button onClick={simulateDraw} className="px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs font-medium hover:bg-orange-600"><LocalizedText source={" Draw "} /></button>
                   </div>
                   <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 min-w-0">
                     <input
@@ -290,9 +285,7 @@ export default function CreditPanel() {
                       onChange={(e) => setRepayAmount(e.target.value)}
                       className="min-w-0 w-full px-3 py-2 border border-gray-200 rounded-lg text-xs"
                     />
-                    <button onClick={simulateRepay} className="px-3 py-1.5 bg-green-500 text-white rounded-lg text-xs font-medium hover:bg-green-600">
-                      Repay
-                    </button>
+                    <button onClick={simulateRepay} className="px-3 py-1.5 bg-green-500 text-white rounded-lg text-xs font-medium hover:bg-green-600"><LocalizedText source={" Repay "} /></button>
                   </div>
                 </div>
               </div>
@@ -300,19 +293,19 @@ export default function CreditPanel() {
 
             {/* Factors */}
             <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-              <h3 className="text-sm font-semibold text-[#1a2e1a] mb-3">Assessment Factors</h3>
-              <p className="text-[11px] text-gray-400 mb-3">The strongest signals that raised or lowered this buyer's score.</p>
+              <h3 className="text-sm font-semibold text-[#26483E] mb-3"><LocalizedText source={"Assessment Factors"} /></h3>
+              <p className="text-[11px] text-gray-400 mb-3"><LocalizedText source={"The strongest signals that raised or lowered this buyer's score."} /></p>
               <div className="space-y-2">
                 {score.major_positive_factors.map((f, i) => (
                   <div key={i} className="flex items-start gap-2 text-xs">
                     <span className="text-green-500 mt-0.5">✓</span>
-                    <span className="text-gray-600">{f}</span>
+                    <span className="text-gray-600"><LocalizedText source={"{0}"} values={[f]} /></span>
                   </div>
                 ))}
                 {score.major_negative_factors.map((f, i) => (
                   <div key={i} className="flex items-start gap-2 text-xs">
                     <span className="text-red-400 mt-0.5">✗</span>
-                    <span className="text-gray-600">{f}</span>
+                    <span className="text-gray-600"><LocalizedText source={"{0}"} values={[f]} /></span>
                   </div>
                 ))}
                 {score.manual_review_flags.length > 0 && (
@@ -320,7 +313,7 @@ export default function CreditPanel() {
                     {score.manual_review_flags.map((f, i) => (
                       <div key={i} className="flex items-start gap-2 text-xs">
                         <span className="text-orange-400 mt-0.5">⚠</span>
-                        <span className="text-orange-600">{f}</span>
+                        <span className="text-orange-600"><LocalizedText source={"{0}"} values={[f]} /></span>
                       </div>
                     ))}
                   </div>
@@ -333,18 +326,16 @@ export default function CreditPanel() {
 
       {!score && !loading && (
         <div className="bg-white border border-gray-100 rounded-2xl p-12 shadow-sm text-center">
-          <div className="w-16 h-16 bg-[#f0f2eb] rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-[#EAE7DD] rounded-2xl flex items-center justify-center mx-auto mb-4">
             <span className="text-3xl">💳</span>
           </div>
-          <h3 className="text-lg font-semibold text-[#1a2e1a] mb-2">Credit Intelligence</h3>
-          <p className="text-sm text-gray-400 max-w-sm mx-auto">
-            Select a buyer above to see their procurement credit score, risk assessment, and revolving credit position.
-          </p>
+          <h3 className="text-lg font-semibold text-[#26483E] mb-2"><LocalizedText source={"Credit Intelligence"} /></h3>
+          <p className="text-sm text-gray-400 max-w-sm mx-auto"><LocalizedText source={" Select a buyer above to see their procurement credit score, risk assessment, and revolving credit position. "} /></p>
         </div>
       )}
 
       {score?.disclaimer && (
-        <p className="text-[10px] text-gray-400 text-center mt-4">{score.disclaimer}</p>
+        <p className="text-[10px] text-gray-400 text-center mt-4"><LocalizedText source={"{0}"} values={[score.disclaimer]} /></p>
       )}
     </div>
   );

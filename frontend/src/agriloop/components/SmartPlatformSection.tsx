@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import { useState } from 'react';
 import {
   Calendar,
@@ -142,18 +143,15 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
                 id="smart-platform-badge"
                 className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-gray-200 text-xs font-semibold text-gray-600 mb-5 uppercase tracking-wider bg-gray-50/80"
               >
-                <span className="w-2 h-2 rounded-full bg-[#16a34a] mr-2 animate-pulse" />
-                How It Works
-              </div>
+                <span className="w-2 h-2 rounded-full bg-[#26483E] mr-2 animate-pulse" /><LocalizedText source={" How It Works "} /></div>
             </BlurReveal>
 
             <BlurReveal delay={0.2} duration={0.85} blur={12} yOffset={20}>
               <h2
                 id="smart-platform-heading"
-                className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#052e16] tracking-tight leading-[1.12]"
-              >
-                Smart Farming Made <br />
-                <span className="italic font-light text-gray-800">Simple and Efficient</span>
+                className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#26483E] tracking-tight leading-[1.12]"
+              ><LocalizedText source={" Smart Farming Made "} /><br />
+                <span className="italic font-light text-gray-800"><LocalizedText source={"Simple and Efficient"} /></span>
               </h2>
             </BlurReveal>
           </div>
@@ -163,9 +161,7 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
               <p
                 id="smart-platform-desc"
                 className="text-lg text-gray-600 font-light leading-relaxed max-w-xl"
-              >
-                A smart farming platform that connects soil, crops, and operations to help farmers grow more efficiently and safely.
-              </p>
+              ><LocalizedText source={" A smart farming platform that connects soil, crops, and operations to help farmers grow more efficiently and safely. "} /></p>
             </BlurReveal>
           </div>
         </div>
@@ -184,8 +180,8 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
                   onClick={() => setActiveTab(tab.key)}
                   className={`p-4 sm:p-5 rounded-2xl sm:rounded-3xl border text-left transition-all duration-300 flex items-center gap-3.5 sm:gap-4 cursor-pointer ${
                     isSelected
-                      ? 'bg-white border-[#166534] shadow-md shadow-emerald-900/5 ring-2 ring-[#166534]/20'
-                      : 'bg-[#f9fafb] border-gray-200/80 hover:bg-white hover:border-gray-300 hover:shadow-xs'
+                      ? 'bg-white border-[#26483E] shadow-md shadow-emerald-900/5 ring-2 ring-[#26483E]/20'
+                      : 'bg-[#EAE7DD] border-gray-200/80 hover:bg-white hover:border-gray-300 hover:shadow-xs'
                   }`}
                 >
                   <div
@@ -198,14 +194,10 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
                   <div className="min-w-0">
                     <h3
                       className={`text-sm sm:text-base font-semibold leading-tight truncate ${
-                        isSelected ? 'text-[#052e16] font-bold' : 'text-gray-900'
+                        isSelected ? 'text-[#26483E] font-bold' : 'text-gray-900'
                       }`}
-                    >
-                      {tab.title}
-                    </h3>
-                    <p className="text-xs text-gray-500 font-light truncate mt-0.5">
-                      {tab.subtitle}
-                    </p>
+                    ><LocalizedText source={" {0} "} values={[tab.title]} /></h3>
+                    <p className="text-xs text-gray-500 font-light truncate mt-0.5"><LocalizedText source={" {0} "} values={[tab.subtitle]} /></p>
                   </div>
                 </button>
               );
@@ -229,8 +221,8 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
             {/* Bottom Left Location Pill */}
             <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 z-20">
               <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-medium shadow-lg">
-                <MapPin className="w-4 h-4 text-[#c4f042]" />
-                <span>{currentTab.location}</span>
+                <MapPin className="w-4 h-4 text-[#EAE7DD]" />
+                <span><LocalizedText source={"{0}"} values={[currentTab.location]} /></span>
               </div>
             </div>
 
@@ -246,35 +238,29 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
                       <CloudRain className="w-4 h-4 text-blue-500 absolute -bottom-1 -right-1" />
                     </div>
                     <div>
-                      <div className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 leading-none">
-                        {currentTab.temperature}
-                      </div>
-                      <div className="text-[11px] sm:text-xs text-gray-500 font-medium mt-1">
-                        {currentTab.tempLabel}
-                      </div>
+                      <div className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 leading-none"><LocalizedText source={" {0} "} values={[currentTab.temperature]} /></div>
+                      <div className="text-[11px] sm:text-xs text-gray-500 font-medium mt-1"><LocalizedText source={" {0} "} values={[currentTab.tempLabel]} /></div>
                     </div>
                   </div>
 
                   <div className="hidden sm:block">
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-semibold">
-                      Farm Conditions
-                    </span>
+                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-semibold"><LocalizedText source={" Farm Conditions "} /></span>
                   </div>
                 </div>
 
                 {/* 3 Stats Row */}
                 <div className="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-gray-100 text-center">
                   <div className="px-1">
-                    <p className="text-xs sm:text-sm font-bold text-gray-900">{currentTab.humidity}</p>
-                    <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">Humidity</p>
+                    <p className="text-xs sm:text-sm font-bold text-gray-900"><LocalizedText source={"{0}"} values={[currentTab.humidity]} /></p>
+                    <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-0.5"><LocalizedText source={"Humidity"} /></p>
                   </div>
                   <div className="px-1 border-x border-gray-100">
-                    <p className="text-xs sm:text-sm font-bold text-gray-900">{currentTab.precipitation}</p>
-                    <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">Precipitation</p>
+                    <p className="text-xs sm:text-sm font-bold text-gray-900"><LocalizedText source={"{0}"} values={[currentTab.precipitation]} /></p>
+                    <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-0.5"><LocalizedText source={"Precipitation"} /></p>
                   </div>
                   <div className="px-1">
-                    <p className="text-xs sm:text-sm font-bold text-gray-900">{currentTab.windSpeed}</p>
-                    <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">Wind Speed</p>
+                    <p className="text-xs sm:text-sm font-bold text-gray-900"><LocalizedText source={"{0}"} values={[currentTab.windSpeed]} /></p>
+                    <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-0.5"><LocalizedText source={"Wind Speed"} /></p>
                   </div>
                 </div>
               </div>
@@ -282,12 +268,8 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
               {/* Widget 2: Area Prediction AI Model Card */}
               <div className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl border border-white/40 text-gray-900 transition-all duration-300">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-xs sm:text-sm font-semibold text-gray-900">
-                    {currentTab.aiModelTitle}
-                  </h4>
-                  <span className={`text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full border ${currentTab.aiModelStatusColor}`}>
-                    {currentTab.aiModelStatus}
-                  </span>
+                  <h4 className="text-xs sm:text-sm font-semibold text-gray-900"><LocalizedText source={" {0} "} values={[currentTab.aiModelTitle]} /></h4>
+                  <span className={`text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full border ${currentTab.aiModelStatusColor}`}><LocalizedText source={" {0} "} values={[currentTab.aiModelStatus]} /></span>
                 </div>
 
                 {/* Multi-bar Prediction Spectrum Chart */}
@@ -317,17 +299,13 @@ export function SmartPlatformSection({ onOpenDemo, onOpenPlan }: SmartPlatformSe
                 <button
                   type="button"
                   onClick={onOpenDemo}
-                  className="w-full flex items-center justify-between p-2 sm:p-2.5 rounded-xl bg-gray-50 hover:bg-[#f0fdf4] border border-gray-200 hover:border-[#bbf7d0] transition-colors cursor-pointer group"
+                  className="w-full flex items-center justify-between p-2 sm:p-2.5 rounded-xl bg-gray-50 hover:bg-[#EAE7DD] border border-gray-200 hover:border-[#EAE7DD] transition-colors cursor-pointer group"
                 >
                   <div className="flex items-center gap-2 text-left">
-                    <span className="w-5 h-5 rounded-md bg-[#166534] text-[#c4f042] text-[10px] font-bold flex items-center justify-center flex-shrink-0">
-                      AI
-                    </span>
-                    <span className="text-[11px] sm:text-xs font-medium text-gray-700 group-hover:text-[#166534] truncate">
-                      {currentTab.aiPromptText}
-                    </span>
+                    <span className="w-5 h-5 rounded-md bg-[#26483E] text-[#EAE7DD] text-[10px] font-bold flex items-center justify-center flex-shrink-0"><LocalizedText source={" AI "} /></span>
+                    <span className="text-[11px] sm:text-xs font-medium text-gray-700 group-hover:text-[#26483E] truncate"><LocalizedText source={" {0} "} values={[currentTab.aiPromptText]} /></span>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#166534] transition-transform group-hover:translate-x-0.5 flex-shrink-0" />
+                  <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#26483E] transition-transform group-hover:translate-x-0.5 flex-shrink-0" />
                 </button>
               </div>
             </div>

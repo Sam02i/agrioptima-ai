@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import { STEPS } from '../data/content';
 import { ArrowRight } from 'lucide-react';
 import { BlurReveal } from './BlurReveal';
@@ -38,19 +39,14 @@ export function HowItWorks({ onStartStep }: HowItWorksProps) {
               <div
                 id="how-it-works-badge"
                 className="inline-block px-3.5 py-1.5 rounded-full border border-gray-200 text-xs font-semibold text-gray-500 mb-6 uppercase tracking-wider bg-gray-50/50"
-              >
-                {t('how_badge')}
-              </div>
+              ><LocalizedText source={" {0} "} values={[t('how_badge')]} /></div>
             </BlurReveal>
 
             <BlurReveal delay={0.2} duration={0.85} blur={12} yOffset={20}>
               <h2
                 id="how-it-works-heading"
-                className="text-3xl sm:text-4xl lg:text-5xl font-serif font-semibold text-[#052e16] leading-tight"
-              >
-                {t('how_title_line1')} <br />
-                {t('how_title_line2')}
-              </h2>
+                className="text-3xl sm:text-4xl lg:text-5xl font-serif font-semibold text-[#26483E] leading-tight"
+              ><LocalizedText source={" {0} "} values={[t('how_title_line1')]} /><br /><LocalizedText source={" {0} "} values={[t('how_title_line2')]} /></h2>
             </BlurReveal>
           </div>
 
@@ -58,9 +54,7 @@ export function HowItWorks({ onStartStep }: HowItWorksProps) {
             <p
               id="how-it-works-description"
               className="text-gray-500 max-w-md font-light text-base leading-relaxed"
-            >
-              {t('how_desc')}
-            </p>
+            ><LocalizedText source={" {0} "} values={[t('how_desc')]} /></p>
           </BlurReveal>
         </div>
 
@@ -68,7 +62,7 @@ export function HowItWorks({ onStartStep }: HowItWorksProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
           {/* Connecting Line for Desktop */}
           <div
-            className="hidden md:block absolute top-12 left-[18%] right-[18%] h-[2px] bg-gradient-to-r from-[#dcfce7] via-[#86efac] to-[#dcfce7] -z-0"
+            className="hidden md:block absolute top-12 left-[18%] right-[18%] h-[2px] bg-gradient-to-r from-[#EAE7DD] via-[#EAE7DD] to-[#EAE7DD] -z-0"
             aria-hidden="true"
           />
 
@@ -80,28 +74,22 @@ export function HowItWorks({ onStartStep }: HowItWorksProps) {
                 className="relative z-10 bg-white group cursor-pointer p-6 rounded-2xl border border-transparent hover:border-gray-100 hover:shadow-xs transition-all duration-300 flex flex-col items-center text-center h-full"
               >
                 {/* Number Circle */}
-                <div className="w-24 h-24 mx-auto rounded-full bg-[#f0fdf4] border-8 border-white flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 group-hover:bg-[#dcfce7] transition-all duration-300 ring-1 ring-gray-100">
-                  <span className="font-serif text-3xl font-bold text-[#166534] group-hover:text-[#1b4332]">
-                    {step.stepNumber}
-                  </span>
+                <div className="w-24 h-24 mx-auto rounded-full bg-[#EAE7DD] border-8 border-white flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 group-hover:bg-[#EAE7DD] transition-all duration-300 ring-1 ring-gray-100">
+                  <span className="font-serif text-3xl font-bold text-[#26483E] group-hover:text-[#26483E]"><LocalizedText source={" {0} "} values={[step.stepNumber]} /></span>
                 </div>
 
                 {/* Step Title */}
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-[#1b4332] transition-colors">
-                  {step.title}
-                </h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-[#26483E] transition-colors"><LocalizedText source={" {0} "} values={[step.title]} /></h3>
 
                 {/* Step Description */}
-                <p className="text-gray-500 text-sm leading-relaxed px-2 mb-4 font-light">
-                  {step.description}
-                </p>
+                <p className="text-gray-500 text-sm leading-relaxed px-2 mb-4 font-light"><LocalizedText source={" {0} "} values={[step.description]} /></p>
 
                 {/* Action Link */}
                 <button
                   type="button"
-                  className="mt-auto inline-flex items-center text-xs font-semibold text-[#166534] group-hover:text-[#15803d] hover:underline cursor-pointer"
+                  className="mt-auto inline-flex items-center text-xs font-semibold text-[#26483E] group-hover:text-[#26483E] hover:underline cursor-pointer"
                 >
-                  <span>{t('how_btn_start_plan')}</span>
+                  <span><LocalizedText source={"{0}"} values={[t('how_btn_start_plan')]} /></span>
                   <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>

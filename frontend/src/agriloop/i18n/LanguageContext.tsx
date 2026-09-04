@@ -11,8 +11,9 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
+export function LanguageProvider({ children, initialLanguage }: { children: React.ReactNode; initialLanguage?: LanguageCode }) {
   const [language, setLanguageState] = useState<LanguageCode>(() => {
+    if(initialLanguage)return initialLanguage;
     // Read from localStorage if available
     try {
       const savedLang = localStorage.getItem('agrovia_preferred_language');

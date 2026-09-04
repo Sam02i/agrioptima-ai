@@ -1,3 +1,4 @@
+import { LocalizedText } from "../i18n/LocalizedText";
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -57,19 +58,16 @@ export default function AgriLoopLanding({ onBuyer, onFarmer }: AgriLoopLandingPr
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] text-gray-800 flex flex-col selection:bg-[#c4f042] selection:text-[#1b4332]">
+    <div className="min-h-screen bg-[#EAE7DD] text-gray-800 flex flex-col selection:bg-[#EAE7DD] selection:text-[#26483E]">
       {/* Top Notification banner if logged in */}
       {loggedInUser && (
-        <div className="bg-[#1b4332] text-white text-xs py-2 px-4 text-center flex items-center justify-center gap-3 sticky top-0 z-50">
-          <span>
-            Active Session: <strong>{loggedInUser}</strong>
+        <div className="bg-[#26483E] text-white text-xs py-2 px-4 text-center flex items-center justify-center gap-3 sticky top-0 z-50">
+          <span><LocalizedText source={" Active Session: "} /><strong><LocalizedText source={"{0}"} values={[loggedInUser]} /></strong>
           </span>
           <button
             onClick={() => setLoggedInUser(null)}
             className="text-white/70 hover:text-white ml-2 cursor-pointer"
-          >
-            Log Out
-          </button>
+          ><LocalizedText source={" Log Out "} /></button>
         </div>
       )}
 

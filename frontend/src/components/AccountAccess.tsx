@@ -1,3 +1,4 @@
+import { LocalizedText } from "../i18n/LocalizedText";
 import { useEffect, useState } from "react";
 import {
   API,
@@ -50,17 +51,15 @@ export default function AccountAccess() {
     <>
       <button
         onClick={() => (user ? setOpen(true) : setOpen(true))}
-        className="account-access-trigger fixed right-4 bottom-4 z-[10000] rounded-full bg-[#153f2e] px-5 py-3 text-sm font-semibold text-white shadow-xl"
-      >
-        {user ? `${user.role.toLowerCase()} account` : `Secure sign in`}
-      </button>
+        className="account-access-trigger fixed right-4 bottom-4 z-[10000] rounded-full bg-[#26483E] px-5 py-3 text-sm font-semibold text-white shadow-xl"
+      ><LocalizedText source={" {0} "} values={[user ? `${user.role.toLowerCase()} account` : `Secure sign in`]} /></button>
       {open && (
         <div
           className="fixed inset-0 z-[10001] grid place-items-center bg-black/60 p-4"
           onClick={() => setOpen(false)}
         >
           <section
-            className="account-access-panel w-full max-w-md rounded-3xl bg-[#fffdf5] p-7 text-[#172235] shadow-2xl"
+            className="account-access-panel w-full max-w-md rounded-3xl bg-[#EAE7DD] p-7 text-[#26483E] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -71,36 +70,22 @@ export default function AccountAccess() {
             </button>
             {user ? (
               <>
-                <span className="text-xs font-bold uppercase text-green-800">
-                  Authenticated session
-                </span>
-                <h2 className="mt-3 text-2xl font-bold">{user.email}</h2>
-                <p className="my-4">
-                  Role: {user.role}
-                  {user.profile_id ? ` · ${user.profile_id}` : ""}
-                </p>
+                <span className="text-xs font-bold uppercase text-green-800"><LocalizedText source={" Authenticated session "} /></span>
+                <h2 className="mt-3 text-2xl font-bold"><LocalizedText source={"{0}"} values={[user.email]} /></h2>
+                <p className="my-4"><LocalizedText source={" Role: {0} {1} "} values={[user.role, user.profile_id ? ` · ${user.profile_id}` : ""]} /></p>
                 <button
-                  className="rounded-full bg-[#153f2e] px-5 py-3 text-white"
+                  className="rounded-full bg-[#26483E] px-5 py-3 text-white"
                   onClick={() => {
                     signOut();
                     setOpen(false);
                   }}
-                >
-                  Sign out
-                </button>
+                ><LocalizedText source={" Sign out "} /></button>
               </>
             ) : (
               <>
-                <span className="text-xs font-bold uppercase text-green-800">
-                  Production account
-                </span>
-                <h2 className="mt-3 text-3xl font-bold">
-                  {mode === "login" ? "Welcome back" : "Create account"}
-                </h2>
-                <p className="mb-5 text-sm text-slate-600">
-                  Demo browsing remains available. Sign in protects saved
-                  actions when production authentication is enabled.
-                </p>
+                <span className="text-xs font-bold uppercase text-green-800"><LocalizedText source={" Production account "} /></span>
+                <h2 className="mt-3 text-3xl font-bold"><LocalizedText source={" {0} "} values={[mode === "login" ? "Welcome back" : "Create account"]} /></h2>
+                <p className="mb-5 text-sm text-slate-600"><LocalizedText source={" Demo browsing remains available. Sign in protects saved actions when production authentication is enabled. "} /></p>
                 <form className="grid gap-3" onSubmit={submit}>
                   <input
                     className="rounded-xl border p-3"
@@ -120,8 +105,8 @@ export default function AccountAccess() {
                   {mode === "register" && (
                     <>
                       <select className="rounded-xl border p-3" name="role">
-                        <option value="FARMER">Farmer</option>
-                        <option value="BUYER">Buyer</option>
+                        <option value="FARMER"><LocalizedText source={"Farmer"} /></option>
+                        <option value="BUYER"><LocalizedText source={"Buyer"} /></option>
                       </select>
                       <input
                         className="rounded-xl border p-3"
@@ -130,17 +115,15 @@ export default function AccountAccess() {
                       />
                     </>
                   )}
-                  {error && <p className="text-sm text-red-700">{error}</p>}
+                  {error && <p className="text-sm text-red-700"><LocalizedText source={"{0}"} values={[error]} /></p>}
                   <button
                     disabled={busy}
-                    className="rounded-xl bg-[#153f2e] p-3 font-bold text-white"
-                  >
-                    {busy
+                    className="rounded-xl bg-[#26483E] p-3 font-bold text-white"
+                  ><LocalizedText source={" {0} "} values={[busy
                       ? "Please wait…"
                       : mode === "login"
                         ? "Sign in"
-                        : "Create secure account"}
-                  </button>
+                        : "Create secure account"]} /></button>
                 </form>
                 <button
                   className="mt-4 text-sm font-semibold text-green-800"
@@ -148,11 +131,9 @@ export default function AccountAccess() {
                     setMode(mode === "login" ? "register" : "login");
                     setError("");
                   }}
-                >
-                  {mode === "login"
+                ><LocalizedText source={" {0} "} values={[mode === "login"
                     ? "Need an account? Register"
-                    : "Already registered? Sign in"}
-                </button>
+                    : "Already registered? Sign in"]} /></button>
               </>
             )}
           </section>

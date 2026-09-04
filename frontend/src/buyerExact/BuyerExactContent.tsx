@@ -1,3 +1,4 @@
+import { LocalizedText } from "../i18n/LocalizedText";
 "use client";
 
 import { lazy, useEffect, useRef, useState } from "react";
@@ -147,14 +148,14 @@ function cropVisual(crop: string, farmer: string, index = 0) {
                         ? "🌿"
                         : "🌾";
   const palettes = [
-    ["#dceacb", "#79985d"],
-    ["#f1ddc4", "#a77550"],
-    ["#d8e7df", "#59806d"],
-    ["#eee1b8", "#a68a3e"],
-    ["#e3dced", "#796b91"],
+    ["#EAE7DD", "#26483E"],
+    ["#EAE7DD", "#26483E"],
+    ["#EAE7DD", "#26483E"],
+    ["#EAE7DD", "#26483E"],
+    ["#EAE7DD", "#26483E"],
   ];
   const [light, dark] = palettes[index % palettes.length];
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="${light}"/><stop offset="1" stop-color="${dark}"/></linearGradient></defs><rect width="900" height="520" fill="url(#g)"/><circle cx="450" cy="220" r="155" fill="#fff" opacity=".4"/><text x="450" y="285" text-anchor="middle" font-size="190">${emoji}</text><rect x="215" y="426" width="470" height="55" rx="28" fill="#153e2c" opacity=".92"/><text x="450" y="461" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="white">${crop} · ${farmer}</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="${light}"/><stop offset="1" stop-color="${dark}"/></linearGradient></defs><rect width="900" height="520" fill="url(#g)"/><circle cx="450" cy="220" r="155" fill="#EAE7DD" opacity=".4"/><text x="450" y="285" text-anchor="middle" font-size="190">${emoji}</text><rect x="215" y="426" width="470" height="55" rx="28" fill="#26483E" opacity=".92"/><text x="450" y="461" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="white">${crop} · ${farmer}</text></svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 const sellers: Seller[] = [
@@ -197,9 +198,7 @@ function Brand() {
     <div className="brand">
       <span>
         <Leaf />
-      </span>
-      AgriOptimaᴬᴵ
-    </div>
+      </span><LocalizedText source={" AgriOptimaᴬᴵ "} /></div>
   );
 }
 function Header({
@@ -226,7 +225,7 @@ function Header({
       <div className="search">
         <Search />
         <input placeholder="Search sellers, orders, shipments…" />
-        <kbd>⌘ K</kbd>
+        <kbd><LocalizedText source={"⌘ K"} /></kbd>
       </div>
       <div className="top-actions">
         <select
@@ -236,23 +235,21 @@ function Header({
           aria-label="Choose buyer profile"
         >
           {buyers.map((id) => (
-            <option key={id} value={id}>
-              {id}
-            </option>
+            <option key={id} value={id}><LocalizedText source={" {0} "} values={[id]} /></option>
           ))}
         </select>
         <div className="exact-portal-switch">
-          <button onClick={onHome}>Home</button>
-          <button onClick={onFarmer}>Farmer portal</button>
+          <button onClick={onHome}><LocalizedText source={"Home"} /></button>
+          <button onClick={onFarmer}><LocalizedText source={"Farmer portal"} /></button>
         </div>
         <button className="bell">
           <Bell />
           <i />
         </button>
-        <span className="avatar">B{buyerNumber.slice(-1)}</span>
+        <span className="avatar"><LocalizedText source={"B{0}"} values={[buyerNumber.slice(-1)]} /></span>
         <div className="person">
-          <b>{buyer}</b>
-          <small>Verified buyer profile</small>
+          <b><LocalizedText source={"{0}"} values={[buyer]} /></b>
+          <small><LocalizedText source={"Verified buyer profile"} /></small>
         </div>
         <ChevronDown />
       </div>
@@ -283,17 +280,18 @@ function Sidebar({
         </button>
       </div>
       <div className="workspace">
-        <span>B{buyer.slice(-1)}</span>
+        <span><LocalizedText source={"B{0}"} values={[buyer.slice(-1)]} /></span>
         <div>
-          <b>{buyer}</b>
-          <small>Buyer workspace</small>
+          <b><LocalizedText source={"{0}"} values={[buyer]} /></b>
+          <small><LocalizedText source={"Buyer workspace"} /></small>
         </div>
         <ChevronDown />
       </div>
       <nav>
-        <p>Workspace</p>
+        <p><LocalizedText source={"Workspace"} /></p>
         {nav.map(([label, Icon]) => (
           <button
+            aria-current={active === label ? "page" : undefined}
             className={active === label ? "active" : ""}
             key={label}
             onClick={() => {
@@ -302,24 +300,21 @@ function Sidebar({
             }}
           >
             <Icon />
-            <span>{label}</span>
+            <span><LocalizedText source={"{0}"} values={[label]} /></span>
           </button>
         ))}
       </nav>
       <div className="credit-mini">
         <div>
-          <CircleDollarSign />
-          Procurement credit
-        </div>
-        <strong>₹{Math.round(availableCredit).toLocaleString("en-IN")}</strong>
-        <small>Current profile availability</small>
+          <CircleDollarSign /><LocalizedText source={" Procurement credit "} /></div>
+        <strong><LocalizedText source={"₹{0}"} values={[Math.round(availableCredit).toLocaleString("en-IN")]} /></strong>
+        <small><LocalizedText source={"Current profile availability"} /></small>
         <Progress value={24}>
           <ProgressTrack>
             <ProgressIndicator />
           </ProgressTrack>
         </Progress>
-        <button onClick={() => setActive("Credit")}>
-          View credit profile <ArrowRight />
+        <button onClick={() => setActive("Credit")}><LocalizedText source={" View credit profile "} /><ArrowRight />
         </button>
       </div>
     </aside>
@@ -337,20 +332,15 @@ function Heading({
   return (
     <section className="page-heading">
       <div>
-        <span className="eyebrow">Tuesday, 1 September</span>
-        <h1>{title}</h1>
-        <p>{copy}</p>
-      </div>
-      {children}
-    </section>
+        <span className="eyebrow"><LocalizedText source={"Tuesday, 1 September"} /></span>
+        <h1><LocalizedText source={"{0}"} values={[title]} /></h1>
+        <p><LocalizedText source={"{0}"} values={[copy]} /></p>
+      </div><LocalizedText source={" {0} "} values={[children]} /></section>
   );
 }
 
 function Overview({
-  market,
-  plan,
-  openShipment,
-  buyer,
+  market, plan, openShipment, buyer,
 }: {
   market: () => void;
   plan: () => void;
@@ -358,236 +348,17 @@ function Overview({
   buyer: string;
 }) {
   return (
-    <div className="page dashboard-page">
+    <div className="page dashboard-page simple-overview">
       <section className="opening-hero">
         <div className="opening-copy">
-          <span className="hero-label">
-            <Sparkles /> {buyer} command center · Live
-          </span>
-          <h1>
-            Smarter procurement.
-            <br />
-            <em>Stronger margins.</em>
-          </h1>
-          <p>
-            One intelligent workspace to discover verified supply, optimize
-            landed cost, and track every shipment from farm to warehouse.
-          </p>
+          <h1><LocalizedText source="Marketplace" /></h1>
           <div className="opening-actions">
-            <Button onClick={plan}>
-              Build procurement plan <ArrowRight />
-            </Button>
-            <Button variant="outline" onClick={market}>
-              Explore verified produce
-            </Button>
-          </div>
-          <div className="hero-proof">
-            <span>
-              <ShieldCheck /> 248 verified sellers
-            </span>
-            <span>
-              <Truck /> 7 live shipments
-            </span>
-            <span>
-              <FileCheck2 /> 100% passport coverage
-            </span>
+            <Button onClick={market}><LocalizedText source=" Explore verified produce " /><ArrowRight /></Button>
+            <Button variant="outline" onClick={plan}><LocalizedText source=" Build procurement plan " /></Button>
           </div>
         </div>
-        <article className="market-signal">
-          <div className="signal-head">
-            <span>
-              <i /> Live market signal
-            </span>
-            <small>Updated 2 min ago</small>
-          </div>
-          <div className="signal-main">
-            <div>
-              <small>Nashik · Grade A Tomato</small>
-              <strong>
-                ₹26.50<em>/kg</em>
-              </strong>
-              <span>
-                <ArrowDownRight /> 4.2% below weekly average
-              </span>
-            </div>
-            <span className="signal-grade">A</span>
-          </div>
-          <div className="signal-grid">
-            <span>
-              <small>Matched supply</small>
-              <b>18.4T</b>
-            </span>
-            <span>
-              <small>Best landed cost</small>
-              <b>₹28.70/kg</b>
-            </span>
-            <span>
-              <small>Freshness confidence</small>
-              <b>94%</b>
-            </span>
-            <span>
-              <small>Potential saving</small>
-              <b>₹14,000</b>
-            </span>
-          </div>
-          <button onClick={plan}>
-            View procurement opportunity <ArrowRight />
-          </button>
-        </article>
       </section>
-      <section className="opening-ticker">
-        <span>
-          <i /> Market online
-        </span>
-        <p>Tomato arrivals steady in Nashik</p>
-        <p>Cold-chain capacity available</p>
-        <p>3 supplier offers awaiting review</p>
-        <b>Average saving today · 8.4%</b>
-      </section>
-      <section className="metrics">
-        {stats.map(([label, value, note, Icon, tone]) => (
-          <article className="metric" key={label}>
-            <span className={tone}>
-              <Icon />
-            </span>
-            <p>{label}</p>
-            <strong>{value}</strong>
-            <small>{note}</small>
-          </article>
-        ))}
-      </section>
-      <section className="two-col">
-        <article className="panel volume">
-          <PanelTitle
-            eyebrow="Procurement pulse"
-            title="Monthly volume"
-            action="Last 6 months"
-          />
-          <div className="chart-number">
-            <strong>128.4T</strong>
-            <span>
-              <ArrowDownRight /> 12.8% growth
-            </span>
-          </div>
-          <div className="bars">
-            {[48, 62, 54, 72, 67, 88].map((h, i) => (
-              <div key={i}>
-                <i
-                  style={{ height: `${h}%` }}
-                  className={i === 5 ? "now" : ""}
-                />
-                <small>{["Apr", "May", "Jun", "Jul", "Aug", "Sep"][i]}</small>
-              </div>
-            ))}
-          </div>
-        </article>
-        <article className="panel">
-          <PanelTitle
-            eyebrow="Live operations"
-            title="Needs attention"
-            badge="4 updates"
-          />
-          <div className="attention">
-            <Alert
-              icon={Clock3}
-              tone="red"
-              title="Shipment delayed by 2h 10m"
-              copy="ORD-2048 · Nashik → Mumbai"
-            />
-            <Alert
-              icon={PackageCheck}
-              tone="amber"
-              title="New verified supply available"
-              copy="Sahyadri Farms · 4.8T Grade A"
-            />
-            <Alert
-              icon={WalletCards}
-              tone="blue"
-              title="Credit repayment due 7 Sep"
-              copy="₹1,20,000 · 6 days remaining"
-            />
-          </div>
-        </article>
-      </section>
-      <section className="opportunity">
-        <div>
-          <span className="ai">
-            <Sparkles /> Procurement intelligence
-          </span>
-          <h2>
-            Review one complete procurement example with{" "}
-            <em>one verified seller.</em>
-          </h2>
-          <p>
-            Follow the same farmer lot from marketplace selection through
-            quality, credit, shipment tracking, and receipt.
-          </p>
-          <div className="opp-stats">
-            <span>
-              <small>Expected landed cost</small>
-              <b>₹27.00/kg</b>
-            </span>
-            <span>
-              <small>Potential saving</small>
-              <b>Single example</b>
-            </span>
-            <span>
-              <small>Delivery</small>
-              <b>Tomorrow, 2–4 PM</b>
-            </span>
-          </div>
-          <div className="actions">
-            <Button onClick={plan}>
-              Build procurement plan <ArrowRight />
-            </Button>
-            <Button variant="ghost" onClick={market}>
-              Review matched sellers
-            </Button>
-          </div>
-        </div>
-        <RouteMap />
-      </section>
-      <section className="two-col lower">
-        <article className="panel">
-          <PanelTitle
-            eyebrow="Arriving today"
-            title="Live shipments"
-            action="View all"
-          />
-          <Shipment
-            crop="Tomato"
-            qty="4,000 kg"
-            order="ORD-2041 · Ramesh Prajapati"
-            status="In transit"
-            eta="ETA 2:10 PM"
-            onClick={() => openShipment("SHP-2041")}
-          />
-        </article>
-        <article className="panel quality">
-          <PanelTitle
-            eyebrow="Quality assurance"
-            title="Supplier reliability"
-          />
-          <div className="score">
-            <strong>94</strong>
-            <small>/100</small>
-          </div>
-          <div>
-            <b>Strong network quality</b>
-            <p>94.8% average on-time fulfilment across preferred suppliers.</p>
-          </div>
-          <div className="quality-stats">
-            <span>
-              <b>2.1%</b>
-              <small>Rejection rate</small>
-            </span>
-            <span>
-              <b>91%</b>
-              <small>Fresh on arrival</small>
-            </span>
-          </div>
-        </article>
-      </section>
+      <OrdersPage buyer={buyer} openPassport={openShipment} />
     </div>
   );
 }
@@ -605,16 +376,14 @@ function PanelTitle({
   return (
     <div className="panel-title">
       <div>
-        <span className="eyebrow">{eyebrow}</span>
-        <h2>{title}</h2>
+        <span className="eyebrow"><LocalizedText source={"{0}"} values={[eyebrow]} /></span>
+        <h2><LocalizedText source={"{0}"} values={[title]} /></h2>
       </div>
       {action && (
-        <button>
-          {action}
-          <ChevronDown />
+        <button><LocalizedText source={" {0} "} values={[action]} /><ChevronDown />
         </button>
       )}
-      {badge && <Badge>{badge}</Badge>}
+      {badge && <Badge><LocalizedText source={"{0}"} values={[badge]} /></Badge>}
     </div>
   );
 }
@@ -635,8 +404,8 @@ function Alert({
         <Icon />
       </span>
       <div>
-        <b>{title}</b>
-        <small>{copy}</small>
+        <b><LocalizedText source={"{0}"} values={[title]} /></b>
+        <small><LocalizedText source={"{0}"} values={[copy]} /></small>
       </div>
       <ArrowRight />
     </button>
@@ -646,23 +415,19 @@ function RouteMap() {
   return (
     <div className="route-map">
       <span className="node n1">
-        <Leaf />
-        3T<small>Nashik</small>
+        <Leaf /><LocalizedText source={" 3T"} /><small><LocalizedText source={"Nashik"} /></small>
       </span>
       <span className="node n2">
-        <Leaf />
-        4T<small>Pimpalgaon</small>
+        <Leaf /><LocalizedText source={" 4T"} /><small><LocalizedText source={"Pimpalgaon"} /></small>
       </span>
       <span className="node n3">
-        <Leaf />
-        3T<small>Sinnar</small>
+        <Leaf /><LocalizedText source={" 3T"} /><small><LocalizedText source={"Sinnar"} /></small>
       </span>
       <i className="r1" />
       <i className="r2" />
       <i className="r3" />
       <span className="node hub">
-        <Truck />
-        10T<small>Clubbed</small>
+        <Truck /><LocalizedText source={" 10T"} /><small><LocalizedText source={"Clubbed"} /></small>
       </span>
     </div>
   );
@@ -688,17 +453,13 @@ function Shipment({
     <button className="shipment" onClick={onClick}>
       <span className={`produce ${crop === "Tomato" ? "tomato" : "onion"}`} />
       <span>
-        <b>
-          {qty} {crop}
-        </b>
-        <small>{order}</small>
+        <b><LocalizedText source={" {0} {1} "} values={[qty, crop]} /></b>
+        <small><LocalizedText source={"{0}"} values={[order]} /></small>
       </span>
       <span className={delay ? "delay" : ""}>
         <span>
-          <i />
-          {status}
-        </span>
-        <b>{eta}</b>
+          <i /><LocalizedText source={" {0} "} values={[status]} /></span>
+        <b><LocalizedText source={"{0}"} values={[eta]} /></b>
       </span>
       <span className="shipment-open">
         <ArrowRight />
@@ -853,9 +614,7 @@ function Marketplace({
             setRequirementSent(false);
           }}
         >
-          <ShoppingBasket />
-          Post requirement
-        </Button>
+          <ShoppingBasket /><LocalizedText source={" Post requirement "} /></Button>
       </Heading>
       <section className="filters">
         <div className="search">
@@ -871,31 +630,28 @@ function Marketplace({
           aria-pressed={gradeOnly}
           className={gradeOnly ? "active" : ""}
           onClick={() => setGradeOnly((v) => !v)}
-        >
-          {gradeOnly ? "Grade A only" : "All grades"} <ChevronDown />
+        ><LocalizedText source={" {0} "} values={[gradeOnly ? "Grade A only" : "All grades"]} /><ChevronDown />
         </button>
         <button
           type="button"
           aria-pressed={nearOnly}
           className={nearOnly ? "active" : ""}
           onClick={() => setNearOnly((v) => !v)}
-        >
-          {nearOnly ? "Within 150 km" : "Any distance"} <ChevronDown />
+        ><LocalizedText source={" {0} "} values={[nearOnly ? "Within 150 km" : "Any distance"]} /><ChevronDown />
         </button>
         <button
           type="button"
           aria-pressed={todayOnly}
           className={todayOnly ? "active" : ""}
           onClick={() => setTodayOnly((v) => !v)}
-        >
-          {todayOnly ? "Available today" : "Any delivery"} <ChevronDown />
+        ><LocalizedText source={" {0} "} values={[todayOnly ? "Available today" : "Any delivery"]} /><ChevronDown />
         </button>
-        <span>{visibleSellers.length} verified farmer listings</span>
+        <span><LocalizedText source={"{0} verified farmer listings"} values={[visibleSellers.length]} /></span>
       </section>
       <section className="seller-grid">
         {orderNotice && (
           <div className="requirement-success" role="status">
-            <b>{orderNotice}</b>
+            <b><LocalizedText source={"{0}"} values={[orderNotice]} /></b>
           </div>
         )}
         {visibleSellers.map((s, i) => (
@@ -909,82 +665,66 @@ function Marketplace({
                 }}
               />
               <span>
-                <Zap />
-                {s.freshness}% fresh
-              </span>
+                <Zap /><LocalizedText source={" {0}% fresh "} values={[s.freshness]} /></span>
               <button
                 className={selected.includes(s.id) ? "selected" : ""}
                 onClick={() => toggle(s.id)}
-              >
-                {selected.includes(s.id) ? "✓ Added" : "+ Compare"}
-              </button>
+              ><LocalizedText source={" {0} "} values={[selected.includes(s.id) ? "✓ Added" : "+ Compare"]} /></button>
             </div>
             <div className="seller-body">
               <div className="seller-title">
                 <div>
-                  <span>{s.variety}</span>
-                  <h2>{s.crop}</h2>
-                  <small className="farmer-name">Sold by {s.name}</small>
+                  <span><LocalizedText source={"{0}"} values={[s.variety]} /></span>
+                  <h2><LocalizedText source={"{0}"} values={[s.crop]} /></h2>
+                  <small className="farmer-name"><LocalizedText source={"Sold by {0}"} values={[s.name]} /></small>
                   <p>
-                    <MapPin />
-                    {s.location} · {s.distance} km
-                  </p>
+                    <MapPin /><LocalizedText source={" {0} · {1} km "} values={[s.location, s.distance]} /></p>
                 </div>
                 <div>
-                  <strong>₹{s.price}</strong>
-                  <small>/kg</small>
+                  <strong><LocalizedText source={"₹{0}"} values={[s.price]} /></strong>
+                  <small><LocalizedText source={"/kg"} /></small>
                 </div>
               </div>
               <div className="badges">
                 <Badge>
-                  <ShieldCheck />
-                  AI verified
-                </Badge>
-                <Badge variant="outline">Passport ready</Badge>
-                <Badge variant="outline">{s.grade || "Grade A"}</Badge>
-                <Badge variant="outline">{s.packaging || "Crates"}</Badge>
+                  <ShieldCheck /><LocalizedText source={" AI verified "} /></Badge>
+                <Badge variant="outline"><LocalizedText source={"Passport ready"} /></Badge>
+                <Badge variant="outline"><LocalizedText source={"{0}"} values={[s.grade || "Grade A"]} /></Badge>
+                <Badge variant="outline"><LocalizedText source={"{0}"} values={[s.packaging || "Crates"]} /></Badge>
               </div>
               <div className="facts">
                 <span>
-                  <small>Available</small>
-                  <b>{s.quantity.toLocaleString("en-IN")} kg</b>
+                  <small><LocalizedText source={"Available"} /></small>
+                  <b><LocalizedText source={"{0} kg"} values={[s.quantity.toLocaleString("en-IN")]} /></b>
                 </span>
                 <span>
-                  <small>Harvest</small>
-                  <b>{s.harvest || "Latest harvest"}</b>
+                  <small><LocalizedText source={"Harvest"} /></small>
+                  <b><LocalizedText source={"{0}"} values={[s.harvest || "Latest harvest"]} /></b>
                 </span>
                 <span>
-                  <small>Delivery</small>
-                  <b>{s.delivery}</b>
+                  <small><LocalizedText source={"Delivery"} /></small>
+                  <b><LocalizedText source={"{0}"} values={[s.delivery]} /></b>
                 </span>
                 <span>
-                  <small>Reliability</small>
+                  <small><LocalizedText source={"Reliability"} /></small>
                   <b>
-                    <Star />
-                    {s.reliability}%
-                  </b>
+                    <Star /><LocalizedText source={" {0}% "} values={[s.reliability]} /></b>
                 </span>
               </div>
               {i === 0 && (
                 <div className="best">
-                  <Sparkles />
-                  Best landed cost · est. ₹28.80/kg
-                </div>
+                  <Sparkles /><LocalizedText source={" Best landed cost · est. ₹28.80/kg "} /></div>
               )}
               {i === 2 && (
                 <div className="best quality-best">
-                  <ShieldCheck />
-                  Best quality · 97% freshness
-                </div>
+                  <ShieldCheck /><LocalizedText source={" Best quality · 97% freshness "} /></div>
               )}
               <div className="seller-actions">
                 <Button
                   variant="outline"
                   onClick={() => openFarmer(s.farmerId)}
-                >
-                  View farmer
-                </Button>
-                <Button onClick={() => createOrder(s)}>Create order</Button>
+                ><LocalizedText source={" View farmer "} /></Button>
+                <Button onClick={() => createOrder(s)}><LocalizedText source={"Create order"} /></Button>
               </div>
             </div>
           </article>
@@ -993,14 +733,13 @@ function Marketplace({
       {selected.length > 0 && (
         <div className="compare-dock">
           <span>
-            <b>{selected.length} sellers selected</b>
-            <small>Select at least 2 to compare landed cost</small>
+            <b><LocalizedText source={"{0} sellers selected"} values={[selected.length]} /></b>
+            <small><LocalizedText source={"Select at least 2 to compare landed cost"} /></small>
           </span>
           <Button
             disabled={selected.length < 2}
             onClick={() => setShowComparison(true)}
-          >
-            Compare sellers <ArrowRight />
+          ><LocalizedText source={" Compare sellers "} /><ArrowRight />
           </Button>
         </div>
       )}
@@ -1025,60 +764,49 @@ function Marketplace({
               >
                 <X />
               </button>
-              <span className="eyebrow">Side-by-side supplier comparison</span>
-              <h2>Compare selected produce</h2>
-              <p>
-                Price, freshness, reliability, distance, and estimated landed
-                cost from the selected listings.
-              </p>
+              <span className="eyebrow"><LocalizedText source={"Side-by-side supplier comparison"} /></span>
+              <h2><LocalizedText source={"Compare selected produce"} /></h2>
+              <p><LocalizedText source={" Price, freshness, reliability, distance, and estimated landed cost from the selected listings. "} /></p>
               <div className="comparison-grid">
                 {liveSellers
                   .filter((s) => selected.includes(s.id))
                   .map((s) => (
                     <article key={s.id}>
                       <img src={s.image} alt={s.crop} />
-                      <h3>{s.crop}</h3>
-                      <small>
-                        {s.variety} · Sold by {s.name}
-                        <br />
-                        {s.location}
-                      </small>
+                      <h3><LocalizedText source={"{0}"} values={[s.crop]} /></h3>
+                      <small><LocalizedText source={" {0} · Sold by {1} "} values={[s.variety, s.name]} /><br /><LocalizedText source={" {0} "} values={[s.location]} /></small>
                       <dl>
                         <div>
-                          <dt>Farmer price</dt>
-                          <dd>₹{s.price}/kg</dd>
+                          <dt><LocalizedText source={"Farmer price"} /></dt>
+                          <dd><LocalizedText source={"₹{0}/kg"} values={[s.price]} /></dd>
                         </div>
                         <div>
-                          <dt>Est. landed cost</dt>
-                          <dd>
-                            ₹
-                            {(
+                          <dt><LocalizedText source={"Est. landed cost"} /></dt>
+                          <dd><LocalizedText source={" ₹ {0} /kg "} values={[(
                               s.price + Math.max(1.2, s.distance * 0.025)
-                            ).toFixed(2)}
-                            /kg
-                          </dd>
+                            ).toFixed(2)]} /></dd>
                         </div>
                         <div>
-                          <dt>Freshness</dt>
-                          <dd>{s.freshness}%</dd>
+                          <dt><LocalizedText source={"Freshness"} /></dt>
+                          <dd><LocalizedText source={"{0}%"} values={[s.freshness]} /></dd>
                         </div>
                         <div>
-                          <dt>Reliability</dt>
-                          <dd>{s.reliability}%</dd>
+                          <dt><LocalizedText source={"Reliability"} /></dt>
+                          <dd><LocalizedText source={"{0}%"} values={[s.reliability]} /></dd>
                         </div>
                         <div>
-                          <dt>Distance</dt>
-                          <dd>{s.distance} km</dd>
+                          <dt><LocalizedText source={"Distance"} /></dt>
+                          <dd><LocalizedText source={"{0} km"} values={[s.distance]} /></dd>
                         </div>
                         <div>
-                          <dt>Available</dt>
-                          <dd>{s.quantity.toLocaleString("en-IN")} kg</dd>
+                          <dt><LocalizedText source={"Available"} /></dt>
+                          <dd><LocalizedText source={"{0} kg"} values={[s.quantity.toLocaleString("en-IN")]} /></dd>
                         </div>
                       </dl>
                     </article>
                   ))}
               </div>
-              <Button onClick={() => setShowComparison(false)}>Done</Button>
+              <Button onClick={() => setShowComparison(false)}><LocalizedText source={"Done"} /></Button>
             </section>
           </div>,
           portalTarget,
@@ -1099,55 +827,40 @@ function Marketplace({
               >
                 <X />
               </button>
-              <span className="eyebrow">Verified farmer profile</span>
-              <h2>{farmerDetail.farmer.name}</h2>
+              <span className="eyebrow"><LocalizedText source={"Verified farmer profile"} /></span>
+              <h2><LocalizedText source={"{0}"} values={[farmerDetail.farmer.name]} /></h2>
               <p>
-                <MapPin /> {farmerDetail.farmer.village},{" "}
-                {farmerDetail.farmer.district}, {farmerDetail.farmer.state}
-              </p>
+                <MapPin /><LocalizedText source={" {0},  {1}, {2} "} values={[farmerDetail.farmer.village, farmerDetail.farmer.district, farmerDetail.farmer.state]} /></p>
               <div className="farmer-detail-grid">
                 {farmerDetail.farms.map((farm: any) => (
                   <article key={farm.farm_id}>
-                    <small>{farm.farm_name}</small>
-                    <b>{farm.area_acres} acres</b>
-                    <span>
-                      {farm.irrigation_type} irrigation · Soil pH{" "}
-                      {farm.ph ?? "—"}
-                    </span>
-                    <span>
-                      N {farm.nitrogen ?? "—"} · P {farm.phosphorus ?? "—"} · K{" "}
-                      {farm.potassium ?? "—"}
-                    </span>
+                    <small><LocalizedText source={"{0}"} values={[farm.farm_name]} /></small>
+                    <b><LocalizedText source={"{0} acres"} values={[farm.area_acres]} /></b>
+                    <span><LocalizedText source={" {0} irrigation · Soil pH  {1} "} values={[farm.irrigation_type, farm.ph ?? "—"]} /></span>
+                    <span><LocalizedText source={" N {0} · P {1} · K  {2} "} values={[farm.nitrogen ?? "—", farm.phosphorus ?? "—", farm.potassium ?? "—"]} /></span>
                   </article>
                 ))}
               </div>
-              <h3>Available produce</h3>
+              <h3><LocalizedText source={"Available produce"} /></h3>
               {farmerDetail.listings.length ? (
                 farmerDetail.listings.map((listing: any) => (
                   <div className="farmer-listing-row" key={listing.listing_id}>
-                    <b>
-                      {listing.crop_name} · {listing.crop_variety}
-                    </b>
-                    <span>
-                      {Number(listing.available_quantity_kg).toLocaleString(
+                    <b><LocalizedText source={" {0} · {1} "} values={[listing.crop_name, listing.crop_variety]} /></b>
+                    <span><LocalizedText source={" {0}  kg "} values={[Number(listing.available_quantity_kg).toLocaleString(
                         "en-IN",
-                      )}{" "}
-                      kg
-                    </span>
-                    <strong>₹{listing.price_per_kg}/kg</strong>
+                      )]} /></span>
+                    <strong><LocalizedText source={"₹{0}/kg"} values={[listing.price_per_kg]} /></strong>
                   </div>
                 ))
               ) : (
-                <p>No active listings.</p>
+                <p><LocalizedText source={"No active listings."} /></p>
               )}
               <Button
                 onClick={() => {
                   setFarmerDetail(null);
                   setRequirementOpen(true);
                 }}
-              >
-                Post requirement for this farmer
-              </Button>
+              ><LocalizedText source={" Post requirement for this farmer "} /></Button>
             </section>
           </div>,
           portalTarget,
@@ -1168,16 +881,14 @@ function Marketplace({
               >
                 <X />
               </button>
-              <span className="eyebrow">Buyer requirement</span>
-              <h2>Post a produce requirement</h2>
+              <span className="eyebrow"><LocalizedText source={"Buyer requirement"} /></span>
+              <h2><LocalizedText source={"Post a produce requirement"} /></h2>
               {requirementSent ? (
                 <div className="requirement-success">
                   <CheckCircle2 />
-                  <b>Requirement posted</b>
-                  <p>Matching farmers will appear in your procurement plan.</p>
-                  <Button onClick={() => setRequirementOpen(false)}>
-                    Done
-                  </Button>
+                  <b><LocalizedText source={"Requirement posted"} /></b>
+                  <p><LocalizedText source={"Matching farmers will appear in your procurement plan."} /></p>
+                  <Button onClick={() => setRequirementOpen(false)}><LocalizedText source={" Done "} /></Button>
                 </div>
               ) : (
                 <form
@@ -1186,24 +897,15 @@ function Marketplace({
                     setRequirementSent(true);
                   }}
                 >
-                  <label>
-                    Crop
-                    <input required placeholder="Tomato, onion, wheat…" />
+                  <label><LocalizedText source={" Crop "} /><input required placeholder="Tomato, onion, wheat…" />
                   </label>
-                  <label>
-                    Quantity (kg)
-                    <input required type="number" min="1" placeholder="1000" />
+                  <label><LocalizedText source={" Quantity (kg) "} /><input required type="number" min="1" placeholder="1000" />
                   </label>
-                  <label>
-                    Maximum price per kg
-                    <input required type="number" min="1" placeholder="30" />
+                  <label><LocalizedText source={" Maximum price per kg "} /><input required type="number" min="1" placeholder="30" />
                   </label>
-                  <label>
-                    Delivery location
-                    <input required placeholder="Mumbai warehouse" />
+                  <label><LocalizedText source={" Delivery location "} /><input required placeholder="Mumbai warehouse" />
                   </label>
-                  <Button type="submit">
-                    Find matching farmers <ArrowRight />
+                  <Button type="submit"><LocalizedText source={" Find matching farmers "} /><ArrowRight />
                   </Button>
                 </form>
               )}
@@ -1225,28 +927,20 @@ function SmartPlan() {
         copy="One requirement, three verified sellers, one coordinated delivery."
       >
         <Badge className="verified">
-          <ShieldCheck />
-          Plan verified
-        </Badge>
+          <ShieldCheck /><LocalizedText source={" Plan verified "} /></Badge>
       </Heading>
       <section className="plan-hero">
         <div>
           <span className="ai">
-            <Sparkles /> Recommended plan
-          </span>
-          <h2>Club 3 nearby sellers and save ₹13,000 on logistics.</h2>
-          <p>
-            Waiting 9 hours reduces logistics cost with low projected freshness
-            risk.
-          </p>
+            <Sparkles /><LocalizedText source={" Recommended plan "} /></span>
+          <h2><LocalizedText source={"Club 3 nearby sellers and save ₹13,000 on logistics."} /></h2>
+          <p><LocalizedText source={" Waiting 9 hours reduces logistics cost with low projected freshness risk. "} /></p>
         </div>
         <div>
-          <small>Expected landed cost</small>
-          <strong>
-            ₹{method === "clubbed" ? "28.70" : "30.10"}
-            <em>/kg</em>
+          <small><LocalizedText source={"Expected landed cost"} /></small>
+          <strong><LocalizedText source={" ₹{0} "} values={[method === "clubbed" ? "28.70" : "30.10"]} /><em><LocalizedText source={"/kg"} /></em>
           </strong>
-          <span>₹2,87,000 total</span>
+          <span><LocalizedText source={"₹2,87,000 total"} /></span>
         </div>
       </section>
       <section className="plan-grid">
@@ -1258,16 +952,14 @@ function SmartPlan() {
           />
           {sellers.map((s, i) => (
             <div className="alloc" key={s.id}>
-              <span>0{i + 1}</span>
+              <span><LocalizedText source={"0{0}"} values={[i + 1]} /></span>
               <div>
-                <b>{s.name}</b>
-                <small>
-                  {s.location} · {s.freshness}% fresh
-                </small>
+                <b><LocalizedText source={"{0}"} values={[s.name]} /></b>
+                <small><LocalizedText source={" {0} · {1}% fresh "} values={[s.location, s.freshness]} /></small>
               </div>
               <div>
-                <b>{s.quantity / 1000}T</b>
-                <small>₹{s.price}/kg</small>
+                <b><LocalizedText source={"{0}T"} values={[s.quantity / 1000]} /></b>
+                <small><LocalizedText source={"₹{0}/kg"} values={[s.price]} /></small>
               </div>
             </div>
           ))}
@@ -1276,24 +968,24 @@ function SmartPlan() {
           <PanelTitle eyebrow="Landed cost engine" title="Complete economics" />
           <dl>
             <div>
-              <dt>Commodity cost</dt>
+              <dt><LocalizedText source={"Commodity cost"} /></dt>
               <dd>₹2,70,400</dd>
             </div>
             <div>
-              <dt>Transportation</dt>
-              <dd>₹{logistics.toLocaleString("en-IN")}</dd>
+              <dt><LocalizedText source={"Transportation"} /></dt>
+              <dd><LocalizedText source={"₹{0}"} values={[logistics.toLocaleString("en-IN")]} /></dd>
             </div>
             <div>
-              <dt>Handling & packaging</dt>
+              <dt><LocalizedText source={"Handling & packaging"} /></dt>
               <dd>₹4,600</dd>
             </div>
             <div>
-              <dt>Expected spoilage</dt>
+              <dt><LocalizedText source={"Expected spoilage"} /></dt>
               <dd>₹3,500</dd>
             </div>
             <div>
-              <dt>Expected landed cost</dt>
-              <dd>₹{(278500 + logistics).toLocaleString("en-IN")}</dd>
+              <dt><LocalizedText source={"Expected landed cost"} /></dt>
+              <dd><LocalizedText source={"₹{0}"} values={[(278500 + logistics).toLocaleString("en-IN")]} /></dd>
             </div>
           </dl>
         </article>
@@ -1335,15 +1027,10 @@ function SmartPlan() {
         <div className="risk">
           <ShieldCheck />
           <span>
-            <b>Consolidation recommended</b>
-            <small>
-              Waiting 9 hours reduces cost while projected arrival freshness
-              remains “Fresh”.
-            </small>
+            <b><LocalizedText source={"Consolidation recommended"} /></b>
+            <small><LocalizedText source={" Waiting 9 hours reduces cost while projected arrival freshness remains “Fresh”. "} /></small>
           </span>
-          <Button>
-            Continue with {method}
-            <ArrowRight />
+          <Button><LocalizedText source={" Continue with {0} "} values={[method]} /><ArrowRight />
           </Button>
         </div>
       </section>
@@ -1371,20 +1058,20 @@ function Choice({
 }) {
   return (
     <button className={chosen ? "chosen" : ""} onClick={onClick}>
-      {recommended && <Badge>Recommended</Badge>}
+      {recommended && <Badge><LocalizedText source={"Recommended"} /></Badge>}
       <span className="choice-icon">
         <Icon />
       </span>
       <div>
-        <span>{overline}</span>
-        <h3>{title}</h3>
-        <p>{copy}</p>
+        <span><LocalizedText source={"{0}"} values={[overline]} /></span>
+        <h3><LocalizedText source={"{0}"} values={[title]} /></h3>
+        <p><LocalizedText source={"{0}"} values={[copy]} /></p>
       </div>
       <dl>
         {data.map(([a, b]) => (
           <div key={a}>
-            <dt>{a}</dt>
-            <dd>{b}</dd>
+            <dt><LocalizedText source={"{0}"} values={[a]} /></dt>
+            <dd><LocalizedText source={"{0}"} values={[b]} /></dd>
           </div>
         ))}
       </dl>
@@ -1435,13 +1122,13 @@ function TrackingMap({ delayed }: { delayed: boolean }) {
       }).addTo(map);
       L.control.zoom({ position: "bottomright" }).addTo(map);
       L.polyline(routePoints, {
-        color: "#b5cf28",
+        color: "#EAE7DD",
         weight: 5,
         opacity: 0.95,
       }).addTo(map);
       L.polyline(
         routePoints.slice(routePoints.findIndex((p) => p === current)),
-        { color: "#d6ddd2", weight: 5, dashArray: "7 8", opacity: 0.95 },
+        { color: "#EAE7DD", weight: 5, dashArray: "7 8", opacity: 0.95 },
       ).addTo(map);
       const marker = (pos: [number, number], kind: string, label: string) =>
         L.marker(pos, {
@@ -1548,15 +1235,11 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
     >
       <header className="passport-top">
         <button onClick={close}>
-          <ArrowLeft />
-          Back to dashboard
-        </button>
+          <ArrowLeft /><LocalizedText source={" Back to dashboard "} /></button>
         <Brand />
         <div>
           <span className="live-dot">
-            <i />
-            Live tracking
-          </span>
+            <i /><LocalizedText source={" Live tracking "} /></span>
           <button onClick={close} aria-label="Close passport">
             <X />
           </button>
@@ -1565,27 +1248,17 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
       <div className="passport-page">
         <section className="passport-heading">
           <div>
-            <span className="eyebrow">Digital produce passport</span>
-            <h1>
-              {shipment.produce} · {shipment.qty}
-            </h1>
-            <p>
-              {id} · Order ORD-{id.slice(-4)} · Updated just now
-            </p>
+            <span className="eyebrow"><LocalizedText source={"Digital produce passport"} /></span>
+            <h1><LocalizedText source={" {0} · {1} "} values={[shipment.produce, shipment.qty]} /></h1>
+            <p><LocalizedText source={" {0} · Order ORD-{1} · Updated just now "} values={[id, id.slice(-4)]} /></p>
           </div>
           <div className="passport-badges">
             <Badge>
-              <ShieldCheck />
-              AI verified
-            </Badge>
+              <ShieldCheck /><LocalizedText source={" AI verified "} /></Badge>
             <Badge>
-              <FileCheck2 />
-              FPO verified
-            </Badge>
+              <FileCheck2 /><LocalizedText source={" FPO verified "} /></Badge>
             <Badge>
-              <CheckCircle2 />
-              Dispatch verified
-            </Badge>
+              <CheckCircle2 /><LocalizedText source={" Dispatch verified "} /></Badge>
           </div>
         </section>
         <section className="passport-hero">
@@ -1593,52 +1266,44 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
             <div
               className={`passport-photo ${delayed ? "passport-onion" : "passport-tomato"}`}
             >
-              <span>{shipment.freshness}</span>
+              <span><LocalizedText source={"{0}"} values={[shipment.freshness]} /></span>
             </div>
             <div className="passport-copy">
-              <span>Shipment passport</span>
-              <h2>{id}</h2>
-              <p>Authenticated farm-to-buyer record</p>
+              <span><LocalizedText source={"Shipment passport"} /></span>
+              <h2><LocalizedText source={"{0}"} values={[id]} /></h2>
+              <p><LocalizedText source={"Authenticated farm-to-buyer record"} /></p>
               <div className="passport-chips">
                 <span>
-                  <Leaf />
-                  Grade A
-                </span>
+                  <Leaf /><LocalizedText source={" Grade A "} /></span>
                 <span>
-                  <ThermometerSun />
-                  {shipment.confidence} AI confidence
-                </span>
+                  <ThermometerSun /><LocalizedText source={" {0} AI confidence "} values={[shipment.confidence]} /></span>
                 <span>
-                  <CalendarDays />
-                  Harvested today
-                </span>
+                  <CalendarDays /><LocalizedText source={" Harvested today "} /></span>
               </div>
             </div>
             <div className="qr">
               <QrCode />
-              <small>Scan passport</small>
-              <b>AO-{id.slice(-4)}-09</b>
+              <small><LocalizedText source={"Scan passport"} /></small>
+              <b><LocalizedText source={"AO-{0}-09"} values={[id.slice(-4)]} /></b>
             </div>
           </div>
           <div className="passport-summary">
             <div>
-              <span>Shipment status</span>
+              <span><LocalizedText source={"Shipment status"} /></span>
               <b className={delayed ? "warning" : ""}>
-                <i />
-                {shipment.status}
-              </b>
+                <i /><LocalizedText source={" {0} "} values={[shipment.status]} /></b>
             </div>
             <div>
-              <span>Current location</span>
-              <b>{shipment.current}</b>
+              <span><LocalizedText source={"Current location"} /></span>
+              <b><LocalizedText source={"{0}"} values={[shipment.current]} /></b>
             </div>
             <div>
-              <span>Expected arrival</span>
-              <b>{shipment.eta}</b>
+              <span><LocalizedText source={"Expected arrival"} /></span>
+              <b><LocalizedText source={"{0}"} values={[shipment.eta]} /></b>
             </div>
             <div>
-              <span>Freshness risk</span>
-              <b>{shipment.risk}</b>
+              <span><LocalizedText source={"Freshness risk"} /></span>
+              <b><LocalizedText source={"{0}"} values={[shipment.risk]} /></b>
             </div>
           </div>
         </section>
@@ -1646,42 +1311,40 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
           <article className="map-card">
             <div className="map-head">
               <div>
-                <span className="eyebrow">Live GPS position</span>
-                <h2>Nashik → Mumbai warehouse</h2>
+                <span className="eyebrow"><LocalizedText source={"Live GPS position"} /></span>
+                <h2><LocalizedText source={"Nashik → Mumbai warehouse"} /></h2>
               </div>
               <span className="map-updated">
-                <i />
-                Updated 24 sec ago
-              </span>
+                <i /><LocalizedText source={" Updated 24 sec ago "} /></span>
             </div>
             <TrackingMap delayed={delayed} />
             <div className="map-stats">
               <span>
                 <Navigation />
-                <small>Current</small>
-                <b>{shipment.current}</b>
+                <small><LocalizedText source={"Current"} /></small>
+                <b><LocalizedText source={"{0}"} values={[shipment.current]} /></b>
               </span>
               <span>
                 <Route />
-                <small>Remaining</small>
-                <b>{shipment.remaining} · 2h 06m</b>
+                <small><LocalizedText source={"Remaining"} /></small>
+                <b><LocalizedText source={"{0} · 2h 06m"} values={[shipment.remaining]} /></b>
               </span>
               <span>
                 <Warehouse />
-                <small>Destination</small>
-                <b>Mehta Foods, Vashi</b>
+                <small><LocalizedText source={"Destination"} /></small>
+                <b><LocalizedText source={"Mehta Foods, Vashi"} /></b>
               </span>
               <span>
                 <Clock3 />
-                <small>ETA</small>
-                <b>{shipment.eta}</b>
+                <small><LocalizedText source={"ETA"} /></small>
+                <b><LocalizedText source={"{0}"} values={[shipment.eta]} /></b>
               </span>
             </div>
           </article>
           <aside className="timeline-card">
             <div className="timeline-head">
-              <span className="eyebrow">Live events</span>
-              <h2>Shipment timeline</h2>
+              <span className="eyebrow"><LocalizedText source={"Live events"} /></span>
+              <h2><LocalizedText source={"Shipment timeline"} /></h2>
             </div>
             <div className="live-events">
               {events.map(([time, label, state], index) => (
@@ -1691,11 +1354,8 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
                 >
                   <span>{state === "Current" ? <Truck /> : <Check />}</span>
                   <div>
-                    <b>{label}</b>
-                    <small>
-                      {time}
-                      {index === 0 ? " · Live" : ""}
-                    </small>
+                    <b><LocalizedText source={"{0}"} values={[label]} /></b>
+                    <small><LocalizedText source={" {0} {1} "} values={[time, index === 0 ? " · Live" : ""]} /></small>
                   </div>
                 </div>
               ))}
@@ -1703,13 +1363,11 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
             <div className={`freshness-alert ${delayed ? "moderate" : ""}`}>
               <ThermometerSun />
               <div>
-                <span>Projected arrival freshness</span>
-                <b>{delayed ? "Fresh · Level 2" : "Fresh · Level 2"}</b>
-                <small>
-                  {delayed
+                <span><LocalizedText source={"Projected arrival freshness"} /></span>
+                <b><LocalizedText source={"{0}"} values={[delayed ? "Fresh · Level 2" : "Fresh · Level 2"]} /></b>
+                <small><LocalizedText source={" {0} "} values={[delayed
                     ? "Delay is being monitored; cold-chain remains stable."
-                    : "Low risk. Expected quality change: −1 freshness level."}
-                </small>
+                    : "Low risk. Expected quality change: −1 freshness level."]} /></small>
               </div>
             </div>
           </aside>
@@ -1719,28 +1377,28 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
             <PanelTitle eyebrow="Shipment details" title="Origin & transport" />
             <dl>
               <div>
-                <dt>Farmer / FPO</dt>
-                <dd>{shipment.seller}</dd>
+                <dt><LocalizedText source={"Farmer / FPO"} /></dt>
+                <dd><LocalizedText source={"{0}"} values={[shipment.seller]} /></dd>
               </div>
               <div>
-                <dt>Farm origin</dt>
-                <dd>{shipment.origin}</dd>
+                <dt><LocalizedText source={"Farm origin"} /></dt>
+                <dd><LocalizedText source={"{0}"} values={[shipment.origin]} /></dd>
               </div>
               <div>
-                <dt>Harvest date</dt>
-                <dd>1 Sep 2026 · 5:30 AM</dd>
+                <dt><LocalizedText source={"Harvest date"} /></dt>
+                <dd><LocalizedText source={"1 Sep 2026 · 5:30 AM"} /></dd>
               </div>
               <div>
-                <dt>Quantity dispatched</dt>
-                <dd>{shipment.qty}</dd>
+                <dt><LocalizedText source={"Quantity dispatched"} /></dt>
+                <dd><LocalizedText source={"{0}"} values={[shipment.qty]} /></dd>
               </div>
               <div>
-                <dt>Vehicle</dt>
-                <dd>{shipment.truck}</dd>
+                <dt><LocalizedText source={"Vehicle"} /></dt>
+                <dd><LocalizedText source={"{0}"} values={[shipment.truck]} /></dd>
               </div>
               <div>
-                <dt>Driver</dt>
-                <dd>{shipment.driver}</dd>
+                <dt><LocalizedText source={"Driver"} /></dt>
+                <dd><LocalizedText source={"{0}"} values={[shipment.driver]} /></dd>
               </div>
             </dl>
           </article>
@@ -1751,26 +1409,24 @@ function DigitalPassport({ id, close }: { id: string; close: () => void }) {
             />
             <div className="quality-comparison">
               <div>
-                <span>Dispatch quality</span>
-                <strong>Level 1</strong>
-                <b>Very fresh</b>
-                <small>AI confidence · {shipment.confidence}</small>
+                <span><LocalizedText source={"Dispatch quality"} /></span>
+                <strong><LocalizedText source={"Level 1"} /></strong>
+                <b><LocalizedText source={"Very fresh"} /></b>
+                <small><LocalizedText source={"AI confidence · {0}"} values={[shipment.confidence]} /></small>
               </div>
               <ArrowRight />
               <div>
-                <span>Projected arrival</span>
-                <strong>Level 2</strong>
-                <b>Fresh</b>
-                <small>Change · −1 level</small>
+                <span><LocalizedText source={"Projected arrival"} /></span>
+                <strong><LocalizedText source={"Level 2"} /></strong>
+                <b><LocalizedText source={"Fresh"} /></b>
+                <small><LocalizedText source={"Change · −1 level"} /></small>
               </div>
             </div>
             <div className="acceptance">
               <ShieldCheck />
               <span>
-                <b>Auto-accept eligible</b>
-                <small>
-                  Projected quality remains within your Grade A tolerance.
-                </small>
+                <b><LocalizedText source={"Auto-accept eligible"} /></b>
+                <small><LocalizedText source={" Projected quality remains within your Grade A tolerance. "} /></small>
               </span>
             </div>
           </article>
@@ -1832,28 +1488,21 @@ function OrdersPage({
           >
             <span className="produce onion" />
             <span>
-              <small>{order.id}</small>
-              <b>
-                {Number(order.quantity_kg).toLocaleString("en-IN")} kg{" "}
-                {order.crop}
-              </b>
-              <small>
-                {order.farmer_id} · {order.shipment?.origin}
-              </small>
+              <small><LocalizedText source={"{0}"} values={[order.id]} /></small>
+              <b><LocalizedText source={" {0} kg  {1} "} values={[Number(order.quantity_kg).toLocaleString("en-IN"), order.crop]} /></b>
+              <small><LocalizedText source={" {0} · {1} "} values={[order.farmer_id, order.shipment?.origin]} /></small>
             </span>
             <span>
-              <small>Order value</small>
-              <b>₹{Number(order.total_amount).toLocaleString("en-IN")}</b>
+              <small><LocalizedText source={"Order value"} /></small>
+              <b><LocalizedText source={"₹{0}"} values={[Number(order.total_amount).toLocaleString("en-IN")]} /></b>
             </span>
             <span>
-              <small>Status</small>
-              <b>
-                {String(order.shipment?.status || order.status).replaceAll(
+              <small><LocalizedText source={"Status"} /></small>
+              <b><LocalizedText source={" {0} "} values={[String(order.shipment?.status || order.status).replaceAll(
                   "_",
                   " ",
-                )}
-              </b>
-              <small>{order.shipment?.eta}</small>
+                )]} /></b>
+              <small><LocalizedText source={"{0}"} values={[order.shipment?.eta]} /></small>
             </span>
             <ArrowRight />
           </button>
@@ -1880,42 +1529,29 @@ function PassportsPage({
       <section className="passport-order-grid">
         {orders.map((order) => (
           <article key={order.id} className="passport-order-card">
-            <span className="eyebrow">Digital produce passport</span>
-            <h2>
-              {order.crop} · {Number(order.quantity_kg).toLocaleString("en-IN")}{" "}
-              kg
-            </h2>
-            <p>
-              {order.shipment?.id} · {order.farmer_id}
-            </p>
+            <span className="eyebrow"><LocalizedText source={"Digital produce passport"} /></span>
+            <h2><LocalizedText source={" {0} · {1}  kg "} values={[order.crop, Number(order.quantity_kg).toLocaleString("en-IN")]} /></h2>
+            <p><LocalizedText source={" {0} · {1} "} values={[order.shipment?.id, order.farmer_id]} /></p>
             <div>
               <Badge>
-                <ShieldCheck />{" "}
-                {order.passport?.dispatch_verified
+                <ShieldCheck /><LocalizedText source={"  {0} "} values={[order.passport?.dispatch_verified
                   ? "Dispatch verified"
-                  : "Awaiting dispatch check"}
-              </Badge>
-              <Badge variant="outline">
-                {String(order.shipment?.status || order.status).replaceAll(
+                  : "Awaiting dispatch check"]} /></Badge>
+              <Badge variant="outline"><LocalizedText source={" {0} "} values={[String(order.shipment?.status || order.status).replaceAll(
                   "_",
                   " ",
-                )}
-              </Badge>
+                )]} /></Badge>
             </div>
-            <Button onClick={() => openPassport(order.shipment?.id)}>
-              Open passport & tracking <ArrowRight />
+            <Button onClick={() => openPassport(order.shipment?.id)}><LocalizedText source={" Open passport & tracking "} /><ArrowRight />
             </Button>
           </article>
         ))}
       </section>
       <section className="connected-engine">
         <div>
-          <span className="eyebrow">Receiving quality verification</span>
-          <h2>Upload received produce images</h2>
-          <p>
-            The trained freshness engine grades the received shipment and
-            provides confidence evidence before acceptance.
-          </p>
+          <span className="eyebrow"><LocalizedText source={"Receiving quality verification"} /></span>
+          <h2><LocalizedText source={"Upload received produce images"} /></h2>
+          <p><LocalizedText source={" The trained freshness engine grades the received shipment and provides confidence evidence before acceptance. "} /></p>
         </div>
         <FreshnessPanel />
       </section>
@@ -1961,12 +1597,9 @@ function Placeholder({ title }: { title: string }) {
         <span>
           <PackageCheck />
         </span>
-        <h2>{title} is ready for your demo journey</h2>
-        <p>
-          Open Marketplace to select verified farmers and build a consolidated
-          produce sourcing plan.
-        </p>
-        <Button variant="outline">Explore sample records</Button>
+        <h2><LocalizedText source={"{0} is ready for your demo journey"} values={[title]} /></h2>
+        <p><LocalizedText source={" Open Marketplace to select verified farmers and build a consolidated produce sourcing plan. "} /></p>
+        <Button variant="outline"><LocalizedText source={"Explore sample records"} /></Button>
       </section>
     </div>
   );
@@ -1990,8 +1623,8 @@ function Negotiation({ seller, close }: { seller: Seller; close: () => void }) {
       >
         <div className="modal-head">
           <div>
-            <span className="eyebrow">Controlled negotiation</span>
-            <h2>Send an offer to {seller.name}</h2>
+            <span className="eyebrow"><LocalizedText source={"Controlled negotiation"} /></span>
+            <h2><LocalizedText source={"Send an offer to {0}"} values={[seller.name]} /></h2>
           </div>
           <button onClick={close}>
             <X />
@@ -1999,26 +1632,22 @@ function Negotiation({ seller, close }: { seller: Seller; close: () => void }) {
         </div>
         <div className="quote">
           <span>
-            <small>Seller price</small>
-            <b>₹{seller.price}/kg</b>
+            <small><LocalizedText source={"Seller price"} /></small>
+            <b><LocalizedText source={"₹{0}/kg"} values={[seller.price]} /></b>
           </span>
           <span>
-            <small>Quantity</small>
-            <b>{seller.quantity.toLocaleString("en-IN")} kg</b>
+            <small><LocalizedText source={"Quantity"} /></small>
+            <b><LocalizedText source={"{0} kg"} values={[seller.quantity.toLocaleString("en-IN")]} /></b>
           </span>
           <span>
-            <small>Allowed range</small>
-            <b>
-              ₹{min.toFixed(1)}–₹{seller.price}
-            </b>
+            <small><LocalizedText source={"Allowed range"} /></small>
+            <b><LocalizedText source={" ₹{0}–₹{1} "} values={[min.toFixed(1), seller.price]} /></b>
           </span>
         </div>
         <div className="offer">
           <div>
-            <span>Your offer</span>
-            <strong>
-              ₹{offer.toFixed(2)}
-              <small>/kg</small>
+            <span><LocalizedText source={"Your offer"} /></span>
+            <strong><LocalizedText source={" ₹{0} "} values={[offer.toFixed(2)]} /><small><LocalizedText source={"/kg"} /></small>
             </strong>
           </div>
           <input
@@ -2030,41 +1659,34 @@ function Negotiation({ seller, close }: { seller: Seller; close: () => void }) {
             onChange={(e) => setOffer(Number(e.target.value))}
           />
           <p>
-            <span>₹{min.toFixed(1)} minimum</span>
-            <span>₹{seller.price} seller price</span>
+            <span><LocalizedText source={"₹{0} minimum"} values={[min.toFixed(1)]} /></span>
+            <span><LocalizedText source={"₹{0} seller price"} values={[seller.price]} /></span>
           </p>
         </div>
         <div className="saving">
           <span>
-            <small>Saving per kg</small>
-            <b>₹{(seller.price - offer).toFixed(2)}</b>
+            <small><LocalizedText source={"Saving per kg"} /></small>
+            <b><LocalizedText source={"₹{0}"} values={[(seller.price - offer).toFixed(2)]} /></b>
           </span>
           <span>
-            <small>Total potential saving</small>
-            <b>₹{saving.toLocaleString("en-IN")}</b>
+            <small><LocalizedText source={"Total potential saving"} /></small>
+            <b><LocalizedText source={"₹{0}"} values={[saving.toLocaleString("en-IN")]} /></b>
           </span>
           <span>
-            <small>Est. landed cost</small>
-            <b>₹{(offer + 1.8).toFixed(2)}/kg</b>
+            <small><LocalizedText source={"Est. landed cost"} /></small>
+            <b><LocalizedText source={"₹{0}/kg"} values={[(offer + 1.8).toFixed(2)]} /></b>
           </span>
         </div>
         <div className="guard">
           <ShieldCheck />
           <span>
-            <b>Fair-price guardrail active</b>
-            <small>
-              Offers below ₹{min.toFixed(1)}/kg are blocked for this commodity
-              band.
-            </small>
+            <b><LocalizedText source={"Fair-price guardrail active"} /></b>
+            <small><LocalizedText source={" Offers below ₹{0}/kg are blocked for this commodity band. "} values={[min.toFixed(1)]} /></small>
           </span>
         </div>
         <div className="modal-actions">
-          <Button variant="outline" onClick={close}>
-            Cancel
-          </Button>
-          <Button onClick={close}>
-            Send offer
-            <ArrowRight />
+          <Button variant="outline" onClick={close}><LocalizedText source={" Cancel "} /></Button>
+          <Button onClick={close}><LocalizedText source={" Send offer "} /><ArrowRight />
           </Button>
         </div>
       </section>
@@ -2163,7 +1785,7 @@ export default function BuyerExactContent({
           buyers={buyers}
           changeBuyer={changeBuyer}
         />
-        <div key={buyer}>{content}</div>
+        <div key={buyer}><LocalizedText source={"{0}"} values={[content]} /></div>
       </div>
       {menu && <button className="overlay" onClick={() => setMenu(false)} />}{" "}
       {passport && (

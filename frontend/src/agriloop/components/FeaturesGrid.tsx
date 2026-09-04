@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import { useState } from 'react';
 import { FEATURES } from '../data/content';
 import { FeatureCard } from '../types';
@@ -34,7 +35,7 @@ export function FeaturesGrid({ onSelectFeature }: FeaturesGridProps) {
     <section id="solutions" className="py-20 lg:py-28 bg-white relative overflow-hidden">
       {/* Ambient Gradient Blur Blobs */}
       <div className="absolute top-1/3 -left-20 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#c4f042]/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#EAE7DD]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Row */}
@@ -45,18 +46,15 @@ export function FeaturesGrid({ onSelectFeature }: FeaturesGridProps) {
                 id="solutions-badge"
                 className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-gray-200 text-xs font-semibold text-gray-500 mb-6 uppercase tracking-wider bg-gray-50/50"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#16a34a] mr-2"></span>
-                {t('features_badge')}
-              </div>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#26483E] mr-2"></span><LocalizedText source={" {0} "} values={[t('features_badge')]} /></div>
             </BlurReveal>
 
             <BlurReveal delay={0.2} duration={0.85} blur={12} yOffset={20}>
               <h2
                 id="solutions-heading"
-                className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#052e16] leading-tight"
-              >
-                {t('features_title_line1')} <br />
-                <span className="font-light italic">{t('features_title_line2')}</span>
+                className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#26483E] leading-tight"
+              ><LocalizedText source={" {0} "} values={[t('features_title_line1')]} /><br />
+                <span className="font-light italic"><LocalizedText source={"{0}"} values={[t('features_title_line2')]} /></span>
               </h2>
             </BlurReveal>
           </div>
@@ -66,9 +64,7 @@ export function FeaturesGrid({ onSelectFeature }: FeaturesGridProps) {
               <p
                 id="solutions-description"
                 className="text-lg text-gray-600 font-light leading-relaxed max-w-xl"
-              >
-                {t('features_desc')}
-              </p>
+              ><LocalizedText source={" {0} "} values={[t('features_desc')]} /></p>
             </BlurReveal>
           </div>
         </div>
@@ -94,37 +90,27 @@ export function FeaturesGrid({ onSelectFeature }: FeaturesGridProps) {
                     />
                     {/* Subtle category badge on hover */}
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-white text-xs font-medium border border-white/20">
-                        {feature.category}
-                      </span>
+                      <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-white text-xs font-medium border border-white/20"><LocalizedText source={" {0} "} values={[feature.category]} /></span>
                     </div>
 
                     <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="w-10 h-10 rounded-full bg-white text-[#1b4332] flex items-center justify-center shadow-lg font-semibold text-xs">
+                      <span className="w-10 h-10 rounded-full bg-white text-[#26483E] flex items-center justify-center shadow-lg font-semibold text-xs">
                         <ArrowUpRight className="w-5 h-5" />
                       </span>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <h3 className="text-2xl font-serif font-semibold text-[#052e16] group-hover:text-[#16a34a] transition-colors">
-                      {feature.title}
-                    </h3>
+                    <h3 className="text-2xl font-serif font-semibold text-[#26483E] group-hover:text-[#26483E] transition-colors"><LocalizedText source={" {0} "} values={[feature.title]} /></h3>
                   </div>
 
-                  <p className="text-gray-500 font-light leading-relaxed text-base">
-                    {feature.description}
-                  </p>
+                  <p className="text-gray-500 font-light leading-relaxed text-base"><LocalizedText source={" {0} "} values={[feature.description]} /></p>
                 </div>
 
                 {/* Card micro-stat */}
                 <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 font-medium">
-                  <span className="text-[#15803d] bg-[#f0fdf4] px-2.5 py-0.5 rounded-md border border-[#bbf7d0]">
-                    {feature.stats}
-                  </span>
-                  <span className="group-hover:text-[#1b4332] transition-colors">
-                    View interactive preview →
-                  </span>
+                  <span className="text-[#26483E] bg-[#EAE7DD] px-2.5 py-0.5 rounded-md border border-[#EAE7DD]"><LocalizedText source={" {0} "} values={[feature.stats]} /></span>
+                  <span className="group-hover:text-[#26483E] transition-colors"><LocalizedText source={" View interactive preview → "} /></span>
                 </div>
               </div>
             </BlurReveal>

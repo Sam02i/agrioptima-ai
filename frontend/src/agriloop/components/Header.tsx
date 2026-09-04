@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -100,11 +101,11 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
             <a
               href="#"
               id="header-logo"
-              className={`font-serif font-bold text-[#1b4332] tracking-tight hover:opacity-90 transition-all duration-300 flex items-center gap-1.5 ${
+              className={`font-serif font-bold text-[#26483E] tracking-tight hover:opacity-90 transition-all duration-300 flex items-center gap-1.5 ${
                 isScrolled ? 'text-xl sm:text-2xl' : 'text-2xl lg:text-3xl'
               }`}
             >
-              <span>AgriOptimaᴬᴵ.</span>
+              <span><LocalizedText source={"AgriOptimaᴬᴵ."} /></span>
             </a>
           </div>
 
@@ -112,43 +113,35 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
           <nav className="hidden md:flex space-x-5 lg:space-x-7 items-center" id="desktop-nav">
             <a
               id="nav-link-solutions"
-              className={`font-medium text-gray-600 hover:text-[#1b4332] transition-all duration-200 py-1 relative group ${
+              className={`font-medium text-gray-600 hover:text-[#26483E] transition-all duration-200 py-1 relative group ${
                 isScrolled ? 'text-xs sm:text-sm' : 'text-sm'
               }`}
               href="#solutions"
-            >
-              {t('nav_solutions')}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1b4332] transition-all duration-200 group-hover:w-full"></span>
+            ><LocalizedText source={" {0} "} values={[t('nav_solutions')]} /><span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#26483E] transition-all duration-200 group-hover:w-full"></span>
             </a>
             <a
               id="nav-link-how-it-works"
-              className={`font-medium text-gray-600 hover:text-[#1b4332] transition-all duration-200 py-1 relative group ${
+              className={`font-medium text-gray-600 hover:text-[#26483E] transition-all duration-200 py-1 relative group ${
                 isScrolled ? 'text-xs sm:text-sm' : 'text-sm'
               }`}
               href="#core-solutions"
-            >
-              {t('nav_how_it_works')}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1b4332] transition-all duration-200 group-hover:w-full"></span>
+            ><LocalizedText source={" {0} "} values={[t('nav_how_it_works')]} /><span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#26483E] transition-all duration-200 group-hover:w-full"></span>
             </a>
             <a
               id="nav-link-impact"
-              className={`font-medium text-gray-600 hover:text-[#1b4332] transition-all duration-200 py-1 relative group ${
+              className={`font-medium text-gray-600 hover:text-[#26483E] transition-all duration-200 py-1 relative group ${
                 isScrolled ? 'text-xs sm:text-sm' : 'text-sm'
               }`}
               href="#impact"
-            >
-              {t('nav_impact')}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1b4332] transition-all duration-200 group-hover:w-full"></span>
+            ><LocalizedText source={" {0} "} values={[t('nav_impact')]} /><span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#26483E] transition-all duration-200 group-hover:w-full"></span>
             </a>
             <a
               id="nav-link-stories"
-              className={`font-medium text-gray-600 hover:text-[#1b4332] transition-all duration-200 py-1 relative group ${
+              className={`font-medium text-gray-600 hover:text-[#26483E] transition-all duration-200 py-1 relative group ${
                 isScrolled ? 'text-xs sm:text-sm' : 'text-sm'
               }`}
               href="#stories"
-            >
-              {t('nav_stories')}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1b4332] transition-all duration-200 group-hover:w-full"></span>
+            ><LocalizedText source={" {0} "} values={[t('nav_stories')]} /><span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#26483E] transition-all duration-200 group-hover:w-full"></span>
             </a>
           </nav>
 
@@ -160,21 +153,17 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
             <button
               id="btn-login-header"
               onClick={onOpenLogin}
-              className={`font-medium text-[#1b4332] hover:text-[#15803d] transition-all duration-200 cursor-pointer font-sans ${
+              className={`font-medium text-[#26483E] hover:text-[#26483E] transition-all duration-200 cursor-pointer font-sans ${
                 isScrolled ? 'text-xs sm:text-sm px-2 py-1.5' : 'text-sm px-2.5 py-2'
               }`}
-            >
-              {t('nav_login')}
-            </button>
+            ><LocalizedText source={" {0} "} values={[t('nav_login')]} /></button>
             <button
               id="btn-get-started-header"
               onClick={onOpenGetStarted}
-              className={`inline-flex items-center justify-center border border-transparent font-medium rounded-full text-white bg-[#1b4332] hover:bg-[#166534] transition-all duration-200 shadow-xs hover:shadow cursor-pointer active:scale-95 ${
+              className={`inline-flex items-center justify-center border border-transparent font-medium rounded-full text-white bg-[#26483E] hover:bg-[#26483E] transition-all duration-200 shadow-xs hover:shadow cursor-pointer active:scale-95 ${
                 isScrolled ? 'text-xs sm:text-sm px-3.5 py-1.5' : 'text-sm px-4.5 py-2'
               }`}
-            >
-              {t('nav_get_started')}
-            </button>
+            ><LocalizedText source={" {0} "} values={[t('nav_get_started')]} /></button>
           </div>
 
           {/* Mobile menu and Language toggle */}
@@ -186,10 +175,10 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-controls="mobile-menu"
               aria-expanded={mobileMenuOpen}
-              className="text-gray-700 hover:text-[#1b4332] focus:outline-none p-1.5 rounded-lg"
+              className="text-gray-700 hover:text-[#26483E] focus:outline-none p-1.5 rounded-lg"
               type="button"
             >
-              <span className="sr-only">Open main menu</span>
+              <span className="sr-only"><LocalizedText source={"Open main menu"} /></span>
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
@@ -203,52 +192,40 @@ export function Header({ onOpenGetStarted, onOpenLogin }: HeaderProps) {
           className="md:hidden mt-2 bg-white/95 backdrop-blur-xl border border-gray-200/80 rounded-2xl shadow-xl p-4 space-y-3 animate-in fade-in slide-in-from-top-4 duration-200"
         >
           <a
-            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#1b4332] hover:bg-gray-50/80"
+            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#26483E] hover:bg-gray-50/80"
             href="#solutions"
             onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav_solutions')}
-          </a>
+          ><LocalizedText source={" {0} "} values={[t('nav_solutions')]} /></a>
           <a
-            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#1b4332] hover:bg-gray-50/80"
+            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#26483E] hover:bg-gray-50/80"
             href="#core-solutions"
             onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav_how_it_works')}
-          </a>
+          ><LocalizedText source={" {0} "} values={[t('nav_how_it_works')]} /></a>
           <a
-            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#1b4332] hover:bg-gray-50/80"
+            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#26483E] hover:bg-gray-50/80"
             href="#impact"
             onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav_impact')}
-          </a>
+          ><LocalizedText source={" {0} "} values={[t('nav_impact')]} /></a>
           <a
-            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#1b4332] hover:bg-gray-50/80"
+            className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-[#26483E] hover:bg-gray-50/80"
             href="#stories"
             onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav_stories')}
-          </a>
+          ><LocalizedText source={" {0} "} values={[t('nav_stories')]} /></a>
           <div className="pt-3 border-t border-gray-100 flex flex-col gap-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenLogin();
               }}
-              className="w-full text-center py-2 text-sm font-medium text-[#1b4332] border border-gray-200 rounded-full hover:bg-gray-50"
-            >
-              {t('nav_login')}
-            </button>
+              className="w-full text-center py-2 text-sm font-medium text-[#26483E] border border-gray-200 rounded-full hover:bg-gray-50"
+            ><LocalizedText source={" {0} "} values={[t('nav_login')]} /></button>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenGetStarted();
               }}
-              className="w-full text-center py-2 text-sm font-medium text-white bg-[#1b4332] rounded-full hover:bg-[#166534]"
-            >
-              {t('nav_get_started')}
-            </button>
+              className="w-full text-center py-2 text-sm font-medium text-white bg-[#26483E] rounded-full hover:bg-[#26483E]"
+            ><LocalizedText source={" {0} "} values={[t('nav_get_started')]} /></button>
           </div>
         </div>
       )}

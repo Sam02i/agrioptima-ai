@@ -1,5 +1,5 @@
-.nearby-farmers{margin-top:18px;padding:24px;border:1px solid #dfe2d6;border-radius:18px;background:#fffef8}
+.nearby-farmers{margin-top:18px;padding:24px;border:1px solid #EAE7DD;border-radius:18px;background:#EAE7DD}
 .nearby-farmers h2{margin:5px 0 16px;font:26px Georgia,serif}
 .nearby-farmers .farmer-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .nearby-farmers .farmer-card{padding:15px}
-.nearby-farmers button{margin-top:8px;color:#2e6842;font-size:10px;font-weight:700}
+.nearby-farmers button{margin-top:8px;color:#26483E;font-size:10px;font-weight:700}

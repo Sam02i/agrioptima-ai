@@ -1,3 +1,4 @@
+import { LocalizedText } from "../i18n/LocalizedText";
 import { useEffect, useRef, useState } from "react";
 import FarmerForm from "./FarmerForm";
 import RecommendationResults from "./RecommendationResults";
@@ -140,45 +141,44 @@ export default function FarmerDashboard({
       <aside className={`farmer-sidebar ${menu ? "open" : ""}`}>
         <div className="buyer-brand">
           <span>♧</span>
-          <b>AgriOptimaᴬᴵ</b>
+          <b><LocalizedText source={"AgriOptimaᴬᴵ"} /></b>
           <button onClick={() => setMenu(false)}>×</button>
         </div>
         <div className="workspace-card">
-          <span>{initials}</span>
+          <span><LocalizedText source={"{0}"} values={[initials]} /></span>
           <div>
-            <b>{farmer?.name || "Select farmer"}</b>
-            <small>Farmer workspace</small>
+            <b><LocalizedText source={"{0}"} values={[farmer?.name || "Select farmer"]} /></b>
+            <small><LocalizedText source={"Farmer workspace"} /></small>
           </div>
           <i>⌄</i>
         </div>
         <nav>
-          <p>Farm intelligence</p>
+          <p><LocalizedText source={"Farm intelligence"} /></p>
           {FARM_NAV.map(([key, label, icon]) => (
             <button
               key={key}
+              aria-current={active === key ? "page" : undefined}
               className={active === key ? "active" : ""}
               onClick={() => go(key)}
             >
-              <span>{icon}</span>
-              {label}
-            </button>
+              <span><LocalizedText source={"{0}"} values={[icon]} /></span><LocalizedText source={" {0} "} values={[label]} /></button>
           ))}
         </nav>
         <div className="sidebar-status">
-          <span>● Farm connected</span>
-          <strong>{farmers.length} profiles ready</strong>
-          <small>Plan · Grade · Sell · Deliver</small>
-          <button onClick={onHome}>← Public landing page</button>
+          <span><LocalizedText source={"● Farm connected"} /></span>
+          <strong><LocalizedText source={"{0} profiles ready"} values={[farmers.length]} /></strong>
+          <small><LocalizedText source={"Plan · Grade · Sell · Deliver"} /></small>
+          <button onClick={onHome}><LocalizedText source={"← Public landing page"} /></button>
         </div>
       </aside>
       <main className="farmer-main">
         <header className="buyer-topbar">
-          <button className="mobile-nav" onClick={() => setMenu(true)}>
+          <button className="mobile-nav" aria-label="Open farmer navigation" onClick={() => setMenu(true)}>
             ☰
           </button>
           <div className="global-search">
             ⌕ <input placeholder="Search farm tools, crops, listings…" />
-            <kbd>⌘ K</kbd>
+            <kbd><LocalizedText source={"⌘ K"} /></kbd>
           </div>
           <div className="farmer-profile-switch">
             <select
@@ -187,21 +187,19 @@ export default function FarmerDashboard({
               onChange={(event) => onFarmerChange(event.target.value)}
             >
               {farmers.map((item) => (
-                <option key={item.farmer_id} value={item.farmer_id}>
-                  {item.name} · {item.district}
-                </option>
+                <option key={item.farmer_id} value={item.farmer_id}><LocalizedText source={" {0} · {1} "} values={[item.name, item.district]} /></option>
               ))}
             </select>
           </div>
           <div className="portal-switch">
-            <button onClick={onHome}>Home</button>
-            <button onClick={onBuyer}>Buyer portal</button>
+            <button onClick={onHome}><LocalizedText source={"Home"} /></button>
+            <button onClick={onBuyer}><LocalizedText source={"Buyer portal"} /></button>
           </div>
           <div className="buyer-person">
-            <span>{initials}</span>
+            <span><LocalizedText source={"{0}"} values={[initials]} /></span>
             <div>
-              <b>{farmer?.name || "Farmer"}</b>
-              <small>Verified farmer</small>
+              <b><LocalizedText source={"{0}"} values={[farmer?.name || "Farmer"]} /></b>
+              <small><LocalizedText source={"Verified farmer"} /></small>
             </div>
             <i>⌄</i>
           </div>
@@ -209,17 +207,14 @@ export default function FarmerDashboard({
         <div className="buyer-content">
           <section className="buyer-heading">
             <div>
-              <span>
-                {farmer
+              <span><LocalizedText source={" {0}  · Connected "} values={[farmer
                   ? `${farmer.district}, ${farmer.state}`
-                  : "Farm intelligence"}{" "}
-                · Connected
-              </span>
-              <h1>{FARM_COPY[active][0]}</h1>
-              <p>{FARM_COPY[active][1]}</p>
+                  : "Farm intelligence"]} /></span>
+              <h1><LocalizedText source={"{0}"} values={[FARM_COPY[active][0]]} /></h1>
+              <p><LocalizedText source={"{0}"} values={[FARM_COPY[active][1]]} /></p>
             </div>
             {active !== "overview" && (
-              <button onClick={() => go("overview")}>← Farm overview</button>
+              <button onClick={() => go("overview")}><LocalizedText source={"← Farm overview"} /></button>
             )}
           </section>
           {active === "overview" && (
@@ -235,49 +230,46 @@ export default function FarmerDashboard({
             (profile ? (
               <section className="farmer-record-card">
                 <div>
-                  <span>{initials}</span>
+                  <span><LocalizedText source={"{0}"} values={[initials]} /></span>
                   <div>
-                    <h2>{profile.farmer.name}</h2>
-                    <p>
-                      {profile.farmer.village}, {profile.farmer.district},{" "}
-                      {profile.farmer.state}
-                    </p>
+                    <h2><LocalizedText source={"{0}"} values={[profile.farmer.name]} /></h2>
+                    <p><LocalizedText source={" {0}, {1},  {2} "} values={[profile.farmer.village, profile.farmer.district, profile.farmer.state]} /></p>
                   </div>
                 </div>
                 <div className="farmer-record-grid">
                   <span>
-                    <small>Profile status</small>
-                    <b>{profile.farmer.profile_status}</b>
+                    <small><LocalizedText source={"Profile status"} /></small>
+                    <b><LocalizedText source={"{0}"} values={[profile.farmer.profile_status]} /></b>
                   </span>
                   <span>
-                    <small>Preferred language</small>
-                    <b>{profile.farmer.preferred_language}</b>
+                    <small><LocalizedText source={"Preferred language"} /></small>
+                    <b><LocalizedText source={"{0}"} values={[profile.farmer.preferred_language]} /></b>
                   </span>
                   <span>
-                    <small>Primary goal</small>
-                    <b>{profile.needs?.primary_goal || "—"}</b>
+                    <small><LocalizedText source={"Primary goal"} /></small>
+                    <b><LocalizedText source={"{0}"} values={[profile.needs?.primary_goal || "—"]} /></b>
                   </span>
                   <span>
-                    <small>Risk preference</small>
-                    <b>{profile.needs?.risk_preference || "—"}</b>
+                    <small><LocalizedText source={"Risk preference"} /></small>
+                    <b><LocalizedText source={"{0}"} values={[profile.needs?.risk_preference || "—"]} /></b>
                   </span>
                   <span>
-                    <small>Current crop</small>
-                    <b>{farm?.current_crop || "—"}</b>
+                    <small><LocalizedText source={"Current crop"} /></small>
+                    <b><LocalizedText source={"{0}"} values={[farm?.current_crop || "—"]} /></b>
                   </span>
                   <span>
-                    <small>Irrigation</small>
-                    <b>{farm?.irrigation_type || "—"}</b>
+                    <small><LocalizedText source={"Irrigation"} /></small>
+                    <b><LocalizedText source={"{0}"} values={[farm?.irrigation_type || "—"]} /></b>
                   </span>
                 </div>
               </section>
             ) : (
-              <div className="demo-panel">Loading farmer record…</div>
+              <div className="demo-panel"><LocalizedText source={"Loading farmer record…"} /></div>
             ))}
           {active === "profile" && farmer && (
             <section className="nearby-farmers">
-              <span className="panel-kicker">Farmers in the same area</span>
-              <h2>Other farmers near {farmer.district}</h2>
+              <span className="panel-kicker"><LocalizedText source={"Farmers in the same area"} /></span>
+              <h2><LocalizedText source={"Other farmers near {0}"} values={[farmer.district]} /></h2>
               <div className="farmer-grid">
                 {farmers
                   .filter(
@@ -296,13 +288,9 @@ export default function FarmerDashboard({
                           .slice(0, 2)}
                       </div>
                       <div>
-                        <h3>{item.name}</h3>
-                        <p>
-                          {item.village}, {item.district}
-                        </p>
-                        <button onClick={() => onFarmerChange(item.farmer_id)}>
-                          View profile →
-                        </button>
+                        <h3><LocalizedText source={"{0}"} values={[item.name]} /></h3>
+                        <p><LocalizedText source={" {0}, {1} "} values={[item.village, item.district]} /></p>
+                        <button onClick={() => onFarmerChange(item.farmer_id)}><LocalizedText source={" View profile → "} /></button>
                       </div>
                     </article>
                   ))}
@@ -313,9 +301,7 @@ export default function FarmerDashboard({
             (farm ? (
               <SoilAdvisoryPanel farmerId={farmerId} farm={farm} />
             ) : (
-              <div className="demo-panel">
-                Loading connected Soil Health Card…
-              </div>
+              <div className="demo-panel"><LocalizedText source={" Loading connected Soil Health Card… "} /></div>
             ))}
           {active === "freshness" && <FreshnessPanel />}
           {active === "listings" && (
@@ -329,9 +315,7 @@ export default function FarmerDashboard({
             <div className="grid lg:grid-cols-[380px_1fr] gap-6 items-start">
               <div>
                 {error && (
-                  <div className="mb-3 p-3 bg-red-50 text-red-700 text-xs rounded-xl">
-                    {error}
-                  </div>
+                  <div className="mb-3 p-3 bg-red-50 text-red-700 text-xs rounded-xl"><LocalizedText source={" {0} "} values={[error]} /></div>
                 )}
                 <FarmerForm
                   key={farmerId}
@@ -381,24 +365,15 @@ export default function FarmerDashboard({
                 ) : (
                   <div className="demo-panel empty-workspace">
                     <span>♧</span>
-                    <h3>
-                      Your {farm?.current_crop || farm?.previous_crop || "crop"}{" "}
-                      plan will appear here
-                    </h3>
-                    <p>
-                      Confirm the few details on the left. Soil values are
-                      already connected and no technical entry is required.
-                    </p>
+                    <h3><LocalizedText source={" Your {0}  plan will appear here "} values={[farm?.current_crop || farm?.previous_crop || "crop"]} /></h3>
+                    <p><LocalizedText source={" Confirm the few details on the left. Soil values are already connected and no technical entry is required. "} /></p>
                   </div>
                 )}
               </div>
             </div>
           )}
         </div>
-        <footer className="buyer-footer">
-          Farmer workspace · Crop planning · Soil intelligence · Freshness ·
-          Produce listings · Orders
-        </footer>
+        <footer className="buyer-footer"><LocalizedText source={" Farmer workspace · Crop planning · Soil intelligence · Freshness · Produce listings · Orders "} /></footer>
       </main>
     </div>
   );

@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import { X, Zap, CheckCircle2, ClipboardList, CircleDollarSign, ArrowRight, TrendingUp, ShieldCheck } from 'lucide-react';
 import { CapabilityItem } from '../types';
 
@@ -22,51 +23,33 @@ export function CapabilityModal({ capability, onClose, onGetStarted }: Capabilit
 
         <div className="flex items-center gap-4 mb-6">
           <div className={`w-14 h-14 rounded-2xl ${capability.badgeColor} flex items-center justify-center`}>
-            {capability.iconName === 'zap' && <Zap className="w-7 h-7 text-[#166534]" />}
+            {capability.iconName === 'zap' && <Zap className="w-7 h-7 text-[#26483E]" />}
             {capability.iconName === 'check-circle' && <CheckCircle2 className="w-7 h-7 text-blue-600" />}
             {capability.iconName === 'clipboard-list' && <ClipboardList className="w-7 h-7 text-amber-600" />}
             {capability.iconName === 'badge-dollar-sign' && <CircleDollarSign className="w-7 h-7 text-purple-600" />}
           </div>
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#166534] bg-[#f0fdf4] px-2.5 py-1 rounded-md border border-[#bbf7d0]">
-              AgriLoop Core Capability
-            </span>
-            <h3 className="text-2xl font-serif font-bold text-gray-900 mt-1">
-              {capability.title}
-            </h3>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#26483E] bg-[#EAE7DD] px-2.5 py-1 rounded-md border border-[#EAE7DD]"><LocalizedText source={" AgriLoop Core Capability "} /></span>
+            <h3 className="text-2xl font-serif font-bold text-gray-900 mt-1"><LocalizedText source={" {0} "} values={[capability.title]} /></h3>
           </div>
         </div>
 
-        <p className="text-gray-600 text-base leading-relaxed mb-6 font-light">
-          {capability.description}
-        </p>
+        <p className="text-gray-600 text-base leading-relaxed mb-6 font-light"><LocalizedText source={" {0} "} values={[capability.description]} /></p>
 
         <div className="space-y-3 mb-6">
           <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">
-              Key Producer Benefit
-            </h4>
-            <p className="text-sm font-medium text-gray-800">
-              {capability.details?.keyBenefit}
-            </p>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1"><LocalizedText source={" Key Producer Benefit "} /></h4>
+            <p className="text-sm font-medium text-gray-800"><LocalizedText source={" {0} "} values={[capability.details?.keyBenefit]} /></p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#f0fdf4] border border-[#bbf7d0]">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#166534] mb-1">
-              Measured Field Performance
-            </h4>
-            <p className="text-sm font-bold text-[#1b4332]">
-              {capability.details?.metrics}
-            </p>
+          <div className="p-4 rounded-2xl bg-[#EAE7DD] border border-[#EAE7DD]">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#26483E] mb-1"><LocalizedText source={" Measured Field Performance "} /></h4>
+            <p className="text-sm font-bold text-[#26483E]"><LocalizedText source={" {0} "} values={[capability.details?.metrics]} /></p>
           </div>
 
           <div className="p-4 rounded-2xl bg-blue-50/60 border border-blue-100">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-blue-800 mb-1">
-              Autonomous Operation
-            </h4>
-            <p className="text-xs text-gray-700">
-              {capability.details?.sampleAction}
-            </p>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-blue-800 mb-1"><LocalizedText source={" Autonomous Operation "} /></h4>
+            <p className="text-xs text-gray-700"><LocalizedText source={" {0} "} values={[capability.details?.sampleAction]} /></p>
           </div>
         </div>
 
@@ -74,17 +57,15 @@ export function CapabilityModal({ capability, onClose, onGetStarted }: Capabilit
           <button
             onClick={onClose}
             className="px-5 py-2.5 rounded-full border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50"
-          >
-            Close
-          </button>
+          ><LocalizedText source={" Close "} /></button>
           <button
             onClick={() => {
               onClose();
               onGetStarted();
             }}
-            className="px-6 py-2.5 rounded-full bg-[#166534] hover:bg-[#1b4332] text-white text-sm font-semibold inline-flex items-center shadow-sm"
+            className="px-6 py-2.5 rounded-full bg-[#26483E] hover:bg-[#26483E] text-white text-sm font-semibold inline-flex items-center shadow-sm"
           >
-            <span>Activate on My Land</span>
+            <span><LocalizedText source={"Activate on My Land"} /></span>
             <ArrowRight className="w-4 h-4 ml-1.5" />
           </button>
         </div>

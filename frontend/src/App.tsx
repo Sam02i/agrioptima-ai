@@ -1,3 +1,4 @@
+import { LocalizedText } from "./i18n/LocalizedText";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { GlobalTranslation } from "./i18n/GlobalTranslation";
 import AccountAccess from "./components/AccountAccess";
@@ -15,7 +16,7 @@ export default function App() {
   useEffect(()=>{const handler=()=>setView(readView());window.addEventListener("hashchange",handler);return()=>window.removeEventListener("hashchange",handler)},[]);
   const go=(next:View)=>{window.location.hash=next==="landing"?"":next;setView(next);window.scrollTo({top:0})};
   const openFarmer=(id?:string)=>{if(id){setFarmerId(id);localStorage.setItem("agrioptima_farmer_id",id)}go("farmer")};
-  const loading=<div className="min-h-screen grid place-items-center bg-[#f6f5ec] text-[#153f2e]"><div><b>AgriOptimaᴬᴵ</b><p>Opening your workspace…</p></div></div>;
+  const loading=<div className="min-h-screen grid place-items-center bg-[#EAE7DD] text-[#26483E]"><div><b><LocalizedText source={"AgriOptimaᴬᴵ"} /></b><p><LocalizedText source={"Opening your workspace…"} /></p></div></div>;
   if(view==="buyer") return <Suspense fallback={loading}><GlobalTranslation showSelector/><BuyerExactDashboard onHome={()=>go("landing")} onFarmer={()=>openFarmer()}/><AccountAccess/></Suspense>;
   if(view==="farmer") return <Suspense fallback={loading}><GlobalTranslation showSelector/><FarmerDashboard farmerId={farmerId} onFarmerChange={(id)=>{setFarmerId(id);localStorage.setItem("agrioptima_farmer_id",id)}} onHome={()=>go("landing")} onBuyer={()=>go("buyer")}/><AccountAccess/></Suspense>;
   return <Suspense fallback={loading}><GlobalTranslation showSelector={false}/><AgriLoopLanding onBuyer={()=>go("buyer")} onFarmer={openFarmer}/><AccountAccess/></Suspense>;

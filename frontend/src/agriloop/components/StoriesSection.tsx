@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import {
@@ -52,7 +53,7 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
       badge: 'Precision Agronomy',
       badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',
       stars: 5,
-      avatarColor: 'bg-emerald-700 text-[#c4f042]',
+      avatarColor: 'bg-emerald-700 text-[#EAE7DD]',
       initials: 'MH',
     },
     {
@@ -130,7 +131,7 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
       badge: 'Fintech Credit',
       badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',
       stars: 5,
-      avatarColor: 'bg-emerald-800 text-[#c4f042]',
+      avatarColor: 'bg-emerald-800 text-[#EAE7DD]',
       initials: 'LG',
     },
     {
@@ -169,19 +170,17 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
     <div
       key={story.id}
       onClick={() => onOpenStoryDetail(story.name)}
-      className="w-[380px] sm:w-[420px] flex-shrink-0 p-6 rounded-3xl bg-white/95 backdrop-blur-md border border-gray-200/90 shadow-sm hover:shadow-xl hover:border-[#166534]/30 transition-all duration-300 flex flex-col justify-between group cursor-pointer relative overflow-hidden"
+      className="w-[380px] sm:w-[420px] flex-shrink-0 p-6 rounded-3xl bg-white/95 backdrop-blur-md border border-gray-200/90 shadow-sm hover:shadow-xl hover:border-[#26483E]/30 transition-all duration-300 flex flex-col justify-between group cursor-pointer relative overflow-hidden"
     >
       {/* Top subtle hover accent */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#166534] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#26483E] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
       <div>
         {/* Header with Badge & Rating */}
         <div className="flex items-center justify-between mb-4">
           <span
             className={`px-3 py-1 rounded-full text-xs font-semibold border ${story.badgeColor}`}
-          >
-            {story.badge}
-          </span>
+          ><LocalizedText source={" {0} "} values={[story.badge]} /></span>
           <div className="flex items-center gap-1 text-amber-400">
             {[...Array(story.stars)].map((_, idx) => (
               <Star key={idx} className="w-3.5 h-3.5 fill-amber-400" />
@@ -190,9 +189,7 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
         </div>
 
         {/* Quote */}
-        <p className="text-gray-700 text-[14px] leading-relaxed font-light mb-5">
-          "{story.quote}"
-        </p>
+        <p className="text-gray-700 text-[14px] leading-relaxed font-light mb-5"><LocalizedText source={" \"{0}\" "} values={[story.quote]} /></p>
       </div>
 
       {/* Author & Metric Footer */}
@@ -200,25 +197,17 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
         <div className="flex items-center gap-3 min-w-0">
           <div
             className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-2xs ${story.avatarColor}`}
-          >
-            {story.initials}
-          </div>
+          ><LocalizedText source={" {0} "} values={[story.initials]} /></div>
           <div className="min-w-0">
-            <h4 className="font-serif font-bold text-gray-900 text-sm truncate">
-              {story.name}
-            </h4>
-            <p className="text-[11px] text-gray-500 truncate">{story.companyOrFarm}</p>
+            <h4 className="font-serif font-bold text-gray-900 text-sm truncate"><LocalizedText source={" {0} "} values={[story.name]} /></h4>
+            <p className="text-[11px] text-gray-500 truncate"><LocalizedText source={"{0}"} values={[story.companyOrFarm]} /></p>
             <p className="text-[10px] text-gray-400 truncate flex items-center gap-1">
-              <MapPin className="w-2.5 h-2.5 text-gray-400" />
-              {story.location}
-            </p>
+              <MapPin className="w-2.5 h-2.5 text-gray-400" /><LocalizedText source={" {0} "} values={[story.location]} /></p>
           </div>
         </div>
 
         <div className="flex-shrink-0 text-right">
-          <span className="inline-block text-xs font-bold text-[#166534] bg-[#f0fdf4] border border-[#bbf7d0] px-2.5 py-1 rounded-lg">
-            {story.metric}
-          </span>
+          <span className="inline-block text-xs font-bold text-[#26483E] bg-[#EAE7DD] border border-[#EAE7DD] px-2.5 py-1 rounded-lg"><LocalizedText source={" {0} "} values={[story.metric]} /></span>
         </div>
       </div>
     </div>
@@ -227,30 +216,24 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
   return (
     <section
       id="stories"
-      className="py-20 lg:py-28 bg-[#f8faf8] border-t border-gray-100/90 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-[#EAE7DD] border-t border-gray-100/90 relative overflow-hidden"
     >
       {/* Ambient Gradient Blur Lights */}
-      <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#c4f042]/15 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#EAE7DD]/15 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-10 right-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
         <BlurReveal delay={0.1} blur={8} yOffset={15}>
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-200 text-xs font-semibold text-gray-600 mb-4 uppercase tracking-wider bg-white shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#166534]" />
-            {t('stories_badge')}
-          </div>
+            <Sparkles className="w-3.5 h-3.5 text-[#26483E]" /><LocalizedText source={" {0} "} values={[t('stories_badge')]} /></div>
         </BlurReveal>
 
         <BlurReveal delay={0.2} duration={0.85} blur={12} yOffset={20}>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#052e16] tracking-tight">
-            {t('stories_title')}
-          </h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#26483E] tracking-tight"><LocalizedText source={" {0} "} values={[t('stories_title')]} /></h2>
         </BlurReveal>
 
         <BlurReveal delay={0.3} duration={0.8} blur={10} yOffset={20}>
-          <p className="text-gray-600 text-base sm:text-lg font-light mt-3 max-w-2xl mx-auto">
-            {t('stories_desc')}
-          </p>
+          <p className="text-gray-600 text-base sm:text-lg font-light mt-3 max-w-2xl mx-auto"><LocalizedText source={" {0} "} values={[t('stories_desc')]} /></p>
         </BlurReveal>
       </div>
 
@@ -258,8 +241,8 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
       {/* Auto-Floating Infinite Reviews Marquee Tracks */}
       <div className="space-y-6 overflow-hidden relative">
         {/* Left & Right Edge Vignette Fade */}
-        <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-[#f8faf8] via-[#f8faf8]/80 to-transparent z-10 pointer-events-none" />
-        <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-[#f8faf8] via-[#f8faf8]/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-[#EAE7DD] via-[#EAE7DD]/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-[#EAE7DD] via-[#EAE7DD]/80 to-transparent z-10 pointer-events-none" />
 
         {/* Row 1: Floating Left */}
         <div className="flex gap-6 overflow-hidden">
@@ -278,9 +261,7 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
           >
             {/* Duplicated for seamless infinite loop */}
             {[...rowOneReviews, ...rowOneReviews].map((story, i) => (
-              <React.Fragment key={`${story.id}-${i}`}>
-                {renderReviewCard(story)}
-              </React.Fragment>
+              <React.Fragment key={`${story.id}-${i}`}><LocalizedText source={" {0} "} values={[renderReviewCard(story)]} /></React.Fragment>
             ))}
           </motion.div>
         </div>
@@ -302,9 +283,7 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
           >
             {/* Duplicated for seamless infinite loop */}
             {[...rowTwoReviews, ...rowTwoReviews].map((story, i) => (
-              <React.Fragment key={`${story.id}-${i}`}>
-                {renderReviewCard(story)}
-              </React.Fragment>
+              <React.Fragment key={`${story.id}-${i}`}><LocalizedText source={" {0} "} values={[renderReviewCard(story)]} /></React.Fragment>
             ))}
           </motion.div>
         </div>
@@ -315,19 +294,16 @@ export function StoriesSection({ onOpenStoryDetail }: StoriesSectionProps) {
         <BlurReveal delay={0.35} duration={0.8} blur={10} yOffset={15}>
           <div className="p-4 rounded-2xl bg-white/90 border border-gray-200 shadow-2xs flex flex-wrap items-center justify-around gap-4 text-xs text-gray-600">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#166534]" />
-              <span className="font-semibold text-gray-900">100% Verified</span> Farm &amp; Buyer Profiles
-            </div>
+              <ShieldCheck className="w-4 h-4 text-[#26483E]" />
+              <span className="font-semibold text-gray-900"><LocalizedText source={"100% Verified"} /></span><LocalizedText source={" Farm &amp; Buyer Profiles "} /></div>
             <div className="w-1 h-1 rounded-full bg-gray-300 hidden sm:block" />
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#166534]" />
-              <span className="font-semibold text-gray-900">Zero Dispute</span> Dual-Gate Quality Settlement
-            </div>
+              <CheckCircle2 className="w-4 h-4 text-[#26483E]" />
+              <span className="font-semibold text-gray-900"><LocalizedText source={"Zero Dispute"} /></span><LocalizedText source={" Dual-Gate Quality Settlement "} /></div>
             <div className="w-1 h-1 rounded-full bg-gray-300 hidden sm:block" />
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-[#166534]" />
-              <span className="font-semibold text-gray-900">4.9 / 5.0</span> Average Agronomy Rating
-            </div>
+              <TrendingUp className="w-4 h-4 text-[#26483E]" />
+              <span className="font-semibold text-gray-900">4.9 / 5.0</span><LocalizedText source={" Average Agronomy Rating "} /></div>
           </div>
         </BlurReveal>
       </div>

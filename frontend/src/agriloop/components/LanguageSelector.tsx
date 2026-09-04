@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import { useState, useRef, useEffect } from 'react';
 import { Globe, Check, ChevronDown, Sparkles } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -48,21 +49,21 @@ export function LanguageSelector({
         title="Change Language / भाषा बदलें"
         className={`inline-flex items-center gap-1.5 font-medium rounded-full transition-all duration-200 cursor-pointer shadow-2xs border ${
           isOpen
-            ? 'bg-[#166534] text-[#c4f042] border-[#166534] ring-2 ring-[#c4f042]/30'
+            ? 'bg-[#26483E] text-[#EAE7DD] border-[#26483E] ring-2 ring-[#EAE7DD]/30'
             : isScrolled
-            ? 'bg-gray-50/90 hover:bg-[#f0fdf4] text-gray-700 hover:text-[#166534] border-gray-200 hover:border-[#bbf7d0]'
-            : 'bg-white/80 hover:bg-[#f0fdf4] text-gray-800 hover:text-[#166534] border-gray-200/90 hover:border-[#bbf7d0]'
+            ? 'bg-gray-50/90 hover:bg-[#EAE7DD] text-gray-700 hover:text-[#26483E] border-gray-200 hover:border-[#EAE7DD]'
+            : 'bg-white/80 hover:bg-[#EAE7DD] text-gray-800 hover:text-[#26483E] border-gray-200/90 hover:border-[#EAE7DD]'
         } ${isScrolled ? 'px-2.5 py-1 text-xs' : 'px-3 py-1.5 text-xs sm:text-sm'}`}
       >
         <Globe
           className={`w-3.5 h-3.5 ${
-            isOpen ? 'text-[#c4f042]' : 'text-[#166534]'
+            isOpen ? 'text-[#EAE7DD]' : 'text-[#26483E]'
           } transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
         />
-        <span className="font-semibold tracking-tight">{currentLanguageInfo.nativeName}</span>
+        <span className="font-semibold tracking-tight"><LocalizedText source={"{0}"} values={[currentLanguageInfo.nativeName]} /></span>
         <ChevronDown
           className={`w-3 h-3 transition-transform duration-200 ${
-            isOpen ? 'rotate-180 text-[#c4f042]' : 'text-gray-400'
+            isOpen ? 'rotate-180 text-[#EAE7DD]' : 'text-gray-400'
           }`}
         />
       </button>
@@ -77,12 +78,8 @@ export function LanguageSelector({
         >
           <div className="px-3 py-2 border-b border-gray-100 mb-1 flex items-center justify-between">
             <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
-              <Globe className="w-3.5 h-3.5 text-[#166534]" />
-              Select Language
-            </span>
-            <span className="text-[10px] font-medium text-[#166534] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-              6 Languages
-            </span>
+              <Globe className="w-3.5 h-3.5 text-[#26483E]" /><LocalizedText source={" Select Language "} /></span>
+            <span className="text-[10px] font-medium text-[#26483E] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200"><LocalizedText source={" 6 Languages "} /></span>
           </div>
 
           <div className="space-y-1">
@@ -95,7 +92,7 @@ export function LanguageSelector({
                   onClick={() => handleSelect(lang.code)}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left transition-all duration-150 group cursor-pointer ${
                     isSelected
-                      ? 'bg-[#f0fdf4] text-[#166534] font-semibold border border-[#bbf7d0]'
+                      ? 'bg-[#EAE7DD] text-[#26483E] font-semibold border border-[#EAE7DD]'
                       : 'hover:bg-gray-50 text-gray-700 hover:text-gray-900 border border-transparent'
                   }`}
                 >
@@ -103,34 +100,28 @@ export function LanguageSelector({
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs flex-shrink-0 transition-colors ${
                         isSelected
-                          ? 'bg-[#166534] text-[#c4f042]'
+                          ? 'bg-[#26483E] text-[#EAE7DD]'
                           : 'bg-gray-100 text-gray-600 group-hover:bg-emerald-100 group-hover:text-emerald-800'
                       }`}
-                    >
-                      {lang.code.toUpperCase()}
-                    </div>
+                    ><LocalizedText source={" {0} "} values={[lang.code.toUpperCase()]} /></div>
                     <div className="min-w-0">
                       <div className="text-sm font-semibold tracking-tight leading-tight flex items-center gap-1.5">
-                        <span>{lang.nativeName}</span>
+                        <span><LocalizedText source={"{0}"} values={[lang.nativeName]} /></span>
                         {lang.code === 'en' ? (
-                          <span className="text-[10px] text-gray-400 font-normal">({lang.name})</span>
+                          <span className="text-[10px] text-gray-400 font-normal"><LocalizedText source={"({0})"} values={[lang.name]} /></span>
                         ) : null}
                       </div>
-                      <div className="text-[11px] text-gray-400 font-light truncate">
-                        {lang.region}
-                      </div>
+                      <div className="text-[11px] text-gray-400 font-light truncate"><LocalizedText source={" {0} "} values={[lang.region]} /></div>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-1.5 flex-shrink-0 pl-2">
                     {isSelected ? (
-                      <span className="w-5 h-5 rounded-full bg-[#166534] text-white flex items-center justify-center shadow-2xs">
+                      <span className="w-5 h-5 rounded-full bg-[#26483E] text-white flex items-center justify-center shadow-2xs">
                         <Check className="w-3 h-3 stroke-[3]" />
                       </span>
                     ) : (
-                      <span className="text-[10px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {lang.greeting}
-                      </span>
+                      <span className="text-[10px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"><LocalizedText source={" {0} "} values={[lang.greeting]} /></span>
                     )}
                   </div>
                 </button>
@@ -138,12 +129,10 @@ export function LanguageSelector({
             })}
           </div>
 
-          <div className="mt-1 pt-2 border-t border-gray-100 px-3 py-1.5 bg-[#fbfdfb] rounded-xl flex items-center justify-between text-[10px] text-gray-500">
+          <div className="mt-1 pt-2 border-t border-gray-100 px-3 py-1.5 bg-[#EAE7DD] rounded-xl flex items-center justify-between text-[10px] text-gray-500">
             <span className="flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-[#166534]" />
-              Instant Translation
-            </span>
-            <span className="font-mono text-gray-400">AgriOptimaᴬᴵ i18n</span>
+              <Sparkles className="w-3 h-3 text-[#26483E]" /><LocalizedText source={" Instant Translation "} /></span>
+            <span className="font-mono text-gray-400"><LocalizedText source={"AgriOptimaᴬᴵ i18n"} /></span>
           </div>
         </div>
       )}

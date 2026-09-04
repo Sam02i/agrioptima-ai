@@ -1,3 +1,4 @@
+import { LocalizedText } from "../../i18n/LocalizedText";
 import { useRef } from 'react';
 import { Zap, CheckCircle2, ClipboardList, CircleDollarSign, ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 import { CAPABILITIES } from '../data/content';
@@ -23,7 +24,7 @@ export function CoreCapabilities({ onSelectCapability }: CoreCapabilitiesProps) 
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'zap':
-        return <Zap className="w-6 h-6 text-[#c4f042]" />;
+        return <Zap className="w-6 h-6 text-[#EAE7DD]" />;
       case 'check-circle':
         return <CheckCircle2 className="w-6 h-6 text-blue-300" />;
       case 'clipboard-list':
@@ -31,16 +32,14 @@ export function CoreCapabilities({ onSelectCapability }: CoreCapabilitiesProps) 
       case 'badge-dollar-sign':
         return <CircleDollarSign className="w-6 h-6 text-purple-300" />;
       default:
-        return <Zap className="w-6 h-6 text-[#c4f042]" />;
+        return <Zap className="w-6 h-6 text-[#EAE7DD]" />;
     }
   };
 
   return (
     <div className="w-full relative mt-8 lg:mt-12" id="core-capabilities-section">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-serif font-medium text-xl tracking-tight flex items-center gap-2">
-          Core Capabilities
-        </h3>
+        <h3 className="text-white font-serif font-medium text-xl tracking-tight flex items-center gap-2"><LocalizedText source={" Core Capabilities "} /></h3>
         <div className="flex space-x-2">
           <button
             id="btn-capabilities-prev"
@@ -77,24 +76,18 @@ export function CoreCapabilities({ onSelectCapability }: CoreCapabilitiesProps) 
               <div className="flex justify-between items-start mb-5">
                 <div
                   className={`w-12 h-12 rounded-xl ${cap.badgeColor} flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}
-                >
-                  {getIcon(cap.iconName)}
-                </div>
+                ><LocalizedText source={" {0} "} values={[getIcon(cap.iconName)]} /></div>
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white/60 hover:text-white">
                   <ArrowUpRight className="w-4 h-4" />
                 </span>
               </div>
-              <h4 className="text-lg font-serif font-semibold text-white mb-2 group-hover:text-[#c4f042] transition-colors">
-                {cap.title}
-              </h4>
-              <p className="text-white/75 text-sm font-light leading-relaxed">
-                {cap.description}
-              </p>
+              <h4 className="text-lg font-serif font-semibold text-white mb-2 group-hover:text-[#EAE7DD] transition-colors"><LocalizedText source={" {0} "} values={[cap.title]} /></h4>
+              <p className="text-white/75 text-sm font-light leading-relaxed"><LocalizedText source={" {0} "} values={[cap.description]} /></p>
             </div>
 
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-white/60 font-mono">
-              <span>{cap.details?.metrics}</span>
-              <span className="text-[#c4f042] group-hover:underline">Explore →</span>
+              <span><LocalizedText source={"{0}"} values={[cap.details?.metrics]} /></span>
+              <span className="text-[#EAE7DD] group-hover:underline"><LocalizedText source={"Explore →"} /></span>
             </div>
           </div>
         ))}

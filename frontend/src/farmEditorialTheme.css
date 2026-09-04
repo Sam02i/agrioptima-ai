@@ -1,3 +1,55 @@
+/* Full-bleed farming photography, with stable text above the crossfade. */
+#hero.slideshow-photo-hero { position: relative; isolation: isolate; overflow: hidden; min-height: 100svh; display: flex; align-items: center; padding: 155px 7vw 110px; background: #26483E; }
+.slideshow-photo-hero .hero-slides { position: absolute; inset: 96px 0 0; z-index: -2; }
+#hero.slideshow-photo-hero .hero-photo-frame { position: absolute; inset: 0; opacity: 0; transition: opacity .8s ease-in-out; }
+#hero.slideshow-photo-hero .hero-photo-frame.is-active { opacity: 1; }
+#hero.slideshow-photo-hero .hero-slides img { position: absolute; width: 100%; height: 100%; object-position: center; animation: none; }
+#hero.slideshow-photo-hero .hero-slides img.hero-photo-complete { object-fit: cover; object-position: center top; }
+.slideshow-photo-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(38,72,62,.78), rgba(38,72,62,.38) 55%, rgba(38,72,62,.12)); }
+.slideshow-photo-hero .editorial-hero-layout { display: block; width: 100%; max-width: 1400px; }
+.slideshow-photo-hero .editorial-hero-copy { max-width: 720px; }
+#hero.slideshow-photo-hero h1 { font-size: clamp(46px, 6vw, 88px); line-height: 1.06; }
+#hero.slideshow-photo-hero p { max-width: 570px; }
+.hero-slideshow-control { position: absolute; bottom: 30px; right: 7vw; display: flex; gap: 18px; align-items: center; padding: 12px 20px; border: 1px solid #EAE7DD70; background: #26483E70; color: #EAE7DD; border-radius: 30px; cursor: pointer; backdrop-filter: blur(10px); }
+.hero-slideshow-control:focus-visible { outline: 3px solid #EAE7DD; outline-offset: 4px; }
+@media (max-width: 600px) {
+  #hero.slideshow-photo-hero { padding: 125px 6vw 100px; }
+  .slideshow-photo-hero .hero-slides { top: 76px; }
+}
+@media (prefers-reduced-motion: reduce) { #hero.slideshow-photo-hero .hero-photo-frame { transition: none; } }
+/* Editorial homepage photo stack. Scoped to leave the portals unchanged. */
+#hero.editorial-photo-hero { background: #EAE7DD; padding: 155px 5vw 95px; min-height: 850px; overflow: hidden; }
+.editorial-hero-layout { max-width: 1440px; margin: auto; display: grid; grid-template-columns: 1fr 1.05fr; gap: 4vw; align-items: center; }
+#hero.editorial-photo-hero h1, #hero.editorial-photo-hero h1 span { color: #26483E !important; text-shadow: none; }
+#hero.editorial-photo-hero h1 { font-size: clamp(48px, 5.8vw, 88px); line-height: 1.02; letter-spacing: -.025em; }
+#hero.editorial-photo-hero p { color: #26483E !important; font-size: 18px; max-width: 490px; }
+#hero.editorial-photo-hero #hero-badge { background: transparent !important; border: 0; color: #26483E; padding-left: 0; box-shadow: none; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+#hero.editorial-photo-hero #hero-badge > span:first-child { display: none; }
+#hero.editorial-photo-hero #btn-hero-get-started { background: #26483E !important; color: #EAE7DD !important; border-radius: 3px !important; padding: 19px 32px; }
+.farm-photo-stack { position: relative; height: 610px; isolation: isolate; }
+.farm-photo { position: absolute; margin: 0; padding: 9px; background: #EAE7DD; box-shadow: 0 25px 50px #26483E29; overflow: hidden; transition: transform .55s ease, box-shadow .55s ease; animation: photoStackEnter 1s both; }
+#hero .farm-photo img { width: 100%; height: 100%; object-fit: cover; animation: none; }
+.farm-photo-plough { width: 62%; height: 420px; top: 14px; left: 0; transform: rotate(-11deg); --photo-angle: -11deg; }
+.farm-photo-plough img { object-position: center 70%; }
+.farm-photo-produce { width: 48%; height: 255px; right: -2%; top: 36px; transform: rotate(10deg); --photo-angle: 10deg; animation-delay: .12s; }
+.farm-photo-rice { width: 62%; height: 435px; top: 145px; left: 29%; transform: rotate(5deg); --photo-angle: 5deg; animation-delay: .24s; }
+.farm-photo:hover { transform: rotate(0deg) translateY(-8px); z-index: 4; box-shadow: 0 35px 65px #26483E3d; }
+.photo-stack-mark { position: absolute; bottom: 0; left: 4%; font-size: 11px; letter-spacing: .14em; color: #26483E; }
+@keyframes photoStackEnter { from { opacity: 0; translate: 0 36px; rotate: -4deg; } to { opacity: 1; translate: 0 0; rotate: 0deg; } }
+@media (max-width: 900px) {
+  #hero.editorial-photo-hero { padding: 125px 7vw 65px; min-height: auto; }
+  .editorial-hero-layout { grid-template-columns: 1fr; gap: 40px; }
+  .editorial-hero-copy { max-width: 650px; }
+  .farm-photo-stack { max-width: 580px; width: 100%; margin: auto; }
+}
+@media (max-width: 540px) {
+  .farm-photo-stack { height: 410px; }
+  .farm-photo-plough { height: 270px; }
+  .farm-photo-produce { height: 170px; }
+  .farm-photo-rice { height: 290px; top: 100px; }
+  .farm-photo { padding: 6px; }
+}
+@media (prefers-reduced-motion: reduce) { .farm-photo { animation: none; transition: none; } }
 /* Warm landscape-glass system for every AgriOptima workspace. */
 @font-face {
   font-family: 'Londrina Solid';
@@ -8,22 +60,22 @@
 }
 
 :root {
-  --forest: #4d2635;
-  --forest-2: #67384a;
-  --lime: #e5b66d;
-  --ivory: #f6efe4;
-  --paper: #fffaf1;
-  --ink: #33262a;
-  --line: rgba(89, 62, 66, .18);
-  --farm-wine: #4d2635;
-  --farm-sage: #a8624c;
-  --farm-sage-soft: #efd6b0;
-  --farm-cream: #f6efe4;
-  --farm-paper: #fffaf1;
-  --farm-charcoal: #33262a;
-  --farm-clay: #b85f47;
-  --farm-gold: #dca957;
-  --farm-blue: #607985;
+  --forest: #26483E;
+  --forest-2: #26483E;
+  --lime: #EAE7DD;
+  --ivory: #EAE7DD;
+  --paper: #EAE7DD;
+  --ink: #26483E;
+  --line: rgba(38,72,62, .18);
+  --farm-wine: #26483E;
+  --farm-sage: #26483E;
+  --farm-sage-soft: #EAE7DD;
+  --farm-cream: #EAE7DD;
+  --farm-paper: #EAE7DD;
+  --farm-charcoal: #26483E;
+  --farm-clay: #26483E;
+  --farm-gold: #EAE7DD;
+  --farm-blue: #26483E;
 }
 
 body {
@@ -32,9 +84,9 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-::selection { background: var(--farm-wine); color: #fff; }
+::selection { background: var(--farm-wine); color: #EAE7DD; }
 ::-webkit-scrollbar-track { background: var(--farm-cream); }
-::-webkit-scrollbar-thumb { background: #a58c79; }
+::-webkit-scrollbar-thumb { background: #26483E; }
 
 .font-serif,
 h1, h2,
@@ -63,14 +115,14 @@ h1, h2,
 
 /* Landing page: creamy canvas, ink-like headings and simple farm-sign buttons. */
 #root > div,
-.min-h-screen.bg-\[\#fafafa\] { background-color: var(--farm-cream) !important; }
-#main-header > div { border-color: rgba(91, 42, 57, .16) !important; }
+.min-h-screen.bg-\[\#EAE7DD\] { background-color: var(--farm-cream) !important; }
+#main-header > div { border-color: rgba(38,72,62, .16) !important; }
 #header-logo { color: var(--farm-wine) !important; }
-#desktop-nav a { color: #5f6254 !important; }
+#desktop-nav a { color: #26483E !important; }
 #desktop-nav a:hover { color: var(--farm-wine) !important; }
 #btn-get-started-header {
   background: var(--farm-wine) !important;
-  color: #fff !important;
+  color: #EAE7DD !important;
   border-radius: 4px !important;
   box-shadow: none !important;
   text-transform: uppercase;
@@ -80,10 +132,10 @@ h1, h2,
 
 main section { scroll-margin-top: 80px; }
 main section h1, main section h2 { color: var(--farm-wine) !important; }
-main section p { color: #636556; }
-#hero h1, #hero h1 span { color: #fffdf7 !important; }
-#hero p { color: rgba(255, 253, 247, .86) !important; }
-#hero-badge { border-radius: 4px !important; background: rgba(91, 42, 57, .72) !important; }
+main section p { color: #26483E; }
+#hero h1, #hero h1 span { color: #EAE7DD !important; }
+#hero p { color: rgba(234,231,221, .86) !important; }
+#hero-badge { border-radius: 4px !important; background: rgba(38,72,62, .72) !important; }
 #hero-badge > span:first-child { background: var(--farm-sage-soft) !important; box-shadow: none !important; }
 #btn-hero-get-started {
   background: var(--farm-sage-soft) !important;
@@ -108,7 +160,7 @@ footer button {
 .farmer-sidebar nav > button.active { box-shadow: inset 3px 0 var(--farm-sage-soft) !important; }
 .buyer-sidebar nav em,
 .buyer-brand > span { background: var(--farm-sage-soft) !important; color: var(--farm-wine) !important; }
-.buyer-topbar { background: rgba(243, 240, 231, .92) !important; border-color: var(--line) !important; }
+.buyer-topbar { background: rgba(234,231,221, .92) !important; border-color: var(--line) !important; }
 .buyer-heading > div > span, .panel-kicker { color: var(--farm-sage) !important; }
 .buyer-heading h1 { color: var(--farm-wine) !important; }
 
@@ -128,11 +180,11 @@ footer button {
   background: var(--farm-paper) !important;
   border-color: var(--line) !important;
   border-radius: 8px !important;
-  box-shadow: 0 4px 0 rgba(91, 42, 57, .07) !important;
+  box-shadow: 0 4px 0 rgba(38,72,62, .07) !important;
 }
 
 .buyer-hero {
-  background: linear-gradient(125deg, var(--farm-sage-soft), #eee5d6) !important;
+  background: linear-gradient(125deg, var(--farm-sage-soft), #EAE7DD) !important;
   border: 0 !important;
   border-radius: 8px !important;
 }
@@ -141,7 +193,7 @@ footer button {
 .farmer-welcome,
 .today-hero,
 .soil-source { background: var(--farm-wine) !important; border-radius: 8px !important; }
-.farmer-welcome h2, .today-hero h2 { color: #fff !important; }
+.farmer-welcome h2, .today-hero h2 { color: #EAE7DD !important; }
 .farmer-welcome h2 em, .today-hero h2 em { color: var(--farm-sage-soft) !important; }
 
 .lime-button,
@@ -152,7 +204,7 @@ footer button {
 .mandi-price-summary button {
   background: var(--farm-wine) !important;
   border-color: var(--farm-wine) !important;
-  color: #fff !important;
+  color: #EAE7DD !important;
   border-radius: 4px !important;
   text-transform: uppercase;
   letter-spacing: .055em;
@@ -166,8 +218,8 @@ footer button {
 .crop-tag,
 .listing-message,
 .crop-choice-note,
-.assisted-use { background: rgba(226, 213, 191, .68) !important; color: var(--farm-wine) !important; }
-.soil-score { background: conic-gradient(var(--farm-sage) 0 78%, #e4e1d7 78%) !important; }
+.assisted-use { background: rgba(234,231,221, .68) !important; color: var(--farm-wine) !important; }
+.soil-score { background: conic-gradient(var(--farm-sage) 0 78%, #EAE7DD 78%) !important; }
 .nutrient-track i,
 .order-progress i { background: var(--farm-sage) !important; }
 
@@ -181,22 +233,22 @@ button:hover:not(:disabled) { transform: translateY(-1px); }
 button:active:not(:disabled) { transform: translateY(0); }
 
 .global-language-dock {
-  background: rgba(255, 253, 247, .94) !important;
+  background: rgba(234,231,221, .94) !important;
   border-color: var(--line) !important;
   border-radius: 6px !important;
 }
 
 /* Remove legacy green tokens that pre-date this theme. */
-.text-\[\#1b4332\], .text-\[\#166534\], .text-\[\#15803d\],
-.text-\[\#14532d\], .text-\[\#173f2b\], .text-\[\#2d5a3d\] { color: var(--farm-wine) !important; }
-.bg-\[\#1b4332\], .bg-\[\#166534\], .bg-\[\#15803d\],
-.bg-\[\#14532d\], .bg-\[\#173f2b\], .bg-\[\#153f2e\], .bg-\[\#2d5a3d\] { background-color: var(--farm-wine) !important; }
-.bg-\[\#c4f042\], .bg-\[\#d5f23f\], .bg-\[\#4ade80\] { background-color: #e2d5bf !important; }
-.text-\[\#c4f042\], .text-\[\#d5f23f\], .text-\[\#4ade80\] { color: #e2d5bf !important; }
-.border-\[\#1b4332\], .border-\[\#166534\], .border-\[\#173f2b\] { border-color: var(--farm-wine) !important; }
+.text-\[\#26483E\], .text-\[\#26483E\], .text-\[\#26483E\],
+.text-\[\#26483E\], .text-\[\#26483E\], .text-\[\#26483E\] { color: var(--farm-wine) !important; }
+.bg-\[\#26483E\], .bg-\[\#26483E\], .bg-\[\#26483E\],
+.bg-\[\#26483E\], .bg-\[\#26483E\], .bg-\[\#26483E\], .bg-\[\#26483E\] { background-color: var(--farm-wine) !important; }
+.bg-\[\#EAE7DD\], .bg-\[\#EAE7DD\], .bg-\[\#EAE7DD\] { background-color: #EAE7DD !important; }
+.text-\[\#EAE7DD\], .text-\[\#EAE7DD\], .text-\[\#EAE7DD\] { color: #EAE7DD !important; }
+.border-\[\#26483E\], .border-\[\#26483E\], .border-\[\#26483E\] { border-color: var(--farm-wine) !important; }
 .text-green-800, .text-green-700, .text-emerald-800, .text-emerald-700 { color: var(--farm-wine) !important; }
-.bg-green-50, .bg-green-100, .bg-emerald-50, .bg-emerald-100 { background-color: #eee5d6 !important; }
-.brand-ai { color: #a58c79 !important; }
+.bg-green-50, .bg-green-100, .bg-emerald-50, .bg-emerald-100 { background-color: #EAE7DD !important; }
+.brand-ai { color: #26483E !important; }
 .global-language-dock + button,
 button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 
@@ -212,7 +264,7 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 .today-grid li.done,
 .simple-soil-status article > span,
 .soil-card-upload {
-  background: #eee5d6 !important;
+  background: #EAE7DD !important;
   color: var(--farm-wine) !important;
 }
 .model-demo-grid i,
@@ -239,8 +291,8 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
   position: relative;
   isolation: isolate;
   background-image:
-    linear-gradient(120deg, rgba(35, 24, 27, .58), rgba(67, 43, 38, .28)),
-    url('./assets/theme/farm-valley.webp') !important;
+    linear-gradient(120deg, rgba(234,231,221, .12), rgba(234,231,221, .2)),
+    url('./assets/theme/farm-illustration.png') !important;
   background-size: cover !important;
   background-position: center !important;
   background-attachment: fixed !important;
@@ -252,7 +304,7 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
   position: fixed;
   z-index: -1;
   inset: 0;
-  background: linear-gradient(180deg, rgba(247, 239, 226, .2), rgba(31, 21, 23, .18));
+  background: linear-gradient(180deg, rgba(234,231,221, .12), rgba(234,231,221, .24));
   pointer-events: none;
 }
 .buyer-main,
@@ -261,39 +313,39 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 .buyer-content { padding-top: 42px !important; }
 
 .buyer-topbar {
-  background: rgba(255, 250, 241, .72) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, .55) !important;
-  box-shadow: 0 12px 35px rgba(38, 24, 26, .12);
+  background: rgba(234,231,221, .72) !important;
+  border-bottom: 1px solid rgba(234,231,221, .55) !important;
+  box-shadow: 0 12px 35px rgba(38,72,62, .12);
   backdrop-filter: blur(22px) saturate(125%) !important;
   -webkit-backdrop-filter: blur(22px) saturate(125%) !important;
 }
 .buyer-sidebar,
 .farmer-sidebar,
 .app > .sidebar {
-  background: linear-gradient(180deg, rgba(68, 30, 45, .94), rgba(42, 26, 31, .9)) !important;
-  border-right: 1px solid rgba(255, 255, 255, .18);
-  box-shadow: 18px 0 55px rgba(20, 12, 15, .24);
+  background: linear-gradient(180deg, rgba(38,72,62, .94), rgba(38,72,62, .9)) !important;
+  border-right: 1px solid rgba(234,231,221, .18);
+  box-shadow: 18px 0 55px rgba(38,72,62, .24);
   backdrop-filter: blur(24px) saturate(120%);
   -webkit-backdrop-filter: blur(24px) saturate(120%);
 }
 
 /* Buyer intelligence uses its own component namespace. */
 .app .topbar {
-  background: rgba(255, 250, 241, .74) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, .6) !important;
-  box-shadow: 0 12px 35px rgba(38, 24, 26, .12);
+  background: rgba(234,231,221, .74) !important;
+  border-bottom: 1px solid rgba(234,231,221, .6) !important;
+  box-shadow: 0 12px 35px rgba(38,72,62, .12);
   backdrop-filter: blur(22px) saturate(125%) !important;
 }
 .app .opening-hero {
-  background: linear-gradient(130deg, rgba(77, 38, 53, .95), rgba(142, 73, 64, .86)) !important;
-  border: 1px solid rgba(255, 255, 255, .24) !important;
+  background: linear-gradient(130deg, rgba(38,72,62, .95), rgba(38,72,62, .86)) !important;
+  border: 1px solid rgba(234,231,221, .24) !important;
   border-radius: 24px !important;
-  box-shadow: 0 24px 70px rgba(38, 20, 26, .28) !important;
+  box-shadow: 0 24px 70px rgba(38,72,62, .28) !important;
   backdrop-filter: blur(18px);
 }
 .app .opening-hero h1,
 .app .opening-hero h2,
-.app .opening-hero h1 em { color: #fffaf1 !important; }
+.app .opening-hero h1 em { color: #EAE7DD !important; }
 .app .opening-hero h1,
 .app .opening-hero h2,
 .app .brand,
@@ -310,51 +362,51 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 .app .panel,
 .app .market-strip,
 .app [class*='-card']:not(.workspace-card) {
-  background-color: rgba(255, 250, 241, .84) !important;
-  border-color: rgba(255, 255, 255, .66) !important;
-  box-shadow: 0 18px 48px rgba(40, 25, 27, .14), inset 0 1px rgba(255,255,255,.72) !important;
+  background-color: rgba(234,231,221, .84) !important;
+  border-color: rgba(234,231,221, .66) !important;
+  box-shadow: 0 18px 48px rgba(38,72,62, .14), inset 0 1px rgba(234,231,221,.72) !important;
   backdrop-filter: blur(18px) saturate(118%);
 }
 .app .page-heading h1,
 .app .page-heading p,
-.app .page-heading > div > span { color: #fffaf1 !important; text-shadow: 0 2px 16px rgba(28,16,20,.45); }
+.app .page-heading > div > span { color: #EAE7DD !important; text-shadow: 0 2px 16px rgba(38,72,62,.45); }
 .app .sidebar nav > button.active,
-.app .sidebar nav > button:hover { background: rgba(184, 95, 71, .4) !important; }
-.app .sidebar nav > button.active { box-shadow: inset 3px 0 #e5b66d !important; }
-.app .sidebar nav em { background: #e5b66d !important; color: var(--farm-wine) !important; }
+.app .sidebar nav > button:hover { background: rgba(38,72,62, .4) !important; }
+.app .sidebar nav > button.active { box-shadow: inset 3px 0 #EAE7DD !important; }
+.app .sidebar nav em { background: #EAE7DD !important; color: var(--farm-wine) !important; }
 .app .brand > span,
-.app .signal-grade { background: #e5b66d !important; color: var(--farm-wine) !important; box-shadow: 0 0 0 8px rgba(229,182,109,.18) !important; }
-.app .credit-mini { background: rgba(255,255,255,.09) !important; border-color: rgba(255,255,255,.16) !important; }
+.app .signal-grade { background: #EAE7DD !important; color: var(--farm-wine) !important; box-shadow: 0 0 0 8px rgba(234,231,221,.18) !important; }
+.app .credit-mini { background: rgba(234,231,221,.09) !important; border-color: rgba(234,231,221,.16) !important; }
 .app .credit-mini > div:first-child,
-.app .hero-label { color: #f0c986 !important; }
-.app .credit-mini [data-slot='progress-indicator'] { background: #e5b66d !important; }
+.app .hero-label { color: #EAE7DD !important; }
+.app .credit-mini [data-slot='progress-indicator'] { background: #EAE7DD !important; }
 .app .signal-head > span,
 .app .opening-ticker > span,
 .app .opening-ticker > b { color: var(--farm-wine) !important; }
 .app .signal-head i,
-.app .opening-ticker i { background: var(--farm-clay) !important; box-shadow: 0 0 0 4px rgba(184,95,71,.18) !important; }
+.app .opening-ticker i { background: var(--farm-clay) !important; box-shadow: 0 0 0 4px rgba(38,72,62,.18) !important; }
 .app .avatar,
 .app .opportunity,
 .app .node { background: var(--farm-wine) !important; }
 .app .green,
-.app .lime { background: #f1dfc4 !important; color: var(--farm-wine) !important; }
+.app .lime { background: #EAE7DD !important; color: var(--farm-wine) !important; }
 .app .now { background: var(--farm-clay) !important; }
-.app .ai { background: rgba(229,182,109,.14) !important; border-color: rgba(229,182,109,.3) !important; color: #f0c986 !important; }
+.app .ai { background: rgba(234,231,221,.14) !important; border-color: rgba(234,231,221,.3) !important; color: #EAE7DD !important; }
 .app .opportunity h2 em,
 .app .hero-proof svg,
-.app .node svg { color: #e5b66d !important; }
-.app .node.hub { background: #e5b66d !important; color: var(--farm-wine) !important; }
+.app .node svg { color: #EAE7DD !important; }
+.app .node.hub { background: #EAE7DD !important; color: var(--farm-wine) !important; }
 .app .node.hub svg,
 .app .node.hub small { color: var(--farm-wine) !important; }
-.app .r1, .app .r2, .app .r3 { background: rgba(229,182,109,.42) !important; }
+.app .r1, .app .r2, .app .r3 { background: rgba(234,231,221,.42) !important; }
 .app .signal-main div > span,
 .app .market-signal > button,
 .app .buyer-data-switch,
 .app .mobile-menu,
 .app .bell { color: var(--farm-wine) !important; }
-.app .hero-label { background: rgba(229,182,109,.12) !important; border-color: rgba(229,182,109,.28) !important; }
+.app .hero-label { background: rgba(234,231,221,.12) !important; border-color: rgba(234,231,221,.28) !important; }
 .app .hero-proof,
-.app .hero-proof * { color: #f0d6ac !important; }
+.app .hero-proof * { color: #EAE7DD !important; }
 .app button[class*='primary'],
 .app .primary-button,
 .app .opening-actions button:first-child { background: var(--farm-clay) !important; border-color: var(--farm-clay) !important; color: white !important; }
@@ -362,23 +414,23 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 .today-hero > div > span,
 .today-section-head > span,
 .today-grid article > span,
-.today-hero aside i { color: #efc57f !important; }
-.today-hero aside i { background: rgba(229,182,109,.14) !important; }
+.today-hero aside i { color: #EAE7DD !important; }
+.today-hero aside i { background: rgba(234,231,221,.14) !important; }
 .farmer-welcome p,
-.today-hero p { color: rgba(255,250,241,.78) !important; }
+.today-hero p { color: rgba(234,231,221,.78) !important; }
 .workspace-card,
 .sidebar-status,
 .buyer-credit-mini {
-  background: rgba(255, 255, 255, .09) !important;
-  border-color: rgba(255, 255, 255, .16) !important;
-  box-shadow: inset 0 1px rgba(255, 255, 255, .09);
+  background: rgba(234,231,221, .09) !important;
+  border-color: rgba(234,231,221, .16) !important;
+  box-shadow: inset 0 1px rgba(234,231,221, .09);
 }
 
 .buyer-heading,
 .buyer-heading h1,
 .buyer-heading p,
-.buyer-heading > div > span { color: #fffaf1 !important; text-shadow: 0 2px 18px rgba(24, 13, 17, .5); }
-.buyer-heading > button { background: rgba(255, 250, 241, .82) !important; }
+.buyer-heading > div > span { color: var(--farm-wine) !important; text-shadow: none; }
+.buyer-heading > button { background: rgba(234,231,221, .82) !important; }
 
 /* Frosted surfaces shared by dashboards and overlays. */
 .demo-panel,
@@ -399,10 +451,10 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 .farmer-tracking-overlay > section,
 .profile-overlay aside,
 .account-access-panel {
-  background: rgba(255, 250, 241, .82) !important;
-  border: 1px solid rgba(255, 255, 255, .64) !important;
+  background: rgba(234,231,221, .82) !important;
+  border: 1px solid rgba(234,231,221, .64) !important;
   border-radius: 18px !important;
-  box-shadow: 0 18px 55px rgba(40, 25, 27, .16), inset 0 1px rgba(255, 255, 255, .72) !important;
+  box-shadow: 0 18px 55px rgba(38,72,62, .16), inset 0 1px rgba(234,231,221, .72) !important;
   backdrop-filter: blur(20px) saturate(120%);
   -webkit-backdrop-filter: blur(20px) saturate(120%);
 }
@@ -410,16 +462,16 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 .buyer-hero,
 .farmer-welcome,
 .today-hero {
-  background: linear-gradient(130deg, rgba(77, 38, 53, .94), rgba(126, 67, 65, .85)) !important;
-  border: 1px solid rgba(255, 255, 255, .22) !important;
+  background: linear-gradient(130deg, rgba(38,72,62, .94), rgba(38,72,62, .85)) !important;
+  border: 1px solid rgba(234,231,221, .22) !important;
   border-radius: 24px !important;
-  box-shadow: 0 24px 70px rgba(38, 20, 26, .25), inset 0 1px rgba(255, 255, 255, .14) !important;
+  box-shadow: 0 24px 70px rgba(38,72,62, .25), inset 0 1px rgba(234,231,221, .14) !important;
   backdrop-filter: blur(18px);
 }
 .market-signal-card {
-  background: rgba(255, 250, 241, .12) !important;
-  border: 1px solid rgba(255, 255, 255, .2) !important;
-  box-shadow: inset 0 1px rgba(255, 255, 255, .12) !important;
+  background: rgba(234,231,221, .12) !important;
+  border: 1px solid rgba(234,231,221, .2) !important;
+  box-shadow: inset 0 1px rgba(234,231,221, .12) !important;
   backdrop-filter: blur(18px);
 }
 
@@ -431,12 +483,12 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 .crop-choice-note,
 .assisted-use,
 .today-grid li.done,
-.passport-checks span { background: #f2dfc4 !important; color: var(--farm-wine) !important; }
+.passport-checks span { background: #EAE7DD !important; color: var(--farm-wine) !important; }
 .lime-button,
 .publish-listing,
 .mandi-price-summary button,
 .account-access-trigger { background: var(--farm-clay) !important; border-color: var(--farm-clay) !important; color: white !important; }
-.soil-score { background: conic-gradient(var(--farm-gold) 0 78%, rgba(255,255,255,.48) 78%) !important; }
+.soil-score { background: conic-gradient(var(--farm-gold) 0 78%, rgba(234,231,221,.48) 78%) !important; }
 .nutrient-track i,
 .order-progress i,
 .buyer-credit-track i,
@@ -471,30 +523,30 @@ button[aria-label='Secure sign in'] { background: var(--farm-wine) !important; }
 
 button {
   border-radius: 12px !important;
-  box-shadow: 0 8px 20px rgba(53, 30, 34, .08);
+  box-shadow: 0 8px 20px rgba(38,72,62, .08);
 }
 input, select, textarea, .global-search {
-  background: rgba(255, 252, 246, .76) !important;
-  border-color: rgba(91, 59, 62, .2) !important;
-  box-shadow: inset 0 1px 2px rgba(61, 38, 40, .04);
+  background: rgba(234,231,221, .76) !important;
+  border-color: rgba(38,72,62, .2) !important;
+  box-shadow: inset 0 1px 2px rgba(38,72,62, .04);
   backdrop-filter: blur(12px);
 }
 
 /* Landing sections retain generous, warm editorial spacing. */
-.min-h-screen.bg-\[\#fafafa\] {
+.min-h-screen.bg-\[\#EAE7DD\] {
   background:
-    radial-gradient(circle at 14% 28%, rgba(220, 169, 87, .16), transparent 28%),
-    radial-gradient(circle at 88% 66%, rgba(96, 121, 133, .12), transparent 31%),
-    #f6efe4 !important;
+    radial-gradient(circle at 14% 28%, rgba(234,231,221, .16), transparent 28%),
+    radial-gradient(circle at 88% 66%, rgba(38,72,62, .12), transparent 31%),
+    #EAE7DD !important;
 }
 #main-header > div {
-  background: rgba(255, 250, 241, .76) !important;
-  border: 1px solid rgba(255, 255, 255, .62) !important;
-  box-shadow: 0 12px 36px rgba(48, 29, 32, .11) !important;
+  background: rgba(234,231,221, .76) !important;
+  border: 1px solid rgba(234,231,221, .62) !important;
+  box-shadow: 0 12px 36px rgba(38,72,62, .11) !important;
   backdrop-filter: blur(22px) saturate(125%) !important;
 }
 #btn-get-started-header,
-#btn-hero-get-started { background: var(--farm-clay) !important; color: #fff !important; }
+#btn-hero-get-started { background: var(--farm-clay) !important; color: #EAE7DD !important; }
 
 @media (max-width: 760px) {
   .buyer-app, .farmer-app { background-attachment: scroll !important; }
@@ -508,10 +560,10 @@ input, select, textarea, .global-search {
 #root [class*='text-lime-'] { color: var(--farm-clay) !important; }
 #root [class*='bg-green-'],
 #root [class*='bg-emerald-'],
-#root [class*='bg-lime-'] { background-color: #f1dfc4 !important; }
+#root [class*='bg-lime-'] { background-color: #EAE7DD !important; }
 #root [class*='border-green-'],
 #root [class*='border-emerald-'],
-#root [class*='border-lime-'] { border-color: rgba(184,95,71,.32) !important; }
+#root [class*='border-lime-'] { border-color: rgba(38,72,62,.32) !important; }
 #root [class*='from-green-'],
 #root [class*='to-green-'],
 #root [class*='from-emerald-'],
@@ -520,15 +572,15 @@ input, select, textarea, .global-search {
 #root [class*='to-lime-'] { background-image: linear-gradient(135deg, var(--farm-clay), var(--farm-gold)) !important; }
 #root [class*='shadow-green-'],
 #root [class*='shadow-emerald-'],
-#root [class*='shadow-lime-'] { --tw-shadow-color: rgba(77,38,53,.2) !important; }
+#root [class*='shadow-lime-'] { --tw-shadow-color: rgba(38,72,62,.2) !important; }
 
 /* The buyer workspace lives in a shadow root, so repeat semantic utility resets there. */
 .app [class*='green'],
 .app [class*='lime'],
-.app [class*='emerald'] { color: var(--farm-wine) !important; border-color: rgba(184,95,71,.3) !important; }
+.app [class*='emerald'] { color: var(--farm-wine) !important; border-color: rgba(38,72,62,.3) !important; }
 .app [class*='green']:not(svg),
 .app [class*='lime']:not(svg),
-.app [class*='emerald']:not(svg) { background-color: #f1dfc4 !important; }
+.app [class*='emerald']:not(svg) { background-color: #EAE7DD !important; }
 
 /* A distinct, quiet motion language for the portals. */
 @keyframes workspaceDrift {
@@ -580,7 +632,7 @@ input, select, textarea, .global-search {
   left: -28%;
   width: 18%;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(255,248,230,.55), transparent);
+  background: linear-gradient(90deg, transparent, rgba(234,231,221,.55), transparent);
   animation: sheenTravel 8s ease-in-out infinite 1.2s;
 }
 .buyer-hero > *,
@@ -615,8 +667,8 @@ input, select, textarea, .global-search {
 .app article:hover,
 .app [class*='-card']:hover {
   transform: translateY(-5px);
-  border-color: rgba(229,182,109,.62) !important;
-  box-shadow: 0 24px 62px rgba(39,23,27,.22), inset 0 1px rgba(255,255,255,.8) !important;
+  border-color: rgba(234,231,221,.62) !important;
+  box-shadow: 0 24px 62px rgba(38,72,62,.22), inset 0 1px rgba(234,231,221,.8) !important;
 }
 .global-language-dock,
 .account-access-trigger { animation: softFloat 4.5s ease-in-out infinite; }
@@ -629,4 +681,301 @@ input, select, textarea, .global-search {
   .global-language-dock, .account-access-trigger { animation: none !important; }
   #hero img { animation: none !important; }
   .buyer-hero::after, .farmer-welcome::after, .today-hero::after, .app .opening-hero::after { display: none; }
+}
+
+/* Final shared palette, also injected into the buyer shadow root. */
+:root, :host {
+  --forest: #26483E; --forest-2: #26483E; --lime: #EAE7DD;
+  --ivory: #EAE7DD; --paper: #EAE7DD; --ink: #182F28;
+  --farm-wine: #26483E; --farm-sage: #26483E; --farm-sage-soft: #EAE7DD;
+  --farm-cream: #EAE7DD; --farm-paper: #EAE7DD; --farm-charcoal: #182F28;
+  --farm-clay: #26483E; --farm-gold: #26483E; --farm-blue: #26483E;
+  --background: #EAE7DD; --foreground: #182F28; --card: #EAE7DD;
+  --card-foreground: #182F28; --popover: #EAE7DD; --popover-foreground: #182F28;
+  --primary: #26483E; --primary-foreground: #EAE7DD;
+  --secondary: #EAE7DD; --secondary-foreground: #182F28;
+  --muted: #EAE7DD; --muted-foreground: #405C51;
+  --accent: #26483E; --accent-foreground: #EAE7DD;
+  --border: #26483E55; --ring: #26483E;
+}
+body, .app, .buyer-app, .farmer-app { color: #182F28; }
+:is(#root, .app) :is([class*='text-green-'],[class*='text-emerald-'],[class*='text-blue-'],[class*='text-purple-'],[class*='text-amber-'],[class*='text-red-'],[class*='text-gray-'],[class*='text-slate-']) { color: #405C51 !important; }
+:is(#root, .app) :is([class*='bg-green-'],[class*='bg-emerald-'],[class*='bg-blue-'],[class*='bg-purple-'],[class*='bg-amber-'],[class*='bg-red-'],[class*='bg-white'],[class*='bg-gray-'],[class*='bg-slate-']) { background-color: #EAE7DD !important; }
+:is(#root, .app) :is([class*='border-green-'],[class*='border-emerald-'],[class*='border-blue-'],[class*='border-purple-'],[class*='border-gray-'],[class*='border-red-']) { border-color: #26483E66 !important; }
+input, select, textarea { accent-color: #26483E; color: #182F28 !important; background-color: #EAE7DD !important; }
+input::placeholder, textarea::placeholder { color: #51695E !important; }
+:is(.demo-panel,.listing-card,.farmer-card,.manual-listing,.my-listings,.connected-engine,.profile-overlay,.account-access-modal) { background-color: #EAE7DD !important; color: #182F28; }
+.buyer-heading, .buyer-heading h1, .buyer-heading p, .buyer-heading > div > span { color: #182F28 !important; }
+/* A dark neutral scrim keeps the natural photographs readable. */
+#hero.slideshow-photo-hero::after { background: linear-gradient(90deg, #13251FD9, #13251F66 60%, #13251F20); }
+#hero.slideshow-photo-hero h1, #hero.slideshow-photo-hero h1 span, #hero.slideshow-photo-hero p { color: #EAE7DD !important; }
+#hero #btn-hero-get-started { background: #EAE7DD !important; color: #182F28 !important; }
+button:focus-visible, a:focus-visible { outline: 2px solid #182F28; outline-offset: 4px; }
+
+/* One viewport-sized illustration, independent of page content height. */
+.buyer-app, .farmer-app, .app {
+  min-height: 100svh;
+  background-image: none !important;
+  background-color: #EAE7DD !important;
+  animation: none !important;
+}
+.buyer-app::before, .farmer-app::before, .app::before {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Purpose-built full-frame artwork: no blank source margins or distortion. */
+  background-image: linear-gradient(#EAE7DD55, #EAE7DD55), url('./assets/theme/farm-illustration-full.png') !important;
+  background-position: center, center center !important;
+  background-size: cover, cover !important;
+  background-color: #EAE7DD;
+  background-repeat: no-repeat !important;
+  pointer-events: none;
+  z-index: -1;
+}
+.app .page-heading h1, .app .page-heading p,
+.app .page-heading > div > span {
+  color: #182F28 !important;
+  text-shadow: none !important;
+}
+
+/* Explicit contrast pairs for the two landing-page callouts. */
+#root #hero #hero-badge {
+  background: #EAE7DD !important;
+  color: #182F28 !important;
+  border-color: #26483E !important;
+}
+#root #hero #hero-badge span { color: #182F28 !important; }
+#root #introduction #intro-heading {
+  background: #EAE7DD !important;
+  background-image: none !important;
+  color: #182F28 !important;
+  border-color: #26483E !important;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+#root #introduction #intro-heading span,
+#root #introduction #intro-heading svg { color: #182F28 !important; }
+
+/* Lower landing sections need explicit foreground/background pairs. */
+#root #impact { background: #26483E !important; color: #EAE7DD !important; }
+#root #impact :is(h2, h4, p, svg) { color: #EAE7DD !important; }
+#root #impact [id^='impact-stat-'] { background: transparent !important; }
+#root #impact [id^='impact-stat-']:hover { background: #EAE7DD12 !important; }
+#root #impact [id^='impact-stat-'] > p:first-child {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+#root #impact .impact-summary { background: #EAE7DD !important; color: #182F28 !important; }
+#root #impact .impact-summary :is(h4, p, span, svg) { color: #182F28 !important; }
+#root #footer { background: #EAE7DD !important; color: #182F28 !important; }
+#root #footer > div > section { background: #26483E !important; }
+#root #footer > div > section :is(h2, h3, p, span, em, svg) { color: #EAE7DD !important; }
+#root #footer > div > section article { background: #26483E !important; border-color: #EAE7DD66 !important; }
+#root #footer > div > section button,
+#root #footer > div > section button :is(span, svg) { background: #EAE7DD !important; color: #182F28 !important; }
+#root #cta-section { background: #EAE7DD !important; }
+#root #cta-section :is(h2, p, span) { color: #182F28 !important; }
+
+/* Production-oriented portal shell: less chrome, larger targets, clearer groups. */
+.buyer-content, .app .content { max-width: 1480px; width: 100%; margin-inline: auto; padding: 34px clamp(18px, 3vw, 48px) 64px !important; }
+.buyer-heading, .app .page-heading { margin-bottom: 28px !important; align-items: end; }
+.buyer-heading h1, .app .page-heading h1 { font-size: clamp(38px, 4vw, 58px) !important; line-height: 1 !important; }
+.buyer-heading p, .app .page-heading p { max-width: 680px; font-size: 15px !important; line-height: 1.55; }
+.buyer-topbar, .app .topbar { min-height: 76px !important; padding-inline: clamp(16px, 3vw, 42px) !important; }
+.global-search, .app .search { min-height: 46px; max-width: 520px !important; }
+.global-search input, .app .search input { font-size: 15px !important; }
+.buyer-sidebar, .farmer-sidebar, .app .sidebar { width: 272px !important; padding: 20px 14px !important; }
+.buyer-app, .farmer-app { grid-template-columns: 272px minmax(0, 1fr) !important; }
+.buyer-main, .farmer-main, .app .main { margin-left: 0 !important; }
+.buyer-sidebar nav, .farmer-sidebar nav, .app .sidebar nav { display: grid; gap: 5px; }
+.buyer-sidebar nav button, .farmer-sidebar nav button, .app .sidebar nav button {
+  min-height: 48px !important; padding: 11px 14px !important; border-radius: 10px !important;
+  font-size: 14px !important; line-height: 1.25; text-align: left;
+}
+.buyer-sidebar nav button svg, .farmer-sidebar nav button svg, .app .sidebar nav button svg { width: 20px !important; height: 20px !important; flex: 0 0 20px; }
+.buyer-sidebar nav button.active, .farmer-sidebar nav button.active, .app .sidebar nav button.active {
+  background: #EAE7DD !important; color: #182F28 !important; box-shadow: none !important;
+}
+.workspace-card, .app .workspace { min-height: 64px; border-radius: 12px !important; }
+.sidebar-status, .buyer-credit-mini, .app .credit-mini { border-radius: 12px !important; }
+.portal-switch button, .exact-portal-switch button, .mobile-nav, .mobile-menu,
+.buyer-topbar button, .app .topbar button, .buyer-heading > button, .app .page-heading > button {
+  min-height: 42px; min-width: 42px; font-size: 13px !important;
+}
+.demo-panel, .farmer-record-card, .soil-advisory, .manual-listing, .my-listings,
+.farmer-order-list, .comparison-panel, .app .panel, .app article { border-radius: 14px !important; box-shadow: 0 8px 28px rgba(38,72,62,.1) !important; }
+.dashboard-stats, .order-status-summary, .model-demo-grid, .engine-grid { gap: 14px !important; }
+.dashboard-stats article, .order-status-summary article { min-height: 132px; padding: 20px !important; }
+.buyer-footer { display: none !important; }
+button, select, input, textarea, a { -webkit-tap-highlight-color: transparent; }
+button:disabled, [aria-disabled='true'] { opacity: .55 !important; cursor: not-allowed !important; }
+@media (max-width: 980px) {
+  .buyer-main, .farmer-main, .app .main { margin-left: 0 !important; }
+  .buyer-sidebar, .farmer-sidebar, .app .sidebar { width: 272px !important; }
+  .buyer-topbar, .app .topbar { min-height: 68px !important; }
+  .global-search, .app .search { display: none !important; }
+  .buyer-content, .app .content { padding-top: 24px !important; }
+}
+@media (max-width: 640px) {
+  .buyer-person > div, .app .person, .buyer-person > i, .app .top-actions > svg { display: none !important; }
+  .portal-switch, .exact-portal-switch { gap: 2px !important; }
+  .buyer-heading, .app .page-heading { align-items: start !important; gap: 15px; }
+  .dashboard-stats { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .dashboard-stats article { min-height: 112px; }
+}
+
+/* Readable portal typography. Set pairs, not white-text utility overrides. */
+:is(#root .farmer-app, #root .buyer-app, .app) {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #182F28;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(p, label, small, h1, h2, h3, h4, dt, dd, th, td) {
+  color: #182F28 !important;
+  text-shadow: none !important;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(p, label, td, dd) { font-size: 15px !important; line-height: 1.55 !important; }
+:is(#root .farmer-app, #root .buyer-app, .app) :is(small, th, dt) { font-size: 13px !important; line-height: 1.5 !important; }
+:is(#root .farmer-app, #root .buyer-app, .app) :is(h2, h3, h4) {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 650 !important;
+  line-height: 1.25 !important;
+  letter-spacing: normal !important;
+  overflow-wrap: anywhere;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) h2 { font-size: clamp(23px, 2.5vw, 32px) !important; }
+:is(#root .farmer-app, #root .buyer-app, .app) h3 { font-size: 20px !important; }
+:is(#root .farmer-app, #root .buyer-app, .app) h4 { font-size: 17px !important; }
+:is(#root .farmer-app, #root .buyer-app, .app) :is(input, select, textarea) { font-size: 16px !important; line-height: 1.5; }
+:is(#root .farmer-app, #root .buyer-app, .app) :is(button, a) { font-size: 14px; line-height: 1.4; }
+/* Light surfaces must not inherit white text from nearby banners. */
+:is(#root .farmer-app, #root .buyer-app, .app) :is(.panel, .demo-panel, .listing-card, .farmer-card, .manual-listing, .my-listings, .farmer-record-card, .order-row, .metric, .stat-card, .comparison-panel, .topbar, .buyer-topbar) {
+  color: #182F28 !important;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(.panel, .demo-panel, .listing-card, .farmer-record-card, .order-row, .stat-card, .comparison-panel) :is([class*='text-white'], [class*='text-[#EAE7DD]']) { color: #182F28 !important; }
+/* Dark banners and navigation retain cream text on a solid green surface. */
+:is(#root .farmer-app, #root .buyer-app, .app) :is(.sidebar, .buyer-sidebar, .farmer-sidebar, .today-hero, .buyer-hero, .farmer-welcome, .opening-hero) {
+  background: #26483E !important;
+  color: #EAE7DD !important;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(.sidebar, .buyer-sidebar, .farmer-sidebar, .today-hero, .buyer-hero, .farmer-welcome, .opening-hero) :is(h1, h2, h3, h4, p, small, label, b, strong, em) { color: #EAE7DD !important; }
+:is(#root .farmer-app, #root .buyer-app, .app) :is(.today-hero, .buyer-hero, .farmer-welcome, .opening-hero) button {
+  background: #EAE7DD !important; color: #182F28 !important; border-color: #EAE7DD !important;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(.today-hero, .buyer-hero, .farmer-welcome, .opening-hero) button :is(span, svg) { color: #182F28 !important; }
+:is(#root .farmer-app, #root .buyer-app, .app) nav button.active,
+:is(#root .farmer-app, #root .buyer-app, .app) nav button.active :is(span, svg, b) { color: #182F28 !important; }
+:is(#root .farmer-app, #root .buyer-app, .app) .opening-hero :is(.market-signal, .signal-card) {
+  background: #EAE7DD !important; color: #182F28 !important;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) .opening-hero :is(.market-signal, .signal-card) :is(h2, h3, p, small, b, strong, span) { color: #182F28 !important; }
+/* Portal readability: keep the grid's sidebar space only once. */
+.app { grid-template-columns: 272px minmax(0, 1fr) !important; animation: none !important; }
+.app .main { margin-left: 0 !important; }
+.simple-overview .opening-hero { display: block; min-height: 0; padding: 28px; }
+.simple-overview .opening-copy { max-width: none; }
+.simple-overview > .page { padding: 0; }
+.today-section-head > span,
+.today-grid > article > span { color: #26483E !important; font-size: 14px !important; }
+.today-actions { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.today-section-head { grid-column: 1 / -1 !important; padding: 4px 0 !important; }
+.today-actions article { min-width: 0; }
+.today-actions article button { min-height: 44px; font-size: 16px !important; text-decoration: underline; }
+.farmer-today .today-listen { background: #EAE7DD !important; color: #182F28 !important; }
+:is(.farmer-app, .app) :is(button, input, select, textarea):focus-visible { outline: 3px solid #26483E; outline-offset: 4px; }
+:is(.farmer-app, .app) :is(button, select) { min-height: 44px; }
+:is(.farmer-app, .app) :is(article, section, .panel) { min-width: 0; }
+.app .topbar { flex-wrap: wrap; height: auto; gap: 12px; }
+.app .top-actions { flex-wrap: wrap; gap: 12px; }
+.app .topbar .search, .app .topbar .bell, .app .topbar .person, .app .top-actions > .avatar, .app .top-actions > svg { display: none; }
+.app article:hover, .farmer-app article:hover { transform: none !important; }
+@media (max-width: 1100px) {
+  .today-hero, .today-grid, .app .two-col { grid-template-columns: minmax(0, 1fr) !important; }
+}
+@media (max-width: 720px) {
+  .today-actions { grid-template-columns: minmax(0, 1fr) !important; }
+  .today-markets p { flex-direction: column; gap: 4px; }
+  .app .order-row { display: flex; flex-wrap: wrap; gap: 16px; padding: 20px; text-align: left; }
+  .app .opening-actions { flex-direction: column; align-items: stretch; }
+}
+/* Listing workflow needs full content width, not two nested narrow columns. */
+#root .farmer-app .farmer-listing-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+#root .farmer-app :is(.manual-listing, .my-listings) { padding: clamp(20px, 3vw, 36px); min-width: 0; }
+#root .farmer-app .listing-form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 24px; margin-block: 28px; }
+#root .farmer-app .listing-form-grid label { min-width: 0; font-size: 16px !important; }
+#root .farmer-app .listing-form-grid :is(input, select) { min-height: 50px; padding: 12px; margin-top: 8px; border-color: #82958B; background: #FFFDF7; box-sizing: border-box; }
+#root .farmer-app .mandi-price-guide { padding: clamp(18px, 2vw, 28px); margin-block: 24px; border-color: #82958B; }
+#root .farmer-app .mandi-price-guide > div:first-child { flex-wrap: wrap; gap: 12px; }
+#root .farmer-app .mandi-price-guide > div:first-child small { flex-basis: 100%; margin-left: 0; }
+#root .farmer-app .mandi-price-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px !important; margin-top: 24px; }
+#root .farmer-app .mandi-price-summary > span { padding: 18px; background: #FFFDF7; min-width: 0; }
+#root .farmer-app .mandi-price-summary b { font: 600 20px/1.5 Arial, sans-serif; overflow-wrap: anywhere; }
+#root .farmer-app .mandi-price-summary button { grid-column: 1 / -1; justify-self: start; padding: 14px 22px; font-size: 16px !important; }
+#root .farmer-app .transport-cost { grid-template-columns: minmax(0, 1fr) 140px !important; gap: 16px !important; margin-block: 24px !important; }
+#root .farmer-app .transport-cost b { grid-column: 1 / -1; font-size: 16px; }
+#root .farmer-app .transport-cost input { min-height: 48px; box-sizing: border-box; }
+#root .farmer-app .mandi-markets { grid-template-columns: minmax(0, 1fr); gap: 12px !important; }
+#root .farmer-app .mandi-markets > span { padding: 16px 0; border-color: #82958B; }
+#root .farmer-app :is(.mandi-markets b, .my-listings b) { font-size: 16px; line-height: 1.5; overflow-wrap: anywhere; }
+#root .farmer-app .mandi-markets i { font-size: 13px; line-height: 1.5; }
+#root .farmer-app .my-listings article { flex-wrap: wrap; gap: 18px; padding-block: 22px; border-color: #82958B; }
+#root .farmer-app .my-listings article > span { min-width: 180px; }
+#root .farmer-app .my-listings strong { font-size: 18px; overflow-wrap: anywhere; }
+#root .farmer-app .remove-listing { padding: 12px 16px; font-size: 14px; }
+#root .farmer-app :is(.fertilizer-plan, .nutrient-grid, .simple-soil-status, .model-demo-grid) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 20px; }
+#root .farmer-app :is(.fertilizer-plan, .nutrient-grid) article { padding: 22px; }
+#root .farmer-app .fertilizer-plan :is(strong, span) { font-size: 15px; line-height: 1.5; }
+@media (max-width: 760px) {
+  #root .farmer-app :is(.listing-form-grid, .mandi-price-summary, .transport-cost) { grid-template-columns: minmax(0, 1fr) !important; }
+  #root .farmer-app .my-listings strong { text-align: left; }
+}
+/* Frosted portal surfaces; solid fallback keeps older browsers readable. */
+:is(#root .farmer-app, #root .buyer-app, .app) {
+  --portal-glass: #EAE7DD;
+  --portal-dark-glass: #26483E;
+  --portal-blur: none;
+}
+@supports ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
+  :is(#root .farmer-app, #root .buyer-app, .app) {
+    --portal-glass: rgba(255, 253, 247, .92);
+    --portal-dark-glass: rgba(38, 72, 62, .95);
+    --portal-blur: blur(16px) saturate(115%);
+  }
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(
+  .panel, .demo-panel, .manual-listing, .my-listings, .soil-advisory,
+  .farmer-record-card, .farmer-order-list, .order-row, .listing-card,
+  .farmer-card, .comparison-panel, .stat-card, .metric,
+  .today-actions article, .today-grid > article, .assisted-use,
+  .topbar, .buyer-topbar
+) {
+  background: var(--portal-glass) !important;
+  -webkit-backdrop-filter: var(--portal-blur);
+  backdrop-filter: var(--portal-blur);
+  border: 1px solid rgba(255, 255, 255, .72) !important;
+  box-shadow: 0 8px 28px rgba(24, 47, 40, .08), inset 0 1px 0 rgba(255, 255, 255, .65) !important;
+  color: #182F28 !important;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(
+  .sidebar, .farmer-sidebar, .buyer-sidebar, .today-hero,
+  .opening-hero, .buyer-hero, .farmer-welcome
+) {
+  background: var(--portal-dark-glass) !important;
+  -webkit-backdrop-filter: var(--portal-blur);
+  backdrop-filter: var(--portal-blur);
+  border: 1px solid rgba(234, 231, 221, .25) !important;
+}
+:is(#root .farmer-app, #root .buyer-app, .app) :is(input, select, textarea) {
+  background-color: #FFFDF7 !important;
+  color: #182F28 !important;
+}
+@media (prefers-reduced-transparency: reduce) {
+  :is(#root .farmer-app, #root .buyer-app, .app) {
+    --portal-glass: #EAE7DD;
+    --portal-dark-glass: #26483E;
+    --portal-blur: none;
+  }
 }

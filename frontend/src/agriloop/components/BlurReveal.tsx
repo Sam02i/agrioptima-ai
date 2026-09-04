@@ -43,9 +43,7 @@ export function BlurReveal({
         ease: [0.22, 1, 0.36, 1],
       }}
       className={className}
-    >
-      {children}
-    </motion.div>
+    >{children}</motion.div>
   );
 }
 
@@ -67,8 +65,6 @@ export function StaggerContainer({
       whileInView="visible"
       viewport={{ once: true, margin: viewportMargin }}
       className={className}
-    >
-      {children}
-    </motion.div>
+    >{children}</motion.div>
   );
 }
