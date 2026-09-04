@@ -1,6 +1,6 @@
 <div align="center">
 
-![AgriOptima banner](docs/banner.svg)
+![AgriOptima banner](docs/banner.gif)
 
 [![Live Demo](https://img.shields.io/badge/OPEN_LIVE_DEMO-AgriOptimaᴬᴵ-c7f633?style=for-the-badge&labelColor=153f2e)](https://agrioptima-rczdd6u2n-samikshas-projects-3b436fe6.vercel.app/)
 
